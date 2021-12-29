@@ -1,8 +1,6 @@
 import CommentOutlinedIcon from '@material-ui/icons/Comment';
-import styles from './icons-style.module.css'
+import { iconsStyle } from '../../../constants/styles';
 
 export const ComsIcon = () => {
-    return <div className={styles.icon}>
-        <CommentOutlinedIcon className={styles.icon}/>
-    </div>
+    return <CommentOutlinedIcon style={iconsStyle}/>
 }
