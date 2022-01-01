@@ -1,7 +1,7 @@
 import { Routing } from '../pages';
 import { Header } from '../widgets/Header';
-// import { Bookmark } from '../shared/core-ui/icons/bookmark';
-// import { ComsIcon } from '../shared/core-ui/icons/commentsIcon';
+// import { Bookmark } from '../shared/components/icons/bookmark';
+// import { ComsIcon } from '../shared/components/icons/commentsIcon';
 import './index.css';
 
 export function App() {
