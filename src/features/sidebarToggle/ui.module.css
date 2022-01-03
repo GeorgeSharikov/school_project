@@ -1,0 +1,6 @@
+.burgerMenu{
+    display: flex;
+    align-items: center;
+    padding-left: 18px;
+    cursor: pointer;
+}
