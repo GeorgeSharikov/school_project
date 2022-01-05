@@ -1,18 +1,27 @@
-import { Grid } from "@mui/material"
 import { SidebarToggle } from "../../features/sidebarToggle"
-import style from './ui.module.css'
-
+import Box from "@mui/material/Box";
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import {AppBarStl, ToolbarStl} from "./ui/styledComponents.js";
+import {Link} from "react-router-dom";
+import {Search} from "../../features/search";
+import {AddArticleButton} from "../../features/addArticle";
+import {NavigationUser} from "../../features/navigationUser";
 
 export const Header = () => {
     return (
-            <Grid container spacing={5} className={style.container}>
-                <Grid item xs={0.5}>
+            <AppBarStl>
+                <ToolbarStl>
                     <SidebarToggle />
-                </Grid>
-                <Grid item xs={1.5}>1</Grid>
-                <Grid item xs={2}>1</Grid>
-                <Grid item xs={1}>1</Grid>
-                <Grid item xs={7}>1</Grid>
-            </Grid>
+                    <Box sx={{pr: 2}}>
+                        <Link to={'/'}>
+                            <MeetingRoomIcon sx={{fontSize: 50, color: 'black'}}/>
+                        </Link>
+                    </Box>
+                    <Search/>
+                    <AddArticleButton />
+                    <Box sx={{ flexGrow: 1 }} />
+                    <NavigationUser />
+                </ToolbarStl>
+            </AppBarStl>
     )
 }
