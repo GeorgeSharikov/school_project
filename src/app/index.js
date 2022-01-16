@@ -1,13 +1,13 @@
 import { Routing } from '../pages';
 import { Header } from '../widgets/Header';
-// import { Bookmark } from '../shared/components/icons/bookmark';
-// import { ComsIcon } from '../shared/components/icons/commentsIcon';
 import './index.css';
+import {SideBar} from "../widgets/Sidebar";
 
 export function App() {
   return (
-    <div className="App">
+    <div>
       <Header />
+      <SideBar />
       <Routing />
     </div>
   );
