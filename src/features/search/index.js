@@ -12,7 +12,7 @@ export const Search = (props) => {
             >
                 <SearchIcon sx={{pr: '5px', pl: '8px'}}/>
                 <InputStld
-                    maxlength={50}
+                    maxLength={50}
                     placeholder="Поиск"
                 />
             </FormStyled>
