@@ -5,6 +5,8 @@
     line-height: 1.3em;
     margin-top: 9px;
     margin-bottom: 7px;
+    font-weight: 500;
+    word-wrap: break-word;
 }
 
 .prewords{
@@ -12,7 +14,7 @@
     padding-right: 20px;
 }
 
-.figure{
+.mediaContainer{
     margin-bottom: 4px;
 }
 
