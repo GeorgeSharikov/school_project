@@ -1,0 +1,15 @@
+.bookmark{
+    transition: color 0.1s;
+    cursor: pointer;
+    color: var(--gray-color);
+    display: flex;
+    align-items: center;
+}
+
+.bookmark:hover{
+    color: var(--blue-hover-color);
+}
+
+.bookmarkIcon{
+    font-size: 25px;
+}
