@@ -1,3 +1,3 @@
 export const iconsStyle = {
-    fill: 'gray'
+    color: '#595959'
 }
