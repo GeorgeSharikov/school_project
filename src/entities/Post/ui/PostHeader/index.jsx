@@ -4,16 +4,16 @@ import {NavLink} from "react-router-dom";
 export const PostHeader = ({author, sub, subImage, date}) => {
     return (
         <div className={styles.header}>
-            <NavLink to={'/sub'} className={styles.headerItem}>
-                <div style={{backgroundImage: subImage}}></div>
+            <NavLink to={'/sub'} className={`${styles.headerItem} ${styles.author}`}>
+                <div style={{backgroundImage: `url(${subImage})`}} className={styles.subImg}></div>
                 <div>{sub}</div>
             </NavLink>
             <NavLink to={'/author'} className={styles.headerItem}>
-                {author}
+                <div>{author}</div>
             </NavLink>
-            <NavLink to={'/time'}>
-                {date}
-            </NavLink>
+            <div className={styles.time}>
+                <time>{date}</time>
+            </div>
         </div>
     );
 }

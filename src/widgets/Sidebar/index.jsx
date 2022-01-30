@@ -9,9 +9,9 @@ export const SideBar = () => {
         <div className={styles.container}>
             <div className={styles.sideBar}>
                 <div className={styles.element}>
-                    <NavLink to={'/articles'}  className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+                    <NavLink to={'/'}  className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
                         <ArticleOutlinedIcon className={styles.itemsIcons}/>
-                        <p>Статьи1</p>
+                        <p>Статьи</p>
                     </NavLink>
                 </div>
                 <div className={styles.element}>

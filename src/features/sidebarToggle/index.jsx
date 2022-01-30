@@ -10,10 +10,11 @@ const MenuIconStyled = styled(MenuIcon)(() => ({
     paddingRight: 15
 }))
 
+
 export const SidebarToggle = () => {
     const {setActive} = useActions(toggleActions)
 
     return (
-            <MenuIconStyled onClick={() => setActive()}/>
+            <MenuIconStyled onClick={() => setActive()} />
     )
 }
