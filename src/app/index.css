@@ -17,3 +17,8 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+:root{
+  --blue-hover-color: #3766a9;
+  --gray-color: #595959;
+}
