@@ -13,6 +13,10 @@
     align-items: center;
 }
 
+.footer div:last-child{
+    margin-left: auto;
+}
+
 .footerItem{
     margin-right: 33px;
     flex-shrink: 0;

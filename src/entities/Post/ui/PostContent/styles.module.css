@@ -9,6 +9,7 @@
     word-wrap: break-word;
 }
 
+
 .prewords{
     padding-left: 20px;
     padding-right: 20px;
@@ -16,6 +17,7 @@
 
 .mediaContainer{
     margin-bottom: 4px;
+    margin-top: 12px;
 }
 
 .mediaContent{

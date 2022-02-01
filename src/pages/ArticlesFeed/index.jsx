@@ -4,6 +4,7 @@ import styles from './styles.module.css'
 import {CommentsIconLink} from "../../features/goToComments";
 import {AddToBookMarks} from "../../features/addToBookmarks";
 import {NavLink} from "react-router-dom";
+import {Like} from "../../features/likes";
 
 
 const PostItem = ({post}) => {
@@ -20,6 +21,9 @@ const PostItem = ({post}) => {
                 </div>
                 <div className={styles.footerItem}>
                     <AddToBookMarks />
+                </div>
+                <div>
+                    <Like />
                 </div>
             </div>
         </div>
