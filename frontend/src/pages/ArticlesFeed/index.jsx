@@ -8,7 +8,7 @@ import {Like} from "../../features/likes";
 
 
 const PostItem = ({post}) => {
-    const {title, prewords, image, author, sub, subImage, date, commentsAmount} = post
+    const {title, prewords, image, author, sub, subImage, date, commentsAmount, likesCount} = post
     return(
         <div className={styles.post}>
             <NavLink to={'/news/id'}>
@@ -23,7 +23,7 @@ const PostItem = ({post}) => {
                     <AddToBookMarks />
                 </div>
                 <div>
-                    <Like />
+                    <Like likesCount={likesCount}/>
                 </div>
             </div>
         </div>
@@ -39,7 +39,8 @@ export const ArticlesFeed = () => {
         sub: 'Dvach',
         subImage: 'https://leonardo.osnova.io/2810b9bb-071f-8a49-2290-2f92ca6797cd/-/scale_crop/64x64/',
         date: 'Today',
-        commentsAmount: 22
+        commentsAmount: 22,
+        likesCount: 50
     }
     return (
         <div>
