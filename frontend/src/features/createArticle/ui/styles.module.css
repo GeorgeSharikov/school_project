@@ -3,6 +3,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    min-height: 0;
 }
 
 
@@ -48,7 +49,7 @@
     height: 48px;
     display: flex;
     align-items: center;
-    position: sticky;
+    position: relative;
 }
 
 .authorSelect{
@@ -97,15 +98,58 @@
 .editorContent{
     flex: 1;
     min-height: 0;
+
 }
 .editorJS{
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     width: 100%;
     box-sizing: border-box;
-    height: 545px;
+    height: 500px;
 }
 
-.editorJS :last-child{
-    /*display: none;*/
+.editorBottom{
+    position: sticky;
+    display: flex;
+    align-items: flex-start;
+    background-color: #fff;
+    min-height: 86px;
+    z-index: 6;
+    margin-top: 5px;
+}
+
+.bottomContent{
+    display: flex;
+    align-items: center;
+    height: 86px;
+}
+
+.publishButton{
+    offset: 16px;
+    min-width: 44px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 8px;
+    position: relative;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    background-color: #4683d9;
+    color: #fff;
+    box-shadow: 0 1px 2px rgba(70, 131, 217, 0.48), inset 0 -1px 0 rgba(0,0,0, 0.12);
+}
+
+.buttonLabel{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 16px;
+    margin: 0 auto;
 }

@@ -7,7 +7,7 @@ export function useActions(actions) {
 
     const boundActions = useMemo(() => {
         return bindActionCreators(actions, dispatch)
-    }, [])
+    }, [actions, dispatch])
 
     return boundActions
 }

@@ -11,7 +11,7 @@ export const PostContent = ({title, prewords, image}) => {
             </div>
             <div className={styles.mediaContainer}>
                 <div className={styles.mediaContent}>
-                    <img src={image}/>
+                    <img src={image} alt={'content art'}/>
                 </div>
             </div>
         </div>

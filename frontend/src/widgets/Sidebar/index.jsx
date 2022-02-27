@@ -1,5 +1,5 @@
 import styles from './ui/style.module.css'
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
