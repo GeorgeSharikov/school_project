@@ -8,10 +8,15 @@ import List from "@editorjs/list";
 import Marker from "@editorjs/marker";
 import Embed from "@editorjs/embed";
 import LinkTool from "@editorjs/link";
+import Paragraph from '@editorjs/paragraph'
 
 export const settings = {
     holder: 'editorjs',
     tools: {
+        paragraph: {
+            class: Paragraph,
+            inlineToolbar: true,
+        },
         header: {
             class: Header,
             inlineToolbar: true,
