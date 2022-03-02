@@ -5,7 +5,7 @@ export const PostHeader = ({author, sub, subImage, date}) => {
     return (
         <div className={styles.header}>
             <NavLink to={'/sub'} className={`${styles.headerItem} ${styles.author}`}>
-                <div style={{backgroundImage: `url(${subImage})`}} className={styles.subImg}></div>
+                <div style={{backgroundImage: `url(${subImage})`}} className={styles.subImg}/>
                 <div>{sub}</div>
             </NavLink>
             <NavLink to={'/author'} className={styles.headerItem}>

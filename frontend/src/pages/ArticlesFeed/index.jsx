@@ -11,8 +11,8 @@ const PostItem = ({post}) => {
     const {title, prewords, image, author, sub, subImage, date, commentsAmount, likesCount} = post
     return(
         <div className={styles.post}>
+            <PostHeader  author={author} sub={sub} subImage={subImage} date={date}/>
             <NavLink to={'/news/id'}>
-                <PostHeader  author={author} sub={sub} subImage={subImage} date={date}/>
                 <PostContent image={image} title={title} prewords={prewords}/>
             </NavLink>
             <div className={styles.footer}>
