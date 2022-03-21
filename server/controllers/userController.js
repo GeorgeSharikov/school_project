@@ -1,6 +1,11 @@
+import {UserService} from "../core/user/user-service.js";
+
 class User{
     async registration(req, res, next){
-        res.send('<h1>Pupkin Zalpkin</h1>')
+        const userData = req.body
+        const token = await UserService.registration(userData, next)
+        console.log(token)
+        res.json({token})
     }
 }
 
