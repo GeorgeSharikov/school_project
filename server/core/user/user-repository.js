@@ -8,7 +8,7 @@ export class UserRepository{
             return !!isUserExist
         }catch (e) {
             console.log(e)
-            next(ApiError.internal('Неизвестная ошибка'))
+            return next(ApiError.internal('Неизвестная ошибка'))
         }
     }
 
@@ -17,7 +17,16 @@ export class UserRepository{
             return await UserModel.create({email, password, firstName, lastName, role})
         }catch (e) {
             console.log(e)
-            next(ApiError.internal('Неизвестная ошибка'))
+            return next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    static async getUser(email, next){
+        try{
+            return await UserModel.findOne({where: {email}})
+        }catch (e) {
+            console.log(e)
+            return next(ApiError.internal('Неизвестная ошибка'))
         }
     }
 }

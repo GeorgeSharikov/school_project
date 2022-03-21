@@ -4,8 +4,18 @@ class User{
     async registration(req, res, next){
         const userData = req.body
         const token = await UserService.registration(userData, next)
-        console.log(token)
-        res.json({token})
+        if(token) {
+            res.json({token})
+        }
+
+    }
+
+    async logIn(req, res, next){
+        const userData = req.body
+        const token = await UserService.signIn(userData, next)
+        if(token) {
+            res.json({token})
+        }
     }
 }
 
