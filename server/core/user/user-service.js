@@ -2,11 +2,10 @@ import {UserRepository} from "./user-repository.js";
 import {ApiError} from "../../error/ApiError.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import env from 'dotenv'; env.config()
+import env from 'dotenv';
+import {generateJWT} from "../helpers/generateJWT.js"; env.config()
 
-const generateJWT = (id, email, role) => {
-    return jwt.sign({id, email, role}, process.env.SECRET_KEY, {expiresIn: '24h'})
-}
+
 
 export class UserService{
     static async registration(userData, next){

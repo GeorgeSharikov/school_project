@@ -1,4 +1,7 @@
 import {UserService} from "../core/user/user-service.js";
+import {generateJWT} from "../core/helpers/generateJWT.js";
+
+
 
 class User{
     async registration(req, res, next){
@@ -16,6 +19,11 @@ class User{
         if(token) {
             res.json({token})
         }
+    }
+
+    async auth(req, res, next){
+        const token = generateJWT(req.user.id, req.user.email, req.user.role)
+        res.json({token})
     }
 }
 
