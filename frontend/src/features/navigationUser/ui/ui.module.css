@@ -1,0 +1,14 @@
+.signIn{
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    margin-right: 40px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    color: black;
+    transition: 0.3s;
+}
+.signIn:hover{
+    color: #e5a040;
+}
