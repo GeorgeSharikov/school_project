@@ -1,14 +1,14 @@
 import {PostHeader} from "../../entities/Post/ui/PostHeader";
 import {PostContent} from "../../entities/Post/ui/PostContent";
 import styles from './styles.module.css'
-import {CommentsIconLink} from "../../features/goToComments";
+// import {CommentsIconLink} from "../../features/goToComments";
 import {AddToBookMarks} from "../../features/addToBookmarks";
 import {NavLink} from "react-router-dom";
 import {Like} from "../../features/likes";
 
 
 const PostItem = ({post}) => {
-    const {title, prewords, image, author, sub, subImage, date, commentsAmount, likesCount} = post
+    const {title, prewords, image, author, sub, subImage, date, likesCount} = post
     return(
         <div className={styles.post}>
             <PostHeader  author={author} sub={sub} subImage={subImage} date={date}/>
@@ -16,9 +16,9 @@ const PostItem = ({post}) => {
                 <PostContent image={image} title={title} prewords={prewords}/>
             </NavLink>
             <div className={styles.footer}>
-                <div className={styles.footerItem}>
-                    <CommentsIconLink commentsAmount={commentsAmount}/>
-                </div>
+                {/*<div className={styles.footerItem}>*/}
+                {/*    <CommentsIconLink commentsAmount={commentsAmount}/>*/}
+                {/*</div>*/}
                 <div className={styles.footerItem}>
                     <AddToBookMarks />
                 </div>
@@ -39,7 +39,6 @@ export const ArticlesFeed = () => {
         sub: 'Dvach',
         subImage: 'https://leonardo.osnova.io/2810b9bb-071f-8a49-2290-2f92ca6797cd/-/scale_crop/64x64/',
         date: 'Today',
-        commentsAmount: 22,
         likesCount: 50
     }
     return (
