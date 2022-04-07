@@ -35,7 +35,8 @@ export const NavigationUser = (props) => {
             onClose={closeHandler}
         >
             <Box sx={modalStyles}>
-                <div>
+                <div className={styles.formContainer}>
+                    <div className={styles.formTitle}>Вход в аккаунт</div>
                     <LoginForm />
                 </div>
             </Box>
