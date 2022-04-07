@@ -1,6 +1,6 @@
 export const modalStyles = {
     backgroundColor: '#fff',
-    padding: '30px',
+    padding: '50px',
     border: 'white',
     borderRadius: '8px',
     display: 'flex',
