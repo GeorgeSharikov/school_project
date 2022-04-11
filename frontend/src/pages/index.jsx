@@ -15,7 +15,7 @@ export const Routing = () => {
                 <div className={styles.wrapper}>
                     <Routes>
                         <Route path={'/'} element={<ArticlesFeed />}/>
-                        <Route path={'/writing=0'} element={<ArticleEditorPage />}/>
+                        <Route path={'/writing'} element={<ArticleEditorPage />}/>
                     </Routes>
                 </div>
 

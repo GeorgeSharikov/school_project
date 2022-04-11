@@ -10,7 +10,6 @@ class User{
         if(token) {
             res.json({token})
         }
-
     }
 
     async logIn(req, res, next){
