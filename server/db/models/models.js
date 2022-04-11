@@ -12,7 +12,7 @@ export const UserModel = sequelize.define('user', {
     status: {type: DataTypes.STRING},
     avatar: {type: DataTypes.STRING, defaultValue: false},
     userArticles: {type: DataTypes.STRING},
-    comments: {type: DataTypes.STRING},
+    bookmarks: {type: DataTypes.STRING},
 })
 
 export const ArticleModel = sequelize.define('article', {
