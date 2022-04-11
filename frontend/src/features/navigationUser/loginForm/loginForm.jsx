@@ -1,22 +1,23 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogIn } from '../../../store/userAuthSlice/slice';
+import { userAuthActions, userLogIn } from '../../../store/userAuthSlice/slice';
 import { userAuthSelectors } from '../../../store/userAuthSlice/slice';
+import {useActions} from '../../../shared/hooks/useActions'
 import styles from './ui.module.css'
 
-export const LoginForm = () => {
+export const LoginForm = ({setModalVisible}) => {
     const dispatch = useDispatch()
+    const {setLoginError} = useActions(userAuthActions)
     const loginErrors = useSelector(state => userAuthSelectors.getIsLoginError(state))
     const [error, setError] = useState(loginErrors)
     const [validateErrors, setValidateErrors] = useState(false)
-    // console.log(validateErrors)
 
     const validate = (values) => {
         const errors = {};
         
         if (!values.email) {
-          errors.email = 'Обязательна';
+          errors.email = 'Почта обязательна';
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
           errors.email = 'Некорректная почта';
         }
@@ -29,50 +30,63 @@ export const LoginForm = () => {
         return errors;
       };
 
-    const logIn = async (data) => {
-        // console.log(data)
+    const logIn = async (data, callbackSubmit) => {
         setTimeout(() => {
-            dispatch(userLogIn(data))
-        }, 5000)
+            dispatch(userLogIn(data)).then((res) => { 
+                if(!('error' in res)){
+                    setModalVisible(false)
+                }
+                callbackSubmit(false)
+            })
+        }, 1000)
         
     }
 
     useEffect(() => {
         setError(loginErrors)
-        return () => {
-            setError(loginErrors)
-            setValidateErrors(false)
-        }
     }, [loginErrors])
+
+    useEffect(() => () => {
+            setLoginError(false)
+            setValidateErrors(false)
+    }, [setLoginError])
     return (
         <div>
         <Formik
             initialValues={{ email: '', password: '' }}
             validate={validate} 
             onSubmit={(values, { setSubmitting }) => {
-                logIn(values)
-                setSubmitting(false)
+                logIn(values, setSubmitting)
             }}
         >
         {({ isSubmitting, isValid, errors, touched }) => {
-            console.log(isSubmitting)
             return (
             <Form>
 
             <div className={styles.inputWrapper}>
                 <Field type="email" name="email" 
-                    className={!validateErrors? styles.loginFormInput : `${styles.loginFormInput} ${styles.invalidInput}`} 
+                className={`${styles.loginFormInput} 
+                            ${validateErrors || error ? styles.invalidInput : null}
+                            ${isSubmitting ? styles.disabledInput : null}`
+                        }
                     placeholder='Почта'/>
                 {errors.email && touched.email && <div className={styles.fieldError}>{errors.email}</div>}
             </div>
             
 
             <div className={styles.inputWrapper}>
-                <Field type="password" name="password" className={styles.loginFormInput} placeholder='Пароль'/>
+                <Field type="password" name="password" 
+                    className={`${styles.loginFormInput} 
+                        ${validateErrors || error ? styles.invalidInput : null}
+                        ${isSubmitting ? styles.disabledInput : null}`
+                        }
+                    placeholder='Пароль'/>
             </div>
 
-            {error && <h3>{error}</h3>}
-            <button type="submit" disabled={!isValid || isSubmitting} className={isValid ? styles.submitButton : `${styles.disabledButton}`}>
+            {error && <div className={styles.fieldError}>{error}</div>}
+            <button type="submit" disabled={!isValid || isSubmitting} className={isValid 
+            ? isSubmitting ?`${styles.submitButton} ${styles.loading}` : styles.submitButton
+            : `${styles.disabledButton}`}>
                 Вход
             </button>
             

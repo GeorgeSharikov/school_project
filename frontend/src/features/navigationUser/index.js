@@ -37,7 +37,7 @@ export const NavigationUser = (props) => {
             <Box sx={modalStyles}>
                 <div className={styles.formContainer}>
                     <div className={styles.formTitle}>Вход в аккаунт</div>
-                    <LoginForm />
+                    <LoginForm setModalVisible={setModalVisible}/>
                 </div>
             </Box>
         </Modal>
