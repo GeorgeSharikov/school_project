@@ -36,6 +36,9 @@ const slice = createSlice({
         setUserInfo(state, {payload}){
             state.userId = payload.userId;
             state.role = payload.role;
+        },
+        setLoginError(state, {payload}){
+            state.errorLoginMessage = payload
         }
     },
     extraReducers: (builder) => {
@@ -49,8 +52,6 @@ const slice = createSlice({
         })
 
         builder.addCase(userLogIn.fulfilled, (state, {payload}) => {
-            console.log('nice')
-            
             const decodedInfo = jwt_decode(payload.token)
             document.cookie = `token=${payload.token}`
             
