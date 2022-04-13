@@ -38,7 +38,7 @@ export const LoginForm = ({setModalVisible}) => {
                 }
                 callbackSubmit(false)
             })
-        }, 1000)
+        }, 5000)
         
     }
 
@@ -81,9 +81,10 @@ export const LoginForm = ({setModalVisible}) => {
                         ${isSubmitting ? styles.disabledInput : null}`
                         }
                     placeholder='Пароль'/>
+                    {error && <div className={styles.fieldError}>{error}</div>}
             </div>
 
-            {error && <div className={styles.fieldError}>{error}</div>}
+            
             <button type="submit" disabled={!isValid || isSubmitting} className={isValid 
             ? isSubmitting ?`${styles.submitButton} ${styles.loading}` : styles.submitButton
             : `${styles.disabledButton}`}>
