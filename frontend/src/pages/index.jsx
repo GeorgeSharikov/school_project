@@ -5,6 +5,7 @@ import {useSelector} from "react-redux";
 import {sideBarSelectors} from "../features/sidebarToggle/model/slice.js";
 import {ArticlesFeed} from "./ArticlesFeed";
 import {ArticleEditorPage} from "./ArticleEditor";
+import { Profile } from "./Profile";
 
 export const Routing = () => {
     const isSidebarActive = useSelector(sideBarSelectors.getSidebarIsActive)
@@ -16,6 +17,7 @@ export const Routing = () => {
                     <Routes>
                         <Route path={'/'} element={<ArticlesFeed />}/>
                         <Route path={'/writing'} element={<ArticleEditorPage />}/>
+                        <Route path={'/profile:id'} element={<Profile/>}/>
                     </Routes>
                 </div>
 
