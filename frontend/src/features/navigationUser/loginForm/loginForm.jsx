@@ -5,6 +5,7 @@ import { userAuthActions, userLogIn } from '../../../store/userAuthSlice/slice';
 import { userAuthSelectors } from '../../../store/userAuthSlice/slice';
 import {useActions} from '../../../shared/hooks/useActions'
 import styles from './ui.module.css'
+import { getPersonalData } from '../../../store/userPersonalData/slice';
 
 export const LoginForm = ({setModalVisible}) => {
     const dispatch = useDispatch()
@@ -31,6 +32,7 @@ export const LoginForm = ({setModalVisible}) => {
       };
 
     const logIn = async (data, callbackSubmit) => {
+        console.log(document.cookie)
         setTimeout(() => {
             dispatch(userLogIn(data)).then((res) => { 
                 if(!('error' in res)){
@@ -38,8 +40,8 @@ export const LoginForm = ({setModalVisible}) => {
                 }
                 callbackSubmit(false)
             })
-        }, 5000)
-        
+            dispatch(getPersonalData())
+        }, 2000)        
     }
 
     useEffect(() => {
