@@ -32,15 +32,14 @@ export const LoginForm = ({setModalVisible}) => {
       };
 
     const logIn = async (data, callbackSubmit) => {
-        console.log(document.cookie)
         setTimeout(() => {
             dispatch(userLogIn(data)).then((res) => { 
                 if(!('error' in res)){
                     setModalVisible(false)
                 }
                 callbackSubmit(false)
+                dispatch(getPersonalData())
             })
-            dispatch(getPersonalData())
         }, 2000)        
     }
 

@@ -1,10 +1,20 @@
 import axios from 'axios'
 import { getCookie } from '../helpers/getCookie';
 
+
+let token = getCookie('token')
+
+
 const instance = axios.create({
     baseURL: 'http://localhost:4000/api/',
     headers: {
-        'Authorization': `Bearer ${getCookie('token')}`
+        'Authorization': `Bearer ${token}`
+    }
+});
+
+window.cookieStore.addEventListener('change', ({changed}) => {
+    for (const {value} of changed) {
+        instance.defaults.headers['Authorization'] = `Bearer ${value}`
     }
 });
 
@@ -51,8 +61,9 @@ class UserInfo{
     }
     async getPersonalData(){
         try{
-           const response = await instance.get(`${this.apiBase}/getPersonalData`)
-           return response
+            instance.defaults.headers['Authorization'] = `Bearer ${getCookie('token')}`
+            const response = await instance.get(`${this.apiBase}/getPersonalData`)
+            return response
         }catch(e){
             if(e.response){
                 if(e.response.status !== 401){
