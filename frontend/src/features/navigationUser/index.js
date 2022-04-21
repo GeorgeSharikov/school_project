@@ -23,8 +23,7 @@ export const NavigationUser = (props) => {
     return (
         <div>
             {isAuth 
-            ? <NavLink to={`/profile:${id}`}>
-                {/* <AccountBoxIcon sx={{fontSize: '40px', color: 'black', cursor: 'pointer'}}/> */}
+            ? <NavLink to={`/profile/${id}`}>
                 <Avatar>{userData.firstName}</Avatar>
             </NavLink>
             : <div className={styles.signIn} onClick={openHandler}>
