@@ -4,6 +4,7 @@ import { UserInfoController } from '../controllers/userInfoController.js';
 
 const router = new Router()
 
-router.get('/getPersonalData', CheckAuth, UserInfoController.getPersonData)
+router.get('/getPersonalData', CheckAuth, UserInfoController.getPersonalData)
+router.get('/getOtherPersonalData', UserInfoController.getOtherPersonalData)
 
 export const userInfoRouter = router
