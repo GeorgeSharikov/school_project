@@ -16,7 +16,7 @@ export const NavigationUser = (props) => {
 
     const id = useSelector(state => userAuthSelectors.getUserPersonalId(state))
     const isAuth = useSelector(state => userAuthSelectors.getIsUserAuth(state))
-    const userData = useSelector(state => personalDataSelectors.getPeronalData(state))
+    const userData = useSelector(state => personalDataSelectors.getPeronalDataSelector(state))
 
     const openHandler = () => setModalVisible(true)
     const closeHandler = () => setModalVisible(false)

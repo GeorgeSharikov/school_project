@@ -1,5 +1,4 @@
-export const getPeronalData = (state, isOwn = true) => {
-    console.log('here')
+export const getPeronalDataSelector = (state, isOwn = true) => {
     if(isOwn){
         return state.personalData.personalData
     }
