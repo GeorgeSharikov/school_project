@@ -13,8 +13,7 @@ export const getPersonalData = createAsyncThunk(
 export const getOtherPersonalData = createAsyncThunk(
     'userPersonalData/getOtherPersonalData',
     async ({id}, thunkAPI) => {
-        console.log(id)
-        const {data} = await UserInfoApi.getPersonalData(id)
+        const {data} = await UserInfoApi.getOtherPersonalData(id)
         return data
     }
 )
@@ -23,8 +22,8 @@ const slice = createSlice({
     name: 'userPersonalData',
     initialState : {
         personalData : {},
+        errorMessage: null,   
         otherAccountData: {},
-        errorMessage: null   
     },
     reducers: {
 

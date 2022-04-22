@@ -75,6 +75,20 @@ class UserInfo{
             } 
         }
     }
-
+    async getOtherPersonalData(id){
+        try{
+            const response = await instance.get(`${this.apiBase}/getOtherPersonalData?id=${id}`)
+            return response
+        }catch(e){
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            } 
+        }
+    }
 }
 export const UserInfoApi = new UserInfo('userInfo')
