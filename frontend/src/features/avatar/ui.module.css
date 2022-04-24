@@ -1,0 +1,16 @@
+.headerAvatar{
+    border-width: 4px;
+    width: 112px;
+    height: 112px;
+    border-radius: 6px;
+    /* background-color: #dedede; */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    box-shadow: 0 0 0 4px #fff, inset 0 0 0 1px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    cursor: zoom-in;
+    margin-bottom: 20px;
+}
