@@ -6,6 +6,8 @@ import {sideBarSelectors} from "../features/sidebarToggle/model/slice.js";
 import {ArticlesFeed} from "./ArticlesFeed";
 import {ArticleEditorPage} from "./ArticleEditor";
 import { Profile } from "./Profile";
+import { ProfileArticleFeed } from "../features/profileArticleFeed";
+import { ProfileDraftsFeed } from "../features/profileDraftsFeed";
 
 export const Routing = () => {
     const isSidebarActive = useSelector(sideBarSelectors.getSidebarIsActive)
@@ -13,16 +15,16 @@ export const Routing = () => {
         <div className={styles.main}>
             {isSidebarActive && <SideBar/>}
             <div className={styles.content}>
-                <div className={styles.wrapper}>
                     <Routes>
-                        <Route path={'/'} element={<ArticlesFeed />}/>
+                        <Route path={'/'} element={<ArticlesFeed />}/>         
                         <Route path={'/writing'} element={<ArticleEditorPage />}/>
-                        <Route path={'/profile/:id'} element={<Profile/>}/>
+                        <Route path={'/profile/:id'} element={<Profile/>}>
+                            <Route path="" element={<ProfileArticleFeed />} />
+                            <Route path="drafts" element={<ProfileDraftsFeed />} />
+                        </Route>
                     </Routes>
-                </div>
-
             </div>
-            <div style={{width: '320px'}}>a</div>
+            <div style={{width: '145px'}}>a</div>
         </div>
     )
 }   
