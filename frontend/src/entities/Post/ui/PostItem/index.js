@@ -14,9 +14,6 @@ export const PostItem = ({post}) => {
                 <PostContent image={image} title={title} prewords={prewords}/>
             </NavLink>
             <div className={styles.footer}>
-                {/*<div className={styles.footerItem}>*/}
-                {/*    <CommentsIconLink commentsAmount={commentsAmount}/>*/}
-                {/*</div>*/}
                 <div className={styles.footerItem}>
                     <AddToBookMarks />
                 </div>
