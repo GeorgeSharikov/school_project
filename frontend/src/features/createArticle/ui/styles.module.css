@@ -1,9 +1,9 @@
 .editorContainer{
     padding-top: 12px;
-    position: relative;
     display: flex;
     flex-direction: column;
     min-height: 0;
+    flex: 1;
 }
 
 
@@ -31,7 +31,7 @@
     resize: none;
     border: 0;
     outline: 0 !important;
-    font-size: 33px;
+    font-size: 36px;
     line-height: 1.3em;
     font-weight: 500;
 }
@@ -98,24 +98,33 @@
 .editorContent{
     flex: 1;
     min-height: 0;
-
-}
-.editorJS{
     overflow-x: hidden;
     overflow-y: auto;
+}
+.editorJS{
     width: 100%;
     box-sizing: border-box;
-    height: 500px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+    flex: 1;
+    z-index: 1;
 }
-
+.editorJS .codex-editor__redactor{
+    padding-bottom: 20px;
+}
+/* botom */
 .editorBottom{
     position: sticky;
     display: flex;
     align-items: flex-start;
-    background-color: #fff;
-    min-height: 86px;
+    order: 2;
+    height: 86px;
     z-index: 6;
-    margin-top: 5px;
+    flex-shrink: 0;
+    /* margin-top: -5px; */
 }
 
 .bottomContent{
