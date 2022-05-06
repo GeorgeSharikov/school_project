@@ -1,5 +1,4 @@
 import styled from "@mui/material/styles/styled.js";
-import {Link} from "react-router-dom";
 
 export const Button = styled('div')(() => ({
     outline: 0,
@@ -14,7 +13,7 @@ export const Button = styled('div')(() => ({
     boxShadow: '0 1px 1px rgb(0 0 0 / 10%), 0 2px 5px rgb(0 0 0 / 5%), 0 -1px 0 rgb(0 0 0 / 5%), -1px 0 0 rgb(0 0 0 / 10%), 1px 0 0 rgb(0 0 0 / 10%)',
 }))
 
-export const LinkStyled = styled(Link)(() => ({
+export const LinkStyled = styled('div')(() => ({
     fontWeight: 700,
     display: 'flex',
     alignItems: 'center',
