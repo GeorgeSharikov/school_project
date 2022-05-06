@@ -12,9 +12,11 @@ import Paragraph from '@editorjs/paragraph'
 
 export const settings = {
     holder: 'editorjs',
+    placeholder: 'Нажмите Tab для выбора инструмента',
     tools: {
         paragraph: {
             class: Paragraph,
+            placeholder: 'Нажмите Tab для выбора инструмента',
             inlineToolbar: true,
         },
         header: {
