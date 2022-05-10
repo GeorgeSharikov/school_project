@@ -9,6 +9,9 @@ import Marker from "@editorjs/marker";
 import Embed from "@editorjs/embed";
 import LinkTool from "@editorjs/link";
 import Paragraph from '@editorjs/paragraph'
+import {BASE_SERVER_URL} from "./url.js";
+
+const UPLOAD_URL = `${BASE_SERVER_URL}static`
 
 export const settings = {
     holder: 'editorjs',
@@ -30,8 +33,10 @@ export const settings = {
         image: {
             class: ImageTool,
             inlineToolbar: true,
-            endpoints: {
-                byFile: 'http://localhost:3000/'
+            config: {
+                endpoints: {
+                    byFile: `${UPLOAD_URL}/uploadImage`
+                }
             }
         },
         table: {
@@ -71,5 +76,36 @@ export const settings = {
             class: LinkTool,
         }
     },
-
+    i18n: {
+        messages:{
+            ui:{
+                "inlineToolbar": {
+                    "converter": {
+                        "Convert to": "Конвертировать в"
+                    }
+                }
+            },
+            toolNames: {
+                "Text": "Параграф",
+                "Heading": "Заголовок",
+                "List": "Список",
+                "Warning": "Примечание",
+                "Checklist": "Чеклист",
+                "Quote": "Цитата",
+                "Delimiter": "Разделитель",
+                "Table": "Таблица",
+                "Link": "Ссылка",
+                "Marker": "Маркер",
+                "Bold": "Полужирный",
+                "Italic": "Курсив",
+                "InlineCode": "Моноширинный",
+                "Image": "Изображение или видео",
+            },
+            tools: {
+                "link": {
+                    "Add a link": "Вставьте ссылку"
+                }
+            }
+        }
+    },
 }
