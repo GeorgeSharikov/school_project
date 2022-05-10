@@ -14,8 +14,9 @@ const app = express()
 
 app.use(express.json())
 app.use(fileupload({}))
-app.use(express.static(path.resolve(path.dirname(''), 'Static')))
 app.use(cors())
+app.use('/api/static/images', express.static(path.resolve(path.dirname(''), 'Static/images')))
+app.use('/api/static/videos', express.static(path.resolve(path.dirname(''), 'Static/videos')))
 app.use('/api', mainRouter)
 app.use(ErrorHandler)
 
