@@ -30,7 +30,9 @@ export const ArticleEditor = (props) => {
     useEffect(() => {
         inputRef.current.focus()
         setTimeout(() => {
-            editorRef.current.removeChild(editorRef.current.children[0])
+            if(editorRef.current.children[0]) {
+                editorRef.current.removeChild(editorRef.current.children[0])
+            }
         }, 0)
         return () => {
             editor.destroy()
