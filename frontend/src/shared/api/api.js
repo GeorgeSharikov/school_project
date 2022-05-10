@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { getCookie } from '../helpers/getCookie';
+import {BASE_SERVER_URL} from "../../constants/url.js";
 
 
 let token = getCookie('token')
 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:4000/api/',
+    baseURL: `${BASE_SERVER_URL}`,
     headers: {
         'Authorization': `Bearer ${token}`
     }
