@@ -11,18 +11,17 @@ export const UserModel = sequelize.define('user', {
     role: {type: DataTypes.STRING, defaultValue: 'USER'},
     status: {type: DataTypes.STRING},
     avatar: {type: DataTypes.STRING, defaultValue: false},
-    userArticles: {type: DataTypes.STRING},
     bookmarks: {type: DataTypes.STRING},
 })
 
 export const ArticleModel = sequelize.define('article', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     title: {type: DataTypes.STRING},
-    titleParagraph: {type: DataTypes.STRING},
-    titleImage: {type: DataTypes.STRING},
-    content: {type: DataTypes.STRING},
-    likeCount: {type: DataTypes.STRING},
-    comments: {type: DataTypes.RANGE(DataTypes.INTEGER)},
+    title_paragraph: {type: DataTypes.TEXT},
+    title_image: {type: DataTypes.STRING},
+    content: {type: DataTypes.TEXT},
+    like_count: {type: DataTypes.STRING},
+    author_id: {type: DataTypes.INTEGER}
 })
 
 UserModel.hasMany(ArticleModel)
