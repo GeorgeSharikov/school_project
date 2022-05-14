@@ -4,12 +4,12 @@ import { ArticleEditor } from ".."
 import { PortalHoc } from "../../../shared/helpers/PortalHoc"
 import { modalEditorStyles } from "./ui/ui"
 
-export const ArticleEditorModal = ({isVisible, hadnleClose}) => {
+export const ArticleEditorModal = ({isVisible, handleClose}) => {
     return (
         <PortalHoc elementPlace={document.body}>
             <Modal
                  open={isVisible}
-                 onClose={hadnleClose}
+                 onClose={handleClose}
                  >
                      <Box sx={modalEditorStyles}> 
                         <ArticleEditor/>
