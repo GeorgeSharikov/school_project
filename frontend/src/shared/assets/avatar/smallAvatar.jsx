@@ -5,8 +5,7 @@ import styles from './ui.module.css'
 
 export const SmallAvatar = () => {
     const {avatar, firstName} = useSelector(state => getPeronalDataSelector(state))
-    const firstLetter = firstName.split('')[0]
-    console.log(!!!avatar)
+    const firstLetter = firstName?.split('')[0]
     return (
         !!!avatar 
         ? <div style={{backgroundImage: `url(${avatar})`}} className={styles.subImg}/>
