@@ -21,8 +21,11 @@ export const ArticleModel = sequelize.define('article', {
     title_image: {type: DataTypes.STRING},
     content: {type: DataTypes.TEXT},
     like_count: {type: DataTypes.STRING},
-    author_id: {type: DataTypes.INTEGER}
+    author_id: {type: DataTypes.INTEGER},
+    is_moderated: {type: DataTypes.BOOLEAN, defaultValue: false},
+    is_draft: {type: DataTypes.BOOLEAN, defaultValue: false},
 })
 
 UserModel.hasMany(ArticleModel)
 ArticleModel.belongsTo(UserModel)
+
