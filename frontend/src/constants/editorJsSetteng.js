@@ -1,6 +1,5 @@
 import Header from "@editorjs/header";
 import ImageTool from "@editorjs/image";
-import Table from "@editorjs/table";
 import Quote from "@editorjs/quote";
 import Warning from "@editorjs/warning";
 import Delimiter from "@editorjs/delimiter";
@@ -38,10 +37,6 @@ export const settings = {
                     byFile: `${UPLOAD_URL}/uploadImage`
                 }
             }
-        },
-        table: {
-            class: Table,
-            inlineToolbar: true,
         },
         quote: {
             class: Quote,
@@ -93,7 +88,6 @@ export const settings = {
                 "Checklist": "Чеклист",
                 "Quote": "Цитата",
                 "Delimiter": "Разделитель",
-                "Table": "Таблица",
                 "Link": "Ссылка",
                 "Marker": "Маркер",
                 "Bold": "Полужирный",
