@@ -3,7 +3,7 @@ import {ApiError} from "../../error/ApiError.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import env from 'dotenv';
-import {generateJWT} from "../helpers/generateJWT.js"; env.config()
+import {generateJWT} from "../../core/helpers/generateJWT.js"; env.config()
 
 
 
