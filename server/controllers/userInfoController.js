@@ -1,4 +1,4 @@
-import { UserinfoService } from '../core/userInfo/userInfo-service.js'
+import { UserinfoService } from '../services/userInfo/userInfo-service.js'
 import {ApiError} from '../error/ApiError.js'
 
 

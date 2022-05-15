@@ -1,4 +1,4 @@
-import {UserService} from "../core/user/user-service.js";
+import {UserService} from "../services/user/user-service.js";
 import {generateJWT} from "../core/helpers/generateJWT.js";
 
 
