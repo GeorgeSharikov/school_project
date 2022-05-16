@@ -56,24 +56,41 @@ class ConvertToHTML{
             ${this.#insertToBaseParagraphDiv(text)}
         </figure>`
     }
-    // "id": "X_nRYH1aZQ",
-    // "type": "warning",
-    // "data": {
-    //     "title": "",
-    //     "message": "asd"
-    // }
     #warning({title, message}){
         const text = `<div class="warning">
-             <div><span>&#9757;</span>${title}</div>
-             <span>${message}</span>
+             <div class="warning_title">
+                <span class="warning_sign">&#9757;</span>
+                ${title}
+              </div>
+             <span class="warning_text">${message}</span>
         </div>`
         return this.#insertToBaseParagraphDiv(text)
     }
 
-    convert(json){
-        const blocks = json["blocks"]
+    #quote({text, caption, alignment}){
+        const alignmentClass = alignment === 'left' ? 'quote' : 'quote quote_text_center'
+        return `
+        <figure>
+            <div class="i-island-b">
+                <blockquote class="${alignmentClass}">
+                    <div class="quote_content">
+                        <QuoteMarkSVG />
+                        <div class="quote_text">
+                            ${text}
+                        </div>
+                        <div class="quote_author">
+                            ${caption}
+                        </div>
+                    </div>
+                </blockquote>
+            </div>
+        </figure>`
+    }
+    convert({data, title}){
+        const blocks = data["blocks"]
         let html = ''
         for(let {type, data} of blocks){
+            console.log(type, data)
             switch (type) {
                 case "paragraph":
                     html+=this.#paragraph(data)
@@ -94,100 +111,88 @@ class ConvertToHTML{
                     html+=this.#warning(data)
                     break
                 case "quote":
-                    html+=this.#warning(data)
+                    html+=this.#quote(data)
                     break
             }
         }
+        return `<div class="content">
+                <h1 class="content_title">${title}</h1>
+                <div class="content_main">
+                   ${html}
+                </div>
+            </div>`
     }
 }
 
 export const JSONToHtml = new ConvertToHTML()
-const JSON = {
+export const JSONDATA = {
     "data": {
-        "time": 1652618449343,
+        "time": 1652705914759,
         "blocks": [
             {
-                "id": "02YKwsIkuH",
+                "id": "wYE0Rx2MT3",
                 "type": "paragraph",
                 "data": {
-                    "text": "Четырёхметровая окаменелость поможет изучить эмбриональное развитие ихтиозавров, живших на планете между 129 и 139 миллионами лет назад.Четырёхметровая окаменелость поможет изучить эмбриональное развитие ихтиозавров, живших на планете между 129 и 139 миллионами лет назад."
+                    "text": "&nbsp; <a href=\"https://www.youtube.com/\">Классов</a>, используемых в Java или Swift в качестве шаблонов или схем для создания объектов, в JavaScript не существует. В прототипном наследовании есть только объекты.Прототипное наследование может имитировать классическую модель наследования от классов. Для этого в ES6 было представлено ключевое слово class: синтаксический сахар для прототипного наследования.\n"
                 }
             },
             {
-                "id": "JYM4-bSAZH",
-                "type": "image",
-
-            },
-            {
-                "id": "552WfvJt3o",
+                "id": "3vpwMagQTV",
                 "type": "paragraph",
                 "data": {
-                    "text": "&nbsp; Чилийские учёные успешно&nbsp;<a href=\"https://www.reuters.com/lifestyle/science/intact-pregnant-ichthyosaur-fossil-recovered-patagonian-glacier-chile-2022-05-11/\" target=\"_blank\">извлекли</a>&nbsp;одну из самых полных в мире окаменелостей ихтиозавра с неповреждёнными эмбрионами на леднике Тиндалла в чилийской Патагонии. Древнюю беременную морскую рептилию специалисты назвали «Фионой».\n\nЧилийские учёные успешно&nbsp;<a href=\"https://www.reuters.com/lifestyle/science/intact-pregnant-ichthyosaur-fossil-recovered-patagonian-glacier-chile-2022-05-11/\" target=\"_blank\">извлекли</a>&nbsp;одну из самых полных в мире окаменелостей ихтиозавра с неповреждёнными эмбрионами на леднике Тиндалла в чилийской Патагонии. Древнюю беременную морскую рептилию специалисты назвали «Фионой».&nbsp;&nbsp;"
+                    "text": "\nКлассов, используемых в Java или Swift в качестве шаблонов или схем для создания объектов, в JavaScript не существует. В прототипном наследовании есть только объекты.Прототипное наследование может имитировать классическую модель наследования от классов. Для этого в ES6 было представлено ключевое слово class: синтаксический сахар для прототипного наследования."
                 }
             },
             {
-                "id": "R686HCLhJQ",
-                "type": "paragraph",
-                "data": {
-                    "text": "Окаменелость обнаружили более десяти лет назад, но экстремальные климатические условия, суровая местность и удалённость этого места сделали извлечение сложной логистической задачей. Учёные потратили 31 день на извлечение окаменелости, которую затем вывозили на вертолёте. В общей сложности палеонтологам пришлось извлечь пять блоков весом 200 килограммов, чтобы сохранить кости целыми.Окаменелость обнаружили более десяти лет назад, но экстремальные климатические условия, суровая местность и удалённость этого места сделали извлечение сложной логистической задачей. Учёные потратили 31 день на извлечение окаменелости, которую затем вывозили на вертолёте. В общей сложности палеонтологам пришлось извлечь пять блоков весом 200 килограммов, чтобы сохранить кости целыми."
-                }
-            },
-            {
-                "id": "0L1jQc5WYv",
-                "type": "paragraph",
-                "data": {
-                    "text": "В леднике Тиндалла исследователи обнаружили почти сто скелетов ихтиозавров, что делает этот регион одним из самых многочисленных и хорошо сохранившихся местонахождений ихтиозавров на планете.В леднике Тиндалла исследователи обнаружили почти сто скелетов ихтиозавров, что делает этот регион одним из самых многочисленных и хорошо сохранившихся местонахождений ихтиозавров на планете."
-                }
-            },
-            {
-                "id": "YNDH_sv1lH",
+                "id": "LT6s1wzg5D",
                 "type": "image",
                 "data": {
                     "file": {
-                        "url": "http://localhost:4000/api/static/images/c5b6332c-7f1e-4b2a-9dc4-86d36084ed5b.jpg"
+                        "url": "http://localhost:4000/api/static/images/f3c673fc-ef34-481f-ac0d-134117b1be61.jpg"
                     },
-                    "caption": "Центра антарктических исследований GAIAЦентра антарктических исследований GAIA",
+                    "caption": "caption",
                     "withBorder": false,
                     "stretched": false,
-                    "withBackground": true
+                    "withBackground": false
                 }
             },
             {
-                "id": "EXjc26oCrm",
-                "type": "header",
+                "id": "JM8_5wHfkx",
+                "type": "quote",
                 "data": {
-                    "text": "фыввфывфыв",
-                    "level": 2
+                    "text": "All roads lead to Rome",
+                    "caption": "Unknown",
+                    "alignment": "left"
                 }
             },
             {
-                "id": "ZheNI2Ps2R",
+                "id": "p1ZPcHz7iW",
                 "type": "delimiter",
                 "data": {}
             },
             {
-
-            },
-            {
-                "id": "X_nRYH1aZQ",
-                "type": "warning",
+                "id": "q5qHJQ0Ymq",
+                "type": "list",
                 "data": {
-                    "title": "",
-                    "message": "asd"
+                    "style": "ordered",
+                    "items": [
+                        "first",
+                        "second",
+                        "third",
+                        "fourth"
+                    ]
                 }
             },
             {
-                "id": "a6yffaeZGX",
-                "type": "quote",
+                "id": "rM4JrQxwW5",
+                "type": "warning",
                 "data": {
-                    "text": "All roads lead to Rome",
-                    "caption": "Xi Jinping 10",
-                    "alignment": "left"
+                    "title": "Обратите внимание",
+                    "message": "Будьте осторожны"
                 }
             }
         ],
         "version": "2.24.3"
     },
-    "title": "Исследователи извлекли самую большую неповреждённую окаменелость беременного ихтиозавра в Чили."
+    "title": "Header"
 }
-JSONToHtml.convert(JSON)
