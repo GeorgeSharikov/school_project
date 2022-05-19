@@ -11,7 +11,8 @@ class Article{
     }
     async createArticle(req, res, next){
         const data = req.body
-        const article = await ArticleService.create(data)
+        const userId = req.user
+        const article = await ArticleService.create(data, userId, next)
         res.send(article)
     }
 }

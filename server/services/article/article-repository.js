@@ -1,12 +1,12 @@
 class Article{
-    async getFirstTwenty(req, res, next){
+    async getFirstTwenty(){
 
     }
-    async getOne(req, res, next){
+    async getOne(){
 
     }
-    async createOne(req, res, next){
-
+    async createOne(id, article){
+        const {title, data, is_moderate, is_draft, articleHTML} = article
     }
 }
 
