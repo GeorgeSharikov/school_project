@@ -4,17 +4,20 @@ import {settings} from "../../constants/editorJsSetteng.js";
 import {useEffect, useRef} from "react";
 import Textarea from 'react-expanding-textarea'
 import { SmallAvatar } from '../../shared/assets/avatar/smallAvatar';
+import {setActiveBlocks} from "../../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
 
 export const ArticleEditor = (props) => {
     const editor = new EditorJS(settings)
     const inputRef = useRef()
     const editorRef = useRef()
-    
+
     const save = async () => {
         try{
             const data = await editor.save()
             const title = document.getElementById('titleArea').value
-            console.log({data, title})
+            setActiveBlocks([])
+            const article = {data, title}
+            console.log(article)
         }catch (e) {
             console.log('Saving failed: ', e)
         }
@@ -28,6 +31,7 @@ export const ArticleEditor = (props) => {
     }
 
     useEffect(() => {
+
         inputRef.current.focus()
         setTimeout(() => {
             if(editorRef.current.children[0]) {
@@ -35,6 +39,7 @@ export const ArticleEditor = (props) => {
             }
         }, 0)
         return () => {
+            setActiveBlocks([])
             editor.destroy()
         }
         // eslint-disable-next-line
