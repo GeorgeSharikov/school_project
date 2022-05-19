@@ -8,7 +8,9 @@ import Marker from "@editorjs/marker";
 import Embed from "@editorjs/embed";
 import LinkTool from "@editorjs/link";
 import Paragraph from '@editorjs/paragraph'
+import ShowInFeed, {activeBlocks, setActiveBlocks} from "../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
 import {BASE_SERVER_URL} from "./url.js";
+import {getCookie} from "../shared/helpers/getCookie.js";
 
 const UPLOAD_URL = `${BASE_SERVER_URL}static`
 
@@ -16,6 +18,7 @@ export const settings = {
     holder: 'editorjs',
     placeholder: 'Нажмите Tab для выбора инструмента',
     tools: {
+        showInFeed: ShowInFeed,
         paragraph: {
             class: Paragraph,
             placeholder: 'Нажмите Tab для выбора инструмента',
@@ -35,7 +38,10 @@ export const settings = {
             config: {
                 endpoints: {
                     byFile: `${UPLOAD_URL}/uploadImage`
-                }
+                },
+                additionalRequestHeaders: {
+                        'authorization': `Bearer ${getCookie('token')}`,
+                    }
             }
         },
         quote: {
@@ -71,6 +77,7 @@ export const settings = {
             class: LinkTool,
         }
     },
+    tunes: ['showInFeed'],
     i18n: {
         messages:{
             ui:{
@@ -102,4 +109,19 @@ export const settings = {
             }
         }
     },
+    logLevel: 'ERROR',
+    onChange: async (api, event) => {
+        let a = [...activeBlocks]
+        const {blocks} = await api.saver.save()
+        const allEditorExistingID = []
+        for(let block of blocks){
+            allEditorExistingID.push(block['id'])
+        }
+        for(let markedBlockId of a){
+            if(!allEditorExistingID.includes(markedBlockId)){
+                a = a.filter(id => id !== markedBlockId)
+            }
+        }
+        setActiveBlocks(a)
+    }
 }
