@@ -15,7 +15,7 @@ export const userLogIn = createAsyncThunk(
     'userInfo/userLogIn',
     async (parametrs, thunkAPI) => {
         const {data} = await UserApi.login(parametrs)
-  
+
         return data
     }
 )
@@ -26,8 +26,7 @@ const slice = createSlice({
         isAuth: false,
         userId: null,
         role: false,
-        errorLoginMessage: null,
-        isLoginModalOpen: false
+        errorLoginMessage: null
     },
     reducers: {
         setIsAuth(state, {payload}){
@@ -40,26 +39,22 @@ const slice = createSlice({
         },
         setLoginError(state, {payload}){
             state.errorLoginMessage = payload
-        },
-        setLoginIsOpen(state, {payload}){
-            state.isLoginModalOpen = payload
         }
     },
     extraReducers: (builder) => {
         builder.addCase(checkUserAuth.fulfilled, (state, {payload}) => {
             const decodedInfo = jwt_decode(payload.token)
             document.cookie = `token=${payload.token}`
-            
+
             state.userId = decodedInfo.id
             state.role = decodedInfo.role
             state.isAuth = true
         })
 
         builder.addCase(userLogIn.fulfilled, (state, {payload}) => {
-            state.isLoginModalOpen = false
             const decodedInfo = jwt_decode(payload.token)
             document.cookie = `token=${payload.token}`
-            
+
             state.userId = decodedInfo.id
             state.role = decodedInfo.role
             state.isAuth = true

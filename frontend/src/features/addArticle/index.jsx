@@ -8,27 +8,20 @@ import {LoginModal} from "../loginModal/index.js";
 import {useActions} from "../../shared/hooks/useActions.jsx";
 
 export const AddArticleButton = () => {
-    const {setLoginIsOpen} = useActions(userAuthActions)
-    const isLoginModalOpen = useSelector(state => userAuthSelectors.getIsLoginModalOpen(state))
     const isAuth = useSelector(state => userAuthSelectors.getIsUserAuth(state))
+    const [isOpen, setIsOpen] = useState(false)
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
 
-    const [isLoginOpen, setIsLoginOpen] = useState(isLoginModalOpen)
-    const [isOpenEditorOpen, setIsOpenEditorOpen] = useState(false)
-
-    const handleEditorModalClose = () => setIsOpenEditorOpen(!isOpenEditorOpen)
+    const handleClose = () => setIsOpen(false)
+    const handleLoginModalClose = () => setIsLoginModalOpen(false)
 
     const handleOpen = () => {
         if(isAuth){
-            setIsOpenEditorOpen(true)
+            setIsOpen(true)
         }else{
-            setLoginIsOpen(true)
+            setIsLoginModalOpen(true)
         }
     }
-
-    useEffect(() => {
-        setIsLoginOpen(isLoginModalOpen)
-    }, [isLoginModalOpen])
-
     return (
         <>
             <Button>
@@ -41,12 +34,10 @@ export const AddArticleButton = () => {
                     </Typography>
                 </LinkStyled>
             </Button>
-            {isAuth
-                ? isOpenEditorOpen ? <ArticleEditorModal isVisible={isOpenEditorOpen} handleClose={handleEditorModalClose}/> : null
-                : isLoginOpen ? <LoginModal isModalVisible={isLoginOpen}
-                                       closeHandler={() => setLoginIsOpen(false)}
-                                       /> : null
-            }
+            {isAuth && isOpen ? <ArticleEditorModal isVisible={isOpen} handleClose={handleClose}/> : null}
+            {isLoginModalOpen ? <LoginModal isModalVisible={isLoginModalOpen}
+                                            closeHandler={handleLoginModalClose}
+                                            setModalVisible={setIsLoginModalOpen}/> : null}
         </>
 
     )
