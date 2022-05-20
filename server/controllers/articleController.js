@@ -10,9 +10,9 @@ class Article{
         res.send(article)
     }
     async createArticle(req, res, next){
-        const data = req.body
-        const userId = req.user
-        const article = await ArticleService.create(data, userId, next)
+        const articleData = req.body
+        const userId = req.user.id
+        const article = await ArticleService.create(articleData, userId, next)
         res.send(article)
     }
 }
