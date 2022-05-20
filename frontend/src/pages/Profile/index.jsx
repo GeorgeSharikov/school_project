@@ -22,7 +22,6 @@ export const Profile = (props) => {
     }, [isMyOwn,id,dispatch])
 
     const userData = useSelector(state => personalDataSelectors.getPeronalDataSelector(state, isMyOwn))
-    console.log(userData)
     return (
         <div className={styles.wrapper}>
             <div className={styles.profileHeaderWrapper}>
