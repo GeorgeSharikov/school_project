@@ -21,9 +21,11 @@ export const ArticleModel = sequelize.define('article', {
     title_image: {type: DataTypes.TEXT},
     content: {type: DataTypes.TEXT},
     like_count: {type: DataTypes.INTEGER},
-    author_id: {type: DataTypes.INTEGER},
+    userId: {type: DataTypes.INTEGER, foreignKey: true},
     is_moderated: {type: DataTypes.BOOLEAN, defaultValue: false},
     is_draft: {type: DataTypes.BOOLEAN, defaultValue: false},
+    json_article_data: {type: DataTypes.TEXT},
+    show_blocks_id: {type: DataTypes.STRING}
 })
 
 UserModel.hasMany(ArticleModel)
