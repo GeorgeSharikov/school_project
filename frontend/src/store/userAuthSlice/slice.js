@@ -26,7 +26,8 @@ const slice = createSlice({
         isAuth: false,
         userId: null,
         role: false,
-        errorLoginMessage: null
+        errorLoginMessage: null,
+        isLoginModalOpen: false
     },
     reducers: {
         setIsAuth(state, {payload}){
@@ -39,6 +40,9 @@ const slice = createSlice({
         },
         setLoginError(state, {payload}){
             state.errorLoginMessage = payload
+        },
+        setLoginIsOpen(state, {payload}){
+            state.isLoginModalOpen = payload
         }
     },
     extraReducers: (builder) => {
@@ -52,6 +56,7 @@ const slice = createSlice({
         })
 
         builder.addCase(userLogIn.fulfilled, (state, {payload}) => {
+            state.isLoginModalOpen = false
             const decodedInfo = jwt_decode(payload.token)
             document.cookie = `token=${payload.token}`
             

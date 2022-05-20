@@ -3,7 +3,7 @@ import styles from './ui/ui.module.css'
 import { modalStyles } from "./ui/ui"
 import { LoginForm } from "./loginForm/loginForm"
 
-export const LoginModal = ({isModalVisible, closeHandler, setModalVisible}) => {
+export const LoginModal = ({isModalVisible, closeHandler}) => {
     return <Modal
         open={isModalVisible}
         onClose={closeHandler}
@@ -11,7 +11,7 @@ export const LoginModal = ({isModalVisible, closeHandler, setModalVisible}) => {
             <Box sx={modalStyles}>
                 <div className={styles.formContainer}>
                     <div className={styles.formTitle}>Вход в аккаунт</div>
-                    <LoginForm setModalVisible={setModalVisible}/>
+                    <LoginForm />
                 </div>
             </Box>
     </Modal>

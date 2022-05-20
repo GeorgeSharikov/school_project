@@ -7,7 +7,7 @@ import {useActions} from '../../../shared/hooks/useActions'
 import styles from './ui.module.css'
 import { getPersonalData } from '../../../store/userPersonalData/slice';
 
-export const LoginForm = ({setModalVisible}) => {
+export const LoginForm = () => {
     const dispatch = useDispatch()
     const {setLoginError} = useActions(userAuthActions)
     const loginErrors = useSelector(state => userAuthSelectors.getIsLoginError(state))
@@ -32,13 +32,11 @@ export const LoginForm = ({setModalVisible}) => {
       };
 
     const logIn = async (data, callbackSubmit) => {
-            dispatch(userLogIn(data)).then((res) => { 
-                if(!('error' in res)){
-                    setModalVisible(false)
-                }
+            dispatch(userLogIn(data))
+                .then(() => {
                 callbackSubmit(false)
                 dispatch(getPersonalData())
-            })   
+                })
     }
 
     useEffect(() => {
