@@ -88,39 +88,58 @@ class ConvertToHTML{
     }
     convert({data, title}){
         const blocks = data["blocks"]
+        const blocksToFeed = blocks[0]['tunes']
+
+        let title_paragraph = ''
+        let title_image = ''
         let html = ''
-        for(let {type, data} of blocks){
-            console.log(type, data)
+        for(let {type, data, id} of blocks){
+            let html_element = ''
             switch (type) {
                 case "paragraph":
-                    html+=this.#paragraph(data)
+                    html_element+=this.#paragraph(data)
                     break
                 case "image":
-                    html+=this.#image(data)
+                    html_element+=this.#image(data)
                     break
                 case "header":
-                    html+=this.#header(data)
+                    html_element+=this.#header(data)
                     break
                 case "list":
-                    html+=this.#list(data)
+                    html_element+=this.#list(data)
                     break
                 case "delimiter":
-                    html+=this.#delimiter()
+                    html_element+=this.#delimiter()
                     break
                 case "warning":
-                    html+=this.#warning(data)
+                    html_element+=this.#warning(data)
                     break
                 case "quote":
-                    html+=this.#quote(data)
+                    html_element+=this.#quote(data)
                     break
             }
+            if(blocksToFeed.includes(id)){
+                if(blocksToFeed[0] === id){
+                    title_paragraph = html_element
+                }else{
+                    title_image = html_element
+                }
+            }
+            html+=html_element
         }
-        return `<div class="content">
-                <h1 class="content_title">${title}</h1>
-                <div class="content_main">
-                   ${html}
-                </div>
-            </div>`
+        const articleWrapper = `<div class="content">
+                                <h1 class="content_title">${title}</h1>
+                                <div class="content_main">
+                                   ${html}
+                                </div>
+                            </div>`
+
+        return  {
+            articleHTML: articleWrapper,
+            title_paragraph,
+            title_image
+        }
+
     }
 }
 
