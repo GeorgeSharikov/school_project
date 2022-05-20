@@ -5,6 +5,7 @@ import {useEffect, useRef} from "react";
 import Textarea from 'react-expanding-textarea'
 import { SmallAvatar } from '../../shared/assets/avatar/smallAvatar';
 import {setActiveBlocks} from "../../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
+import {ArticleApi} from "../../shared/api/api.js";
 
 export const ArticleEditor = (props) => {
     const editor = new EditorJS(settings)
@@ -18,6 +19,7 @@ export const ArticleEditor = (props) => {
             setActiveBlocks([])
             const article = {data, title}
             console.log(article)
+            await ArticleApi.createArticle({article, isModerated: false, isDraft: false})
         }catch (e) {
             console.log('Saving failed: ', e)
         }
@@ -31,7 +33,6 @@ export const ArticleEditor = (props) => {
     }
 
     useEffect(() => {
-
         inputRef.current.focus()
         setTimeout(() => {
             if(editorRef.current.children[0]) {

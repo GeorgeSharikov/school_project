@@ -2,9 +2,7 @@ import axios from 'axios'
 import { getCookie } from '../helpers/getCookie';
 import {BASE_SERVER_URL} from "../../constants/url.js";
 
-
 let token = getCookie('token')
-
 
 const instance = axios.create({
     baseURL: `${BASE_SERVER_URL}`,
@@ -14,8 +12,10 @@ const instance = axios.create({
 });
 
 window.cookieStore.addEventListener('change', ({changed}) => {
-    for (const {value} of changed) {
-        instance.defaults.headers['Authorization'] = `Bearer ${value}`
+    for (const {name, value} of changed) {
+        if(name === 'token'){
+            instance.defaults.headers['Authorization'] = `Bearer ${value}`
+        }
     }
 });
 
@@ -93,3 +93,19 @@ class UserInfo{
     }
 }
 export const UserInfoApi = new UserInfo('userInfo')
+
+class Article{
+    constructor(apiBase){
+        this.apiBase = apiBase
+    }
+    async createArticle(data){
+        try{
+            const {article, isModerated:is_moderated, isDraft: is_draft} = data
+            const response = await instance.post(`${this.apiBase}/createArticle`, {article, is_moderated, is_draft})
+            return response
+        }catch (e) {
+
+        }
+    }
+}
+export const ArticleApi = new Article('article')
