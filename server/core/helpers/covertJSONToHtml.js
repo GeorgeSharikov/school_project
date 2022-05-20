@@ -137,7 +137,8 @@ class ConvertToHTML{
         return  {
             articleHTML: articleWrapper,
             title_paragraph,
-            title_image
+            title_image,
+            blocksToFeed: blocksToFeed.join(" ")
         }
 
     }
