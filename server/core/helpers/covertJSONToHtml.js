@@ -88,7 +88,7 @@ class ConvertToHTML{
     }
     convert({data, title}){
         const blocks = data["blocks"]
-        const blocksToFeed = blocks[0]['tunes']
+        const blocksToFeed = blocks[0]['tunes'].showInFeed
 
         let title_paragraph = ''
         let title_image = ''
