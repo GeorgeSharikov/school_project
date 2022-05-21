@@ -4,3 +4,4 @@ export const getPeronalDataSelector = (state, isOwn = true) => {
     }
     return state.personalData.otherAccountData
 }
+export const getIsFetching = (state) => state.personalData.isFetching

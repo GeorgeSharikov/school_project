@@ -24,6 +24,7 @@ const slice = createSlice({
         personalData : {},
         errorMessage: null,   
         otherAccountData: {},
+        isFetching: true
     },
     reducers: {
 
@@ -31,10 +32,12 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getPersonalData.fulfilled, (state, {payload}) => {
             state.personalData = payload
+            state.isFetching = false
         })
 
         builder.addCase(getPersonalData.rejected, (state, action) => {
-            state.errorMessage = action.error.messages  
+            state.errorMessage = action.error.messages
+            state.isFetching = false
         })
 
         builder.addCase(getOtherPersonalData.fulfilled, (state, {payload}) => {
