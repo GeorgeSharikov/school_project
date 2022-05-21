@@ -11,7 +11,7 @@ export const Like = ({likesCount}) => {
                 <ExpandLessIcon className={styles.icon}/>
             </div>
 
-            <div className={`${styles.likeCounts} ${likesCount > 0 ? styles.likesGreen : styles.likesRed}`}>
+            <div className={`${styles.likeCounts} ${likesCount === 0 ? styles.defaultColor : likesCount > 0 ? styles.likesGreen : styles.likesRed}`}>
                 {likesCount}
             </div>
             <div className={`${styles.arrow}`}>

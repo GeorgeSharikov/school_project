@@ -47,6 +47,10 @@
     cursor: default;
 }
 
+.defaultColor{
+    color: #595959;
+}
+
 .likesRed{
     color: #e52e3a;
 }
