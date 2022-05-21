@@ -7,7 +7,7 @@ import { SmallAvatar } from '../../shared/assets/avatar/smallAvatar';
 import {setActiveBlocks} from "../../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
 import {ArticleApi} from "../../shared/api/api.js";
 
-export const ArticleEditor = (props) => {
+export const ArticleEditor = ({close}) => {
     const editor = new EditorJS(settings)
     const inputRef = useRef()
     const editorRef = useRef()
@@ -20,6 +20,7 @@ export const ArticleEditor = (props) => {
             const article = {data, title}
             console.log(article)
             await ArticleApi.createArticle({article, isModerated: false, isDraft: false})
+            close()
         }catch (e) {
             console.log('Saving failed: ', e)
         }

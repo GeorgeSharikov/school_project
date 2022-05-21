@@ -12,7 +12,7 @@ export const ArticleEditorModal = ({isVisible, handleClose}) => {
                  onClose={handleClose}
                  >
                      <Box sx={modalEditorStyles}> 
-                        <ArticleEditor/>
+                        <ArticleEditor close={handleClose}/>
                      </Box>  
             </Modal>  
         </PortalHoc> 
