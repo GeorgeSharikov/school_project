@@ -25,7 +25,9 @@ export const ArticleModel = sequelize.define('article', {
     is_moderated: {type: DataTypes.BOOLEAN, defaultValue: false},
     is_draft: {type: DataTypes.BOOLEAN, defaultValue: false},
     json_article_data: {type: DataTypes.TEXT},
-    show_blocks_id: {type: DataTypes.STRING}
+    show_blocks_id: {type: DataTypes.STRING},
+    first_name: {type: DataTypes.STRING},
+    last_name: {type: DataTypes.STRING},
 })
 
 UserModel.hasMany(ArticleModel)
