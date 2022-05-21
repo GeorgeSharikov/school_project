@@ -98,13 +98,37 @@ class Article{
     constructor(apiBase){
         this.apiBase = apiBase
     }
+
     async createArticle(data){
         try{
             const {article, isModerated:is_moderated, isDraft: is_draft} = data
             const response = await instance.post(`${this.apiBase}/createArticle`, {article, is_moderated, is_draft})
             return response
         }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
 
+    async getFeedArticlesByPortions(page){
+        try{
+            const response = await instance.get(`${this.apiBase}/getFeedArticles/?page=${page}`)
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
         }
     }
 }
