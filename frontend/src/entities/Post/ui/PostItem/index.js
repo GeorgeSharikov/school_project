@@ -6,12 +6,13 @@ import { PostHeader } from "../PostHeader"
 import styles from './ui.module.css'
 
 export const PostItem = ({post}) => {
-    const {title, prewords, image, author, sub, subImage, date, likesCount} = post
+    const {id:articleId, title, title_paragraph, title_image: secondTitleBlock, like_count: likesCount, userId: authorId, first_name, last_name, createdAt} = post
+    const author = first_name + last_name
     return(
         <div className={styles.post}>
-            <PostHeader  author={author} sub={sub} subImage={subImage} date={date}/>
-            <NavLink to={'/news/id'}>
-                <PostContent image={image} title={title} prewords={prewords}/>
+            <PostHeader author={author} date={createdAt} authorId={authorId}/>
+            <NavLink to={`/articles/${articleId}`}>
+                <PostContent title={title} titleParagraph={title_paragraph} secondTitleBlock={secondTitleBlock}/>
             </NavLink>
             <div className={styles.footer}>
                 <div className={styles.footerItem}>
