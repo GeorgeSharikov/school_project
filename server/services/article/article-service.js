@@ -3,10 +3,14 @@ import {ArticleRepository} from "./article-repository.js";
 import {ApiError} from "../../error/ApiError.js";
 
 class ArticleServiceClass{
-    async getFeed(){
-
+    async getFeed(page){
+        try{
+            return await ArticleRepository.getFeedArticlesByPage(page)
+        }catch (e) {
+            throw new Error(e)
+        }
     }
-    async getOne(){
+    async getOne(articleId){
 
     }
     async create(articleData, userId, next){

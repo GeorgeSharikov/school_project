@@ -1,18 +1,35 @@
-import {ArticleModel} from "../../db/models/models.js";
+import {ArticleModel, UserModel} from "../../db/models/models.js";
 import {ApiError} from "../../error/ApiError.js";
+import {Op} from "sequelize";
 
 class Article{
-    async getFirstTwenty(){
+    async getFeedArticlesByPage(page){
+        try{
+            const amount = page*5
+            const articles = await ArticleModel.findAll({
+                where: {
+                    is_moderated: true,
+                },
+                attributes: ['id','title','title_paragraph','title_image','content','like_count','userId', 'first_name', 'last_name', 'createdAt'],
+                order: [['updatedAt', 'DESC']],
+                offset: amount-5,
+                limit: amount
+            })
+            return articles
 
+        }catch (e) {
+            console.log(e, 'rep')
+            throw new Error(e)
+        }
     }
+
     async getOne(){
 
     }
     async createOne(id, article, next){
         try{
-
+            const user = await UserModel.findOne({where: {id: id}})
             const {title, data, is_moderated, is_draft, articleHTML, title_paragraph, title_image, blocksToFeed} = article
-            console.log(articleHTML)
             const result = await ArticleModel.create({
                 title,
                 title_paragraph,
@@ -23,7 +40,10 @@ class Article{
                 is_moderated,
                 is_draft,
                 json_article_data: JSON.stringify(data),
-                show_blocks_id: blocksToFeed
+                show_blocks_id: blocksToFeed,
+                last_name: user.lastName,
+                first_name: user.firstName,
+
             })
             return result
         }catch (e) {

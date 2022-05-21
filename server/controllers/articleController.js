@@ -1,9 +1,15 @@
 import {ArticleService} from "../services/article/article-service.js";
+import {ApiError} from "../error/ApiError.js";
 
 class Article{
     async getFeedArticles(req, res, next){
-        const articles = await ArticleService.getFeed()
-        res.send(articles)
+        try{
+            const page = req.query.page
+            const articles = await ArticleService.getFeed(page)
+            res.send(articles)
+        }catch (e) {
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
     }
     async getArticle(req, res, next){
         const article = await ArticleService.getOne()
