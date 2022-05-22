@@ -3,7 +3,6 @@ export const modalEditorStyles = {
     margin: '20px auto',
     position: 'absolute',
     width: '880px',
-    height: '700px',
     top: 0, 
     right: 0, 
     bottom: 0, 
