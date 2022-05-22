@@ -21,9 +21,9 @@
     font-weight: 500;
 }
 
-.subImg{
-    width: 22px;
-    height: 22px;
+.avatar{
+    width: 19px;
+    height: 19px;
     margin-right: 10px;
     border-radius: 6px;
     flex-shrink: 0;
