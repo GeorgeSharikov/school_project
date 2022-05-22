@@ -1,11 +1,10 @@
 import {Button, LinkStyled} from "./ui/StyledComponents.js";
 import Typography from "@mui/material/Typography";
-import {userAuthActions, userAuthSelectors} from "../../store/userAuthSlice/slice.js";
+import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
 import { useSelector } from "react-redux";
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import { ArticleEditorModal } from "../createArticle/ModalArticleEditor/index.jsx";
 import {LoginModal} from "../loginModal/index.js";
-import {useActions} from "../../shared/hooks/useActions.jsx";
 
 export const AddArticleButton = () => {
     const isAuth = useSelector(state => userAuthSelectors.getIsUserAuth(state))

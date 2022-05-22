@@ -1,7 +1,6 @@
 import styles from './styles.module.css'
 import {NavLink} from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-import {toHumanDateFormat} from "../../../../shared/helpers/toHumanDateFormat.js";
 
 export const PostHeader = ({author,date, authorId}) => {
     // toHumanDateFormat(date)
