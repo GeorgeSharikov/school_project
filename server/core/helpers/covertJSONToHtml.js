@@ -1,11 +1,30 @@
 class ConvertToHTML{
+constructor() {
+        this.quoteSvg = `<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    \t width="123.961px" height="123.961px" viewBox="0 0 123.961 123.961" style="enable-background:new 0 0 123.961 123.961;"
+    \t xml:space="preserve">
+    <g>
+    \t<path d="M49.8,29.032c3.1-1.3,4.4-5,3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899c-8.5,3.6-15.8,8.3-21.6,14
+    \t\tC11.4,28.532,6.6,36.232,4,44.732c-2.6,8.601-4,20.3-4,35.2v30.7c0,3.3,2.7,6,6,6h39.3c3.3,0,6-2.7,6-6v-39.3c0-3.301-2.7-6-6-6
+    \t\tH26.5c0.2-10.101,2.6-18.2,7-24.301C37.1,36.133,42.5,32.133,49.8,29.032z"/>
+    \t<path d="M120.4,29.032c3.1-1.3,4.399-5,3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9c-8.4,3.6-15.601,8.3-21.5,13.9
+    \t\tc-7.101,6.8-12,14.5-14.601,23c-2.6,8.399-3.899,20.1-3.899,35.1v30.7c0,3.3,2.7,6,6,6H116c3.3,0,6-2.7,6-6v-39.3
+    \t\tc0-3.301-2.7-6-6-6H97.1c0.2-10.101,2.601-18.2,7-24.301C107.7,36.133,113.1,32.133,120.4,29.032z"/>
+    </g>
+    </svg>`
+}
+
 
     #insertToBaseParagraphDiv(text){
         return `<div class="I-island-a">${text}</div>`
     }
 
     #paragraph(data){
-        const {text} = data
+        let {text} = data
+        let tmp = text.split(" ")
+        if(tmp[0] === "&nbsp;"){
+            text = tmp.filter((el, i) => (el !== "&nbsp;" && i !== 0)).join(" ")
+        }
         let textP = `<p>${text}</p>`
         return this.#insertToBaseParagraphDiv(textP)
     }
@@ -74,7 +93,7 @@ class ConvertToHTML{
             <div class="i-island-b">
                 <blockquote class="${alignmentClass}">
                     <div class="quote_content">
-                        <QuoteMarkSVG />
+                        ${this.quoteSvg}
                         <div class="quote_text">
                             ${text}
                         </div>
@@ -145,74 +164,3 @@ class ConvertToHTML{
 }
 
 export const JSONToHtml = new ConvertToHTML()
-export const JSONDATA = {
-    "data": {
-        "time": 1652705914759,
-        "blocks": [
-            {
-                "id": "wYE0Rx2MT3",
-                "type": "paragraph",
-                "data": {
-                    "text": "&nbsp; <a href=\"https://www.youtube.com/\">Классов</a>, используемых в Java или Swift в качестве шаблонов или схем для создания объектов, в JavaScript не существует. В прототипном наследовании есть только объекты.Прототипное наследование может имитировать классическую модель наследования от классов. Для этого в ES6 было представлено ключевое слово class: синтаксический сахар для прототипного наследования.\n"
-                }
-            },
-            {
-                "id": "3vpwMagQTV",
-                "type": "paragraph",
-                "data": {
-                    "text": "\nКлассов, используемых в Java или Swift в качестве шаблонов или схем для создания объектов, в JavaScript не существует. В прототипном наследовании есть только объекты.Прототипное наследование может имитировать классическую модель наследования от классов. Для этого в ES6 было представлено ключевое слово class: синтаксический сахар для прототипного наследования."
-                }
-            },
-            {
-                "id": "LT6s1wzg5D",
-                "type": "image",
-                "data": {
-                    "file": {
-                        "url": "http://localhost:4000/api/static/images/f3c673fc-ef34-481f-ac0d-134117b1be61.jpg"
-                    },
-                    "caption": "caption",
-                    "withBorder": false,
-                    "stretched": false,
-                    "withBackground": false
-                }
-            },
-            {
-                "id": "JM8_5wHfkx",
-                "type": "quote",
-                "data": {
-                    "text": "All roads lead to Rome",
-                    "caption": "Unknown",
-                    "alignment": "left"
-                }
-            },
-            {
-                "id": "p1ZPcHz7iW",
-                "type": "delimiter",
-                "data": {}
-            },
-            {
-                "id": "q5qHJQ0Ymq",
-                "type": "list",
-                "data": {
-                    "style": "ordered",
-                    "items": [
-                        "first",
-                        "second",
-                        "third",
-                        "fourth"
-                    ]
-                }
-            },
-            {
-                "id": "rM4JrQxwW5",
-                "type": "warning",
-                "data": {
-                    "title": "Обратите внимание",
-                    "message": "Будьте осторожны"
-                }
-            }
-        ],
-        "version": "2.24.3"
-    },
-    "title": "Header"
-}
