@@ -111,6 +111,7 @@ constructor() {
 
         let title_paragraph = ''
         let title_image = ''
+        let count = 0
         let html = ''
         for(let {type, data, id} of blocks){
             let html_element = ''
@@ -137,9 +138,11 @@ constructor() {
                     html_element+=this.#quote(data)
                     break
             }
+
             if(blocksToFeed.includes(id)){
-                if(blocksToFeed[0] === id){
+                if(count === 0){
                     title_paragraph = html_element
+                    count+=1
                 }else{
                     title_image = html_element
                 }
