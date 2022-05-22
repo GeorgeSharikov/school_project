@@ -7,7 +7,7 @@ import styles from './ui.module.css'
 
 export const PostItem = ({post}) => {
     const {id:articleId, title, title_paragraph, title_image: secondTitleBlock, like_count: likesCount, userId: authorId, first_name, last_name, createdAt} = post
-    const author = first_name + last_name
+    const author = `${first_name} ${last_name}`
     return(
         <div className={styles.post}>
             <PostHeader author={author} date={createdAt} authorId={authorId}/>
