@@ -11,14 +11,6 @@ const instance = axios.create({
     }
 });
 
-window.cookieStore.addEventListener('change', ({changed}) => {
-    for (const {name, value} of changed) {
-        if(name === 'token'){
-            instance.defaults.headers['Authorization'] = `Bearer ${value}`
-        }
-    }
-});
-
 class User{
     constructor(apiBase){
         this.apiBase = apiBase
