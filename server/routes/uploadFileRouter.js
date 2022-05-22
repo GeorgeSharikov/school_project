@@ -4,6 +4,6 @@ import {UploadFilesController} from "../controllers/uploadController.js";
 
 const router = new Router()
 
-router.post('/uploadImage', UploadFilesController.uploadImage)
+router.post('/uploadImage', CheckAuth, UploadFilesController.uploadImage)
 
 export const uploadFileRouter = router
