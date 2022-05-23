@@ -38,3 +38,7 @@ button, input, textarea {
 figure, blockquote{
   margin: 0px; 
 }
+
+ol, ul{
+  padding: 0;
+}
