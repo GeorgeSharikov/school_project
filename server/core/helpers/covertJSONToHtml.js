@@ -46,7 +46,7 @@ constructor() {
     }
 
     #createHeader(lvl, text){
-        return `<h${lvl}>${text}</h${lvl}>`
+        return `<h${lvl}><div class="I-island-a">${text}</div></h${lvl}>`
     }
 
     #header(data){
