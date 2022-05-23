@@ -34,3 +34,7 @@ button, input, textarea {
   width: 100%;
   flex-shrink: 0;
 }
+
+figure, blockquote{
+  margin: 0px; 
+}
