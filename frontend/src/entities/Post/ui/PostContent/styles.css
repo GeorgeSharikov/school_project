@@ -9,10 +9,25 @@
     font-size: 17px;
 }
 
+.content figure {
+    margin-top: 13px;
+}
+
+.content figure:last-child {
+    margin-bottom: 4px;
+}
+
 .quote{
     background-color: #fffaf1;
     padding: 35px 0 40px;
+}
 
+.quote_text_center .quote_text_big{
+    text-align: center;
+}
+
+.quote_text_center .quote_text{
+    text-align: center;
 }
 
 @media(max-width: 859px){
@@ -55,11 +70,43 @@
 .quote_text{
     font-size: 22px;
     font-weight: 400;
-    line-height: 32px;
+    line-height: 30px;
+    word-wrap: break-word;
 }
 
+.quote_text_medium{
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 34px;
+    word-wrap: break-word;
+}
+
+.quote_text_big{
+    font-size: 29px;
+    font-weight: 500;
+    line-height: 37px;
+    word-wrap: break-word;
+}
+@media (max-width: 859px){
+    .quote_text{
+        font-size: 18px;
+        line-height: 1.6em;
+    }
+    .quote_text_medium{
+        font-size: 18px;
+        line-height: 25px;
+    }
+    .quote_text_big{
+        font-size: 22px;
+        line-height: 28px;
+    }
+}
 .quote_author{
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 1.45em;
+    font-size: 1.06em;
 }
+

@@ -88,13 +88,16 @@ constructor() {
 
     #quote({text, caption, alignment}){
         const alignmentClass = alignment === 'left' ? 'quote' : 'quote quote_text_center'
+        const quoteSize = text.length > 100 
+        ? text.length < 200 ? "quote_text_medium" : "quote_text" 
+        : "quote_text_big"
         return `
         <figure>
             <div class="i-island-b">
                 <blockquote class="${alignmentClass}">
                     <div class="quote_content">
                         ${this.quoteSvg}
-                        <div class="quote_text">
+                        <div class="${quoteSize}">
                             ${text}
                         </div>
                         <div class="quote_author">
