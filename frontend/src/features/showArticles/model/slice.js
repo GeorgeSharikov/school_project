@@ -4,8 +4,8 @@ import * as selectors from './selectors.js'
 
 export const getFeedArticles = createAsyncThunk(
     'article/getFeedArticles',
-    async (id, thunkAPI) => {
-        const {data} = await ArticleApi.getFeedArticlesByPortions(id)
+    async (page, thunkAPI) => {
+        const {data} = await ArticleApi.getFeedArticlesByPortions(page)
         return data
     }
 )
