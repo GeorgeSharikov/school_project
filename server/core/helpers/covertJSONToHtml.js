@@ -1,3 +1,6 @@
+import sizeOf from 'image-size'
+import path from 'path'
+
 class ConvertToHTML{
 constructor() {
         this.quoteSvg = `<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -30,19 +33,78 @@ constructor() {
     }
 
     #insertImageToFigure(data){
-        return `<figure class="figure-image">${data}</figure>`
+        return `<figure class="figure-image">
+                    <div class="I-island-b">   
+                        ${data}
+                    </div>
+                </figure>`
     }
-    // "data": {
-    //     "file": {
-    //         "url": "http://localhost:4000/api/static/images/ce61b342-bca2-414c-bc60-ec362fdb80e1.jpg"
-    //     },
-    //     "caption": "Центра антарктических исследований GAIAЦентра антарктических исследований GAIA",
-    //     "withBorder": false,
-    //     "stretched": false,
-    //     "withBackground": false
+
+    #getImageSizes(url){
+        url = url.split("/")
+        const imgId = url[url.length-1]
+        try {
+            return sizeOf(path.resolve(path.dirname(''),`Static/images/${imgId}`));
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    #createImgWrappDiv(url, height, width, type){
+        const img = `<img src="${url}"/>`
+        const divImg = `<div class="image-inner" style="padding-bottom: 0px; background: transparent;">${img}</div>`
+        let maxWidth = 0
+        let maxHeight = 0
+        if(type === 'stretched' || type === 'simple'){
+            maxWidth = width
+            maxHeight = height
+        }
+        if(type === 'stretched and border'){
+            maxWidth = 613
+            maxHeight = height
+        }
+        if(type === 'border'){
+            maxWidth = 613
+            maxHeight = height
+        }
+        if(type === 'background'){
+            maxWidth = (460 * width)/height
+            maxHeight = 460
+        }
+        return `<div style="max-width: ${maxWidth}px;max-height: ${maxHeight}px">
+                ${divImg}
+            </div>`
+    }
 
     #image(data){
+        const url = data.file.url
+        const {height, width} = this.#getImageSizes(url)
+        let contentWrapperClasses = 'content-image'
+        if(data.withBorder || data.withBackground){
+            contentWrapperClasses+=' image-padding content-image-background'
+        }
 
+        let type
+        if((data.withBorder && data.stretched) || data.withBorder){
+            type = 'border'
+        }
+        if(data.stretched){
+            type = 'stretched'
+        }
+        if(data.stretched && data.withBorder){
+            type = 'stretched and border'
+        }
+        if(!data.withBorder && !data.stretched && !data.withBackground){
+            type = 'simple'
+        }
+        if(data.withBackground || (data.withBorder && data.stretched && data.withBackground)){
+            type = 'background'
+        }
+        const contentWrapper = `<div class="${contentWrapperClasses}">
+            ${this.#createImgWrappDiv(url, height, width, type)}
+        </div>`
+        console.log(this.#insertImageToFigure(contentWrapper))
+        return this.#insertImageToFigure(contentWrapper)
     }
 
     #createHeader(lvl, text){
@@ -170,3 +232,13 @@ constructor() {
 }
 
 export const JSONToHtml = new ConvertToHTML()
+
+// const data =  {
+//      "file": {
+//          "url": "http://localhost:4000/api/static/images/3f27254c-7209-43ea-a36d-28e3ec62fcee.jpg"
+//      },
+//      "caption": "Центра антарктических исследований GAIAЦентра антарктических исследований GAIA",
+//      "withBorder": false,
+//      "stretched": false,
+//      "withBackground": false
+// }
