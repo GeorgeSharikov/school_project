@@ -148,6 +148,35 @@
     font-weight: 700;
 }
 
+.figure-image{
+    margin-top: 13px;
+    margin-bottom: 4px;
+}
+
+.content-image{
+    display: flex;
+    align-items: center;
+}
+
+.image-padding{
+    padding: 8px 0;
+}
+
+.content-image-background{
+    background-color: rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: center;
+}
+
+.image-inner{
+
+}
+
+.image-inner img{
+    display: block;
+    width: 100%;
+}
+
 @media (max-width: 859px){
     .content ol li, .content ul li {
         margin-left: 1.4em;
