@@ -5,14 +5,14 @@ import {Op} from "sequelize";
 class Article{
     async getFeedArticlesByPage(page){
         try{
-            const amount = page*5
+            const amount = page*20
             const articles = await ArticleModel.findAll({
                 where: {
                     is_moderated: true,
                 },
                 attributes: ['id','title','title_paragraph','title_image','content','like_count','userId', 'first_name', 'last_name', 'createdAt'],
                 order: [['updatedAt', 'DESC']],
-                offset: amount-5,
+                offset: amount-20,
                 limit: amount
             })
             return articles
@@ -37,7 +37,7 @@ class Article{
                 content: articleHTML,
                 like_count: 0,
                 userId: id,
-                is_moderated,
+                is_moderated: true,
                 is_draft,
                 json_article_data: JSON.stringify(data),
                 show_blocks_id: blocksToFeed,
