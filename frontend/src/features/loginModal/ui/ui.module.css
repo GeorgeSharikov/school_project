@@ -3,10 +3,11 @@
     line-height: 36px;
     margin-bottom: 16px;
     font-weight: 500;
+    margin-top: 114px;
 }
-
+/*
 @media (min-width: 860px) {
     .formTitle{
-        margin-top: 114px;
+
     }
-}
+}*/
