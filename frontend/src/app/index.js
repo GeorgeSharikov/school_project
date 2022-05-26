@@ -6,9 +6,10 @@ import { useDispatch } from 'react-redux';
 import {checkUserAuth} from '../store/userAuthSlice/slice'
 import { getPersonalData } from '../store/userPersonalData/slice';
 
+
 export function App() {
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
       dispatch(checkUserAuth()).then(() => {
         dispatch(getPersonalData())

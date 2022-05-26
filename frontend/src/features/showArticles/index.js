@@ -11,7 +11,6 @@ export const ShowArticles = (props) => {
     useEffect(() => {
         dispatch(getFeedArticles(page))
     }, [page, dispatch])
-    console.log(articlesFeed)
     return (
         <div>
             {articlesFeed.map((el) => {

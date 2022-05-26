@@ -103,7 +103,6 @@ constructor() {
         const contentWrapper = `<div class="${contentWrapperClasses}">
             ${this.#createImgWrappDiv(url, height, width, type)}
         </div>`
-        console.log(this.#insertImageToFigure(contentWrapper))
         return this.#insertImageToFigure(contentWrapper)
     }
 
