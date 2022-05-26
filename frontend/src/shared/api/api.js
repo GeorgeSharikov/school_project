@@ -2,13 +2,12 @@ import axios from 'axios'
 import { getCookie } from '../helpers/getCookie';
 import {BASE_SERVER_URL} from "../../constants/url.js";
 
-let token = getCookie('token')
+const getAuthHeaders = () => ({
+        'Authorization': `Bearer ${getCookie('token')}`
+})
 
 const instance = axios.create({
     baseURL: `${BASE_SERVER_URL}`,
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
 });
 
 class User{
@@ -17,7 +16,9 @@ class User{
     }
     async checkAuth(){
         try{
-           const response = await instance.get(`${this.apiBase}/auth`)
+           const response = await instance.get(`${this.apiBase}/auth`, {
+               headers: getAuthHeaders()
+           })
            return response
         }catch(e){
             if(e.response){
@@ -34,7 +35,10 @@ class User{
     async login(userData){
         try{
             const {email, password} = userData
-            return await instance.post(`${this.apiBase}/login`, {email: email, password: password})
+            const res = await instance.post(`${this.apiBase}/login`, {email: email, password: password}, {
+                headers: getAuthHeaders()
+            })
+            return res
         }catch(e){
             if(e.response){
                 if(e.response.status === 404){
@@ -47,7 +51,6 @@ class User{
     }
 }
 export const UserApi = new User('user')
-
 class UserInfo{
     constructor(apiBase){
         this.apiBase = apiBase
@@ -55,7 +58,9 @@ class UserInfo{
     async getPersonalData(){
         try{
             instance.defaults.headers['Authorization'] = `Bearer ${getCookie('token')}`
-            const response = await instance.get(`${this.apiBase}/getPersonalData`)
+            const response = await instance.get(`${this.apiBase}/getPersonalData`, {
+                headers: getAuthHeaders()
+            })
             return response
         }catch(e){
             if(e.response){
@@ -70,7 +75,9 @@ class UserInfo{
     }
     async getOtherPersonalData(id){
         try{
-            const response = await instance.get(`${this.apiBase}/getOtherPersonalData?id=${id}`)
+            const response = await instance.get(`${this.apiBase}/getOtherPersonalData?id=${id}`, {
+                headers: getAuthHeaders()
+            })
             return response
         }catch(e){
             if(e.response){
@@ -94,7 +101,9 @@ class Article{
     async createArticle(data){
         try{
             const {article, isModerated:is_moderated, isDraft: is_draft} = data
-            const response = await instance.post(`${this.apiBase}/createArticle`, {article, is_moderated, is_draft})
+            const response = await instance.post(`${this.apiBase}/createArticle`, {article, is_moderated, is_draft},{
+                headers: getAuthHeaders()
+            })
             return response
         }catch (e) {
             if(e.response){
@@ -110,7 +119,9 @@ class Article{
 
     async getFeedArticlesByPortions(page){
         try{
-            const response = await instance.get(`${this.apiBase}/getFeedArticles/?page=${page}`)
+            const response = await instance.get(`${this.apiBase}/getFeedArticles/?page=${page}`, {
+                headers: getAuthHeaders()
+            })
             return response
         }catch (e) {
             if(e.response){
