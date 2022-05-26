@@ -1,19 +1,19 @@
 import {ArticleModel, UserModel} from "../../db/models/models.js";
 import {ApiError} from "../../error/ApiError.js";
-import {Op} from "sequelize";
+import {Error, Op} from "sequelize";
 
 class Article{
     async getFeedArticlesByPage(page){
         try{
-            const amount = page*20
+            const amount = page*5
             const articles = await ArticleModel.findAll({
                 where: {
                     is_moderated: true,
                 },
                 attributes: ['id','title','title_paragraph','title_image','content','like_count','userId', 'first_name', 'last_name', 'createdAt'],
                 order: [['updatedAt', 'DESC']],
-                offset: amount-20,
-                limit: amount
+                offset: amount-5,
+                limit: 5
             })
             return articles
 
@@ -50,7 +50,16 @@ class Article{
             console.log('error rep', e)
             next(ApiError.internal('Неизвестная ошибка'))
         }
-
+    }
+    async count(condition, next){
+        try{
+            return await ArticleModel.count({
+                where: condition
+            })
+        }catch (e) {
+            console.log('error rep', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
     }
 }
 

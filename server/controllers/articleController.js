@@ -21,6 +21,10 @@ class Article{
         const article = await ArticleService.create(articleData, userId, next)
         res.send(article)
     }
+    async getCountOfAllArticles(req, res, next){
+        const count = await ArticleService.countArticles(req.query, next)
+        res.send({totalCount: count})
+    }
 }
 
 export const ArticleController = new Article()

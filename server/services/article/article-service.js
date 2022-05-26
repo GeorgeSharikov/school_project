@@ -25,6 +25,21 @@ class ArticleServiceClass{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+    async countArticles(conditions, next){
+        const conditionalObj = {}
+        if(conditions.isModerated){
+            conditionalObj['is_moderated'] = Boolean(conditions.isModerated)
+        }
+        if(conditions.profileId){
+            conditionalObj['userId'] = conditions.profileId
+        }
+        try{
+            return await ArticleRepository.count(conditionalObj, next)
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
 }
 
 export const ArticleService = new ArticleServiceClass()
