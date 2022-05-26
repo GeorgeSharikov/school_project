@@ -14,6 +14,14 @@ import {getCookie} from "../shared/helpers/getCookie.js";
 
 const UPLOAD_URL = `${BASE_SERVER_URL}static`
 
+let cookieToken = ''
+setInterval(() => {
+    if(!!getCookie('token')){
+        settings.tools.image.config.additionalRequestHeaders.authorization = `Bearer ${getCookie('token')}`
+        clearInterval()
+    }
+}, 1000)
+
 export const settings = {
     holder: 'editorjs',
     placeholder: 'Нажмите Tab для выбора инструмента',
@@ -40,7 +48,7 @@ export const settings = {
                     byFile: `${UPLOAD_URL}/uploadImage`
                 },
                 additionalRequestHeaders: {
-                        'authorization': `Bearer ${getCookie('token')}`,
+                        'authorization': `Bearer ${cookieToken}`,
                     }
             }
         },
