@@ -26,7 +26,9 @@ const slice = createSlice({
         isFetching: true
     },
     reducers: {
-
+        setFeedArticles(state, {payload}){
+            state.feedArticles = payload
+        }
     },
     extraReducers: builder => {
         builder.addCase(getFeedArticles.fulfilled, (state, {payload}) => {
