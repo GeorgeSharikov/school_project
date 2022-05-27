@@ -1,12 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
 import {useDispatch, useSelector} from "react-redux";
-import {articleSelectors, getArticlesTotalCount, getFeedArticles} from "./model/slice.js";
+import {articleActions, articleSelectors, getArticlesTotalCount, getFeedArticles} from "./model/slice.js";
 import {PostItem} from "../../entities/Post/ui/PostItem/index.js";
 import Skeleton from "@mui/material/Skeleton";
+import {useActions} from "../../shared/hooks/useActions.jsx";
 
 export const ShowArticles = () => {
     const dispatch = useDispatch()
+    const {setFeedArticles} = useActions(articleActions)
+
     const articlesFeed = useSelector(state => articleSelectors.getArticles(state))
     const totalCount = useSelector(state => articleSelectors.totalArticlesCount(state))
     const [page, setPage] = useState(1)
@@ -22,7 +24,6 @@ export const ShowArticles = () => {
                 }
             })
     );
-
     useEffect(() => {
         setLoading(true)
         if(page*5 <= totalCount){
@@ -41,23 +42,23 @@ export const ShowArticles = () => {
         }
 
         return () => {
+
             if (currentElement) {
                 currentObserver.unobserve(currentElement);
             }
         };
     }, [lastElement]);
 
-
-
     useEffect(() => {
         dispatch(getArticlesTotalCount({isModerated: true, id: null}))
+        return () => {
+            setFeedArticles([])
+        }
     }, [dispatch])
-    console.log(articlesFeed)
     return (
         <div>
                 {articlesFeed.length > 0 && articlesFeed.map((el, i) => {
                     if(i === articlesFeed.length-1 && !loading && page*5 <= totalCount ){
-                        console.log('here')
                         return <div key={el.id} ref={setLastElement}>
                             <PostItem  post={el} />
                         </div>
