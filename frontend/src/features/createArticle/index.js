@@ -1,14 +1,14 @@
 import styles from './ui/styles.module.css'
 import EditorJS from "@editorjs/editorjs";
 import {settings} from "../../constants/editorJsSetteng.js";
-import {useEffect, useRef} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import Textarea from 'react-expanding-textarea'
 import { SmallAvatar } from '../../shared/assets/avatar/smallAvatar';
 import {setActiveBlocks} from "../../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
 import {ArticleApi} from "../../shared/api/api.js";
 
 export const ArticleEditor = ({close}) => {
-    const editor = new EditorJS(settings)
+    const editor = useMemo(() => new EditorJS(settings), [])
     const inputRef = useRef()
     const editorRef = useRef()
 
@@ -26,13 +26,23 @@ export const ArticleEditor = ({close}) => {
         }
     }
 
+    const [isDisable, setIsDisable] = useState(true)
+    const handleChange = (event) => {
+        let tmp = event.target.value.split("").filter(el => el!=='')
+        tmp = tmp.join("")
+        if(!!tmp){
+            setIsDisable(false)
+        }else if(!!tmp === false && !isDisable){
+            setIsDisable(true)
+        }
+    }
+
     const onTitleChange = (event) => {
         if(event.keyCode === 13){
             event.preventDefault()
             editor.focus()
         }
     }
-
     useEffect(() => {
         inputRef.current.focus()
         setTimeout(() => {
@@ -50,7 +60,7 @@ export const ArticleEditor = ({close}) => {
         <div className={styles.editorContainer}>
             <div className={`${styles.Ieditor} ${styles.editorBottom}`}>
                 <div className={styles.bottomContent}>
-                    <button onClick={save} className={styles.publishButton}>
+                    <button onClick={save} className={styles.publishButton} style={isDisable ? {pointerEvents: 'none', opacity: .5} : null}>
                         <span className={styles.buttonLabel}>Опубликовать</span>
                     </button>
                 </div>
@@ -69,6 +79,7 @@ export const ArticleEditor = ({close}) => {
                 <div className={styles.Ieditor}>
                     <Textarea rows="1"
                                 onKeyDown={onTitleChange}
+                                onChange={handleChange}
                                 id={'titleArea'}
                                 ref={inputRef}
                                 placeholder="Заголовок"
