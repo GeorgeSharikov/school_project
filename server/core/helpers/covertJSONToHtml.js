@@ -32,10 +32,13 @@ constructor() {
         return this.#insertToBaseParagraphDiv(textP)
     }
 
-    #insertImageToFigure(data){
+
+
+    #insertImageToFigure(data, caption, type){
         return `<figure class="figure-image">
-                    <div class="I-island-b">   
                         ${data}
+                    <div class="I-island-a">
+                        <span class="content-image-caption">${caption}</span>
                     </div>
                 </figure>`
     }
@@ -55,8 +58,12 @@ constructor() {
         const divImg = `<div class="image-inner" style="padding-bottom: 0px; background: transparent;">${img}</div>`
         let maxWidth = 0
         let maxHeight = 0
-        if(type === 'stretched' || type === 'simple'){
+        if(type === 'simple'){
             maxWidth = width
+            maxHeight = height
+        }
+        if(type === 'stretched'){
+            maxWidth = 1020
             maxHeight = height
         }
         if(type === 'stretched and border'){
@@ -76,8 +83,57 @@ constructor() {
             </div>`
     }
 
+    #createStretchedImageForArticle(url){
+        const {height, width} = this.#getImageSizes(url)
+        return `<figure class="figure-image">
+            <div class="I-island-c">
+                <div class='content-image'>
+                    <div style="max-width: 1020px;max-height: ${height}px">
+                        <div class="image-inner" style="padding-bottom: 0px; background: transparent;">
+                            <img src="${url}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </figure>`
+    }
+
+    #video(url){
+        const forFeed = `<figure class="figure-image">
+            <div class="I-island-c">
+                <div class='content-image'>
+                    <div style="max-width: 640px;">
+                        <div class="video__container">
+                            <video autoplay loop controls muted playsinline>
+                                <source src=${url}>
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </figure>`
+        const forArticle = `<figure class="figure-image">
+            <div class="I-island-b">
+                <div class='content-image'>
+                    <div style="max-width: 600px;">
+                        <div class="video__container">
+                            <video autoplay loop controls muted playsinline>
+                                <source src=${url}>
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </figure>`
+        return {forArticle, forFeed}
+    }
+
     #image(data){
+        if(!data.file.isImage){
+            return this.#video(data.file.url)
+        }
         const url = data.file.url
+        const caption = data.caption
         const {height, width} = this.#getImageSizes(url)
         let contentWrapperClasses = 'content-image'
         if(data.withBorder || data.withBackground){
@@ -100,10 +156,18 @@ constructor() {
         if(data.withBackground || (data.withBorder && data.stretched && data.withBackground)){
             type = 'background'
         }
-        const contentWrapper = `<div class="${contentWrapperClasses}">
+        const typeClass = type === 'stretched' ? `I-island-c` : type === 'simple' ? `I-island-a` : `I-island-b`
+        const contentWrapper = `<div class=${typeClass}><div class="${contentWrapperClasses}">
             ${this.#createImgWrappDiv(url, height, width, type)}
-        </div>`
-        return this.#insertImageToFigure(contentWrapper)
+        </div></div>`
+        const forFeed = this.#insertImageToFigure(contentWrapper, caption)
+        let forArticle = ''
+        if(type === 'stretched' || type ==='stretched and border'){
+            forArticle+=this.#createStretchedImageForArticle(url)
+        }else{
+            forArticle = forFeed
+        }
+        return {forFeed, forArticle}
     }
 
     #createHeader(lvl, text){
@@ -154,7 +218,7 @@ constructor() {
         : "quote_text_big"
         return `
         <figure>
-            <div class="i-island-b">
+            <div class="I-island-b">
                 <blockquote class="${alignmentClass}">
                     <div class="quote_content">
                         ${this.quoteSvg}
@@ -171,7 +235,7 @@ constructor() {
     }
     convert({data, title}){
         const blocks = data["blocks"]
-        const blocksToFeed = blocks[0]['tunes'].showInFeed
+        const blocksToFeed = blocks[0]?.['tunes'].showInFeed
 
         let title_paragraph = ''
         let title_image = ''
@@ -184,7 +248,9 @@ constructor() {
                     html_element+=this.#paragraph(data)
                     break
                 case "image":
-                    html_element+=this.#image(data)
+                    const {forFeed, forArticle} = this.#image(data, blocksToFeed.includes(id))
+                    html+=forArticle
+                    html_element+=forFeed
                     break
                 case "header":
                     html_element+=this.#header(data)
@@ -211,10 +277,13 @@ constructor() {
                     title_image = html_element
                 }
             }
-            html+=html_element
+            if(type !== 'image'){
+                html+=html_element
+            }
+
         }
         const articleWrapper = `<div class="content">
-                                <h1 class="content_title">${title}</h1>
+                                <div class="I-island-a"><h1 class="content_title">${title}</h1></div>
                                 <div class="content_main">
                                    ${html}
                                 </div>
