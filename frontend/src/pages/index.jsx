@@ -7,6 +7,7 @@ import {ArticlesFeed} from "./ArticlesFeed";
 import { Profile } from "./Profile";
 import { ProfileArticleFeed } from "../features/profileArticleFeed";
 import { ProfileDraftsFeed } from "../features/profileDraftsFeed";
+import {FullArticle} from "./FullArticle/index.js";
 
 export const Routing = () => {
     const isSidebarActive = useSelector(sideBarSelectors.getSidebarIsActive)
@@ -15,7 +16,8 @@ export const Routing = () => {
             {isSidebarActive && <SideBar/>}
             <div className={styles.content}>
                     <Routes>
-                        <Route path={'/'} element={<ArticlesFeed />}/>         
+                        <Route path={'/'} element={<ArticlesFeed />}/>
+                        <Route path={'/articles/:id'} element={<FullArticle />}/>
                         <Route path={'/profile/:id'} element={<Profile/>}>
                             <Route path="" element={<ProfileArticleFeed />} />
                             <Route path="drafts" element={<ProfileDraftsFeed />} />
