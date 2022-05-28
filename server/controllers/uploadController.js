@@ -1,9 +1,9 @@
 import {uploadFilesService} from "../services/uploadFiles/upload-files-service.js";
 
 class UploadFiles{
-    async uploadImage(req, res, next){
-        const {image} = req.files
-        const response = uploadFilesService.uploadImage(image)
+    async upload(req, res, next){
+        const {image: file} = req.files
+        const response = uploadFilesService.upload(file)
         res.send(response)
     }
 
