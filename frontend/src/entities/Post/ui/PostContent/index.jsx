@@ -6,7 +6,7 @@ export const PostContent = ({title, titleParagraph, secondTitleBlock}) => {
         return {__html: html}
     }
     return (
-        <div className={'content'}>
+        <div className={'content-short'}>
             <div className={styles.title}>
                 {title}
             </div>

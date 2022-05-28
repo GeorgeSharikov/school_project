@@ -1,15 +1,18 @@
-.I-island-a{
+
+
+.content-short .I-island-a{
     padding-left: 20px;
     padding-right: 20px;
 }
+
 @media (max-width: 640px){
-    .I-island-a{
+    .content-short .I-island-a{
         padding-left: 16px;
         padding-right: 16px;
     }
 }
 
-.content ol, .content ul{
+.content-short ol, .content-short ul{
     margin: 12px 0;
     list-style: disc;
     list-style-position: outside;
@@ -17,56 +20,56 @@
     font-size: 20px;
 }
 
-.content ol{
+.content-short ol{
     list-style-type: decimal;
 }
 
-.content ol li, .content ul li {
+.content-short ol li, .content-short ul li {
     margin: 10px 0 10px 2em;
     word-wrap: break-word;
 }
 
 
-.content p{
+.content-short p{
     margin-bottom: 12px;
     line-height: 26px;
     font-size: 17px;
 }
 
-.content h2,h3,h4, h5, h6{
+.content-short h2,h3,h4, h5, h6{
     font-weight: 500;
     margin-bottom: 8px
 }
 
-.content figure {
+.content-short figure {
     margin-top: 13px;
 }
 
-.content figure:last-child {
+.content-short figure:last-child {
     margin-bottom: 4px;
 }
 
-.quote{
+.content-short .quote{
     background-color: #fffaf1;
     padding: 35px 0 40px;
 }
 
-.quote_text_center .quote_text_big{
+.content-short .quote_text_center .quote_text_big{
     text-align: center;
 }
 
-.quote_text_center .quote_text{
+.content-short .quote_text_center .quote_text{
     text-align: center;
 }
 
-.quote_content{
+.content-short .quote_content{
     max-width: 450px;
     margin: auto;
     position: relative;
     width: 100%;
 }
 
-.quote_content svg{
+.content-short .quote_content svg{
 
     position: absolute;
     left: -57px;
@@ -80,33 +83,33 @@
 
 
 @media (min-width: 860px){
-    .quote_content{
+    .content-short .quote_content{
         width: 465px;
     }
 }
 
-.quote_text{
+.content-short .quote_text{
     font-size: 22px;
     font-weight: 400;
     line-height: 30px;
     word-wrap: break-word;
 }
 
-.quote_text_medium{
+.content-short .quote_text_medium{
     font-size: 24px;
     font-weight: 500;
     line-height: 34px;
     word-wrap: break-word;
 }
 
-.quote_text_big{
+.content-short .quote_text_big{
     font-size: 29px;
     font-weight: 500;
     line-height: 37px;
     word-wrap: break-word;
 }
 
-.quote_author{
+.content-short .quote_author{
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -116,7 +119,7 @@
 }
 
 
-.block-delimiter:before {
+.content-short .block-delimiter:before {
     display: block;
     content: '***';
     font-size: 36px;
@@ -126,7 +129,7 @@
     text-align: center;
 }
 
-.warning{
+.content-short .warning{
     display: flex;
     padding: 20px;
     margin: 30px 0;
@@ -136,73 +139,84 @@
     font-size: 15px;
 }
 
-.warning_sign{
+.content-short .warning_sign{
     margin-right: 15px;
 }
 
-.warning_text{
+.content-short .warning_text{
     padding-left: 15px;
 }
 
-.warning_title{
+.content-short .warning_title{
     font-weight: 700;
 }
 
-.figure-image{
+.content-short .figure-image{
     margin-top: 13px;
     margin-bottom: 4px;
 }
 
-.content-image{
+.content-short .content-image{
     display: flex;
     align-items: center;
 }
 
-.image-padding{
+.content-short .image-padding{
     padding: 8px 0;
 }
 
-.content-image-background{
+.content-short .content-image-background{
     background-color: rgba(0,0,0,0.08);
     display: flex;
     justify-content: center;
 }
 
-.image-inner{
+.content-short .image-inner{
 
 }
 
-.image-inner img{
+.content-short .image-inner img{
     display: block;
     width: 100%;
 }
 
+.content-short figcaption{
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.content-short .content-image-caption{
+    display: none;
+}
+
+
 @media (max-width: 859px){
-    .content ol li, .content ul li {
+    .content-short .content-short ol li, .content-short .content-short ul li {
         margin-left: 1.4em;
     }
 
-    .quote{
+    .content-short .quote{
         padding: 15px 25px 18px 50px;
     }
 
-    .quote_content{
+    .content-short .quote_content{
         width: 100%;
     }
 
-    .quote_text{
+    .content-short .quote_text{
         font-size: 18px;
         line-height: 1.6em;
     }
-    .quote_text_medium{
+    .content-short .quote_text_medium{
         font-size: 18px;
         line-height: 25px;
     }
-    .quote_text_big{
+    .content-short .quote_text_big{
         font-size: 22px;
         line-height: 28px;
     }
-    .block-delimiter:before {
+    .content-short .block-delimiter:before {
         font-size: 23px;
     }
 }
