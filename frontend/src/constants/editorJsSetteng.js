@@ -5,7 +5,6 @@ import Warning from "@editorjs/warning";
 import Delimiter from "@editorjs/delimiter";
 import List from "@editorjs/list";
 import Marker from "@editorjs/marker";
-import Embed from "@editorjs/embed";
 import LinkTool from "@editorjs/link";
 import Paragraph from '@editorjs/paragraph'
 import ShowInFeed, {activeBlocks, setActiveBlocks} from "../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
@@ -15,10 +14,10 @@ import {getCookie} from "../shared/helpers/getCookie.js";
 const UPLOAD_URL = `${BASE_SERVER_URL}static`
 
 let cookieToken = ''
-setInterval(() => {
-    if(!!getCookie('token')){
+const interval = setInterval(() => {
+    if(!!getCookie('token') || getCookie('token')){
         settings.tools.image.config.additionalRequestHeaders.authorization = `Bearer ${getCookie('token')}`
-        clearInterval()
+        clearInterval(interval)
     }
 }, 1000)
 
@@ -45,12 +44,15 @@ export const settings = {
             inlineToolbar: true,
             config: {
                 endpoints: {
-                    byFile: `${UPLOAD_URL}/uploadImage`
+                    byFile: `${UPLOAD_URL}/upload`
                 },
                 additionalRequestHeaders: {
                         'authorization': `Bearer ${cookieToken}`,
-                    }
-            }
+                },
+                types: 'image/*, video/mp4',
+                buttonContent: 'Выберите видео или фото'
+            },
+
         },
         quote: {
             class: Quote,
@@ -76,10 +78,6 @@ export const settings = {
         Marker: {
             class: Marker,
             inlineToolbar: true,
-        },
-        embed: {
-            class: Embed,
-            inlineToolbar: true
         },
         linkTool: {
             class: LinkTool,
