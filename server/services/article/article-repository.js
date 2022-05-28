@@ -23,9 +23,19 @@ class Article{
         }
     }
 
-    async getOne(){
-
+    async getOne(articleId){
+        try{
+            const {content, title, userId, first_name, last_name, like_count, createdAt} = await ArticleModel.findOne({
+                where: {
+                    id: articleId
+                }
+            })
+            return {content, title, userId, first_name, last_name, like_count, createdAt}
+        }catch (e) {
+            throw new Error(e)
+        }
     }
+
     async createOne(id, article, next){
         try{
             const user = await UserModel.findOne({where: {id: id}})

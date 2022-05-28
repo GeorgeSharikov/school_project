@@ -12,18 +12,31 @@ class Article{
         }
     }
     async getArticle(req, res, next){
-        const article = await ArticleService.getOne()
-        res.send(article)
+        try{
+            const id = req.query.id
+            const article = await ArticleService.getOne(id)
+            res.send(article)
+        }catch (e) {
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
     }
     async createArticle(req, res, next){
-        const articleData = req.body
-        const userId = req.user.id
-        const article = await ArticleService.create(articleData, userId, next)
-        res.send(article)
+        try{
+            const articleData = req.body
+            const userId = req.user.id
+            const article = await ArticleService.create(articleData, userId, next)
+            res.send(article)
+        }catch (e) {
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
     }
     async getCountOfAllArticles(req, res, next){
-        const count = await ArticleService.countArticles(req.query, next)
-        res.send({totalCount: count})
+        try{
+            const count = await ArticleService.countArticles(req.query, next)
+            res.send({totalCount: count})
+        }catch (e) {
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
     }
 }
 

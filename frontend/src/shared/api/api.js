@@ -134,6 +134,7 @@ class Article{
             }
         }
     }
+
     async getArticlesTotalCount({isModerated, id}){
         try{
             let queryStrID = id ? `profileId=${id}` : ''
@@ -141,6 +142,23 @@ class Article{
                 headers: getAuthHeaders()
             })
             return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
+    async getArticle(id){
+        try{
+            return await instance.get(`${this.apiBase}/getArticle/?id=${id}`, {
+                headers: getAuthHeaders()
+            })
         }catch (e) {
             if(e.response){
                 if(e.response.status !== 401){
