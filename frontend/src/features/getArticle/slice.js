@@ -14,17 +14,23 @@ const slice = createSlice({
     name: 'getArticle',
     initialState: {
         articleInformation: {},
-        errorMessage: {}
+        errorMessage: null
     },
     reducers: {
-
+        setErrorMessage(state, {payload}){
+            state.errorMessage = payload
+        },
+        setArticleInformation(state, {payload}){
+            state.articleInformation = {}
+        }
     },
     extraReducers: builder => {
         builder.addCase(getOneArticle.fulfilled, (state, {payload}) => {
             state.articleInformation = payload
         })
-        builder.addCase(getOneArticle.rejected, (state, {payload}) => {
-            state.errorMessage = payload
+        builder.addCase(getOneArticle.rejected, (state, action) => {
+            state.errorMessage = {}
+            state.errorMessage.message = action.error.message
         })
     }
 })
