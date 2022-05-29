@@ -23,16 +23,21 @@ class Article{
         }
     }
 
-    async getOne(articleId){
+    async getOne(articleId, next){
         try{
-            const {content, title, userId, first_name, last_name, like_count, createdAt} = await ArticleModel.findOne({
+            const article = await ArticleModel.findOne({
                 where: {
                     id: articleId
                 }
             })
-            return {content, title, userId, first_name, last_name, like_count, createdAt}
+            if(!article){
+                next(ApiError.badRequest('Статья  не найдена'))
+            }else{
+                const {content, title, userId, first_name, last_name, like_count, createdAt} = article
+                return {content, title, userId, first_name, last_name, like_count, createdAt}
+            }
         }catch (e) {
-            throw new Error(e)
+            next(ApiError.badRequest('Неизвестная ошибка.'))
         }
     }
 

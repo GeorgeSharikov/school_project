@@ -10,12 +10,8 @@ class ArticleServiceClass{
             throw new Error(e)
         }
     }
-    async getOne(articleId){
-        try{
-            return await ArticleRepository.getOne(articleId)
-        }catch (e) {
-            throw new Error(e)
-        }
+    async getOne(articleId, next){
+        return await ArticleRepository.getOne(articleId, next)
     }
     async create(articleData, userId, next){
         try{

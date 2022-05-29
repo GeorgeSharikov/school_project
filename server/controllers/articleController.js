@@ -12,12 +12,10 @@ class Article{
         }
     }
     async getArticle(req, res, next){
-        try{
-            const id = req.query.id
-            const article = await ArticleService.getOne(id)
+        const id = req.query.id
+        const article = await ArticleService.getOne(id, next)
+        if(article){
             res.send(article)
-        }catch (e) {
-            next(ApiError.internal('Неизвестная ошибка'))
         }
     }
     async createArticle(req, res, next){

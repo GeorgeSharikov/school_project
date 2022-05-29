@@ -161,6 +161,9 @@ class Article{
             })
         }catch (e) {
             if(e.response){
+                if(e.response.status === 404){
+                    throw new Error(e?.response?.data?.message)
+                }
                 if(e.response.status !== 401){
                     throw new Error(e?.response?.statusText)
                 }
