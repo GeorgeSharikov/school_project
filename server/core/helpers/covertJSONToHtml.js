@@ -83,19 +83,85 @@ constructor() {
             </div>`
     }
 
-    #createStretchedImageForArticle(url){
+    #createStretchedImageForArticle(url, caption){
         const {height, width} = this.#getImageSizes(url)
-        return `<figure class="figure-image">
-            <div class="I-island-c">
-                <div class='content-image'>
-                    <div style="max-width: 1020px;max-height: ${height}px">
+        if(width < 1020 || height > 1500){
+            return `<figure class="figure-image">
+            <div class="I-island-b">
+                <div class='content-image image-padding content-image-background''>
+                    <div style="max-width: ${(460 * width)/height}px;max-height: 460px;">
                         <div class="image-inner" style="padding-bottom: 0px; background: transparent;">
                             <img src="${url}"/>
                         </div>
                     </div>
                 </div>
             </div>
+             <div class="I-island-a">
+                    <span class="content-image-caption">${caption}</span>
+              </div>
         </figure>`
+        }
+        return `<figure class="figure-image">
+            <div class="I-island-c">
+                <div class='content-image '>
+                    <div style="max-width: 1020px;max-height: ${height}px; width: 1024px">
+                        <div class="image-inner" style="padding-bottom: 0px; background: transparent;">
+                            <img src="${url}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="I-island-a">
+                    <span class="content-image-caption">${caption}</span>
+              </div>
+        </figure>`
+    }
+
+    #image(data){
+        if(!data.file.isImage){
+            return this.#video(data.file.url)
+        }
+        const url = data.file.url
+        const caption = data.caption
+        const {height, width} = this.#getImageSizes(url)
+
+        let contentWrapperClasses = 'content-image'
+        if(data.withBorder || data.withBackground){
+            contentWrapperClasses+=' image-padding content-image-background'
+        }
+
+        let type
+        if((data.withBorder && data.stretched) || data.withBorder){
+            type = 'border'
+        }
+        if(data.stretched){
+            type = 'stretched'
+        }
+        if(data.stretched && data.withBorder){
+            type = 'stretched and border'
+        }
+        if(!data.withBorder && !data.stretched && !data.withBackground){
+            type = 'simple'
+        }
+        if(data.withBackground || (data.withBorder && data.stretched && data.withBackground)){
+            type = 'background'
+        }
+        if(height > 1500){
+            type='background'
+            contentWrapperClasses+=' image-padding content-image-background'
+        }
+        const typeClass = type === 'stretched' ? `I-island-c` : type === 'simple' ? `I-island-a` : `I-island-b`
+        const contentWrapper = `<div class=${typeClass}><div class="${contentWrapperClasses}">
+            ${this.#createImgWrappDiv(url, height, width, type)}
+        </div></div>`
+        const forFeed = this.#insertImageToFigure(contentWrapper, caption)
+        let forArticle = ''
+        if(type === 'stretched' || type ==='stretched and border'){
+            forArticle+=this.#createStretchedImageForArticle(url, caption)
+        }else{
+            forArticle = forFeed
+        }
+        return {forFeed, forArticle}
     }
 
     #video(url){
@@ -126,48 +192,6 @@ constructor() {
             </div>
         </figure>`
         return {forArticle, forFeed}
-    }
-
-    #image(data){
-        if(!data.file.isImage){
-            return this.#video(data.file.url)
-        }
-        const url = data.file.url
-        const caption = data.caption
-        const {height, width} = this.#getImageSizes(url)
-        let contentWrapperClasses = 'content-image'
-        if(data.withBorder || data.withBackground){
-            contentWrapperClasses+=' image-padding content-image-background'
-        }
-
-        let type
-        if((data.withBorder && data.stretched) || data.withBorder){
-            type = 'border'
-        }
-        if(data.stretched){
-            type = 'stretched'
-        }
-        if(data.stretched && data.withBorder){
-            type = 'stretched and border'
-        }
-        if(!data.withBorder && !data.stretched && !data.withBackground){
-            type = 'simple'
-        }
-        if(data.withBackground || (data.withBorder && data.stretched && data.withBackground)){
-            type = 'background'
-        }
-        const typeClass = type === 'stretched' ? `I-island-c` : type === 'simple' ? `I-island-a` : `I-island-b`
-        const contentWrapper = `<div class=${typeClass}><div class="${contentWrapperClasses}">
-            ${this.#createImgWrappDiv(url, height, width, type)}
-        </div></div>`
-        const forFeed = this.#insertImageToFigure(contentWrapper, caption)
-        let forArticle = ''
-        if(type === 'stretched' || type ==='stretched and border'){
-            forArticle+=this.#createStretchedImageForArticle(url)
-        }else{
-            forArticle = forFeed
-        }
-        return {forFeed, forArticle}
     }
 
     #createHeader(lvl, text){
