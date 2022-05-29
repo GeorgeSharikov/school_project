@@ -271,3 +271,9 @@
         font-size: 23px;
     }
 }
+
+
+.page-mask{
+    display: flex;
+    flex-direction: column;
+}
