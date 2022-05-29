@@ -8,6 +8,7 @@ import { Profile } from "./Profile";
 import { ProfileArticleFeed } from "../features/profileArticleFeed";
 import { ProfileDraftsFeed } from "../features/profileDraftsFeed";
 import {FullArticle} from "./FullArticle/index.js";
+import {PageNotFound} from "./PageNotFound/index.js";
 
 export const Routing = () => {
     const isSidebarActive = useSelector(sideBarSelectors.getSidebarIsActive)
@@ -22,6 +23,7 @@ export const Routing = () => {
                             <Route path="" element={<ProfileArticleFeed />} />
                             <Route path="drafts" element={<ProfileDraftsFeed />} />
                         </Route>
+                        <Route path={"/error-page-not-found"} element={<PageNotFound/>}/>
                     </Routes>
             </div>
             <div style={{width: '145px'}}></div>
