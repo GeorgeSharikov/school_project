@@ -18,11 +18,28 @@ export const getArticlesTotalCount = createAsyncThunk(
     }
 )
 
+export const addBookmark = createAsyncThunk(
+    'article/addBookmark',
+    async (articleId, thunkAPI) => {
+        const {data} = await ArticleApi.addBookmark(articleId)
+        return data
+    }
+)
+
+export const getBookmarks = createAsyncThunk(
+    'article/getBookmarks',
+    async (params, thunkAPI) => {
+        const {data} = await ArticleApi.getBookmarks()
+        return data
+    }
+)
+
 const slice = createSlice({
     name: 'article',
     initialState: {
         feedArticles: [],
         totalArticlesCount: 0,
+        userBookmarks: [],
         isFetching: true
     },
     reducers: {
@@ -37,6 +54,13 @@ const slice = createSlice({
         })
         builder.addCase(getArticlesTotalCount.fulfilled, (state, {payload}) => {
             state.totalArticlesCount = payload.totalCount
+        })
+        builder.addCase(addBookmark.fulfilled, (state, {payload}) => {
+            state.userBookmarks = payload
+        })
+        builder.addCase(getBookmarks.fulfilled, (state, {payload}) => {
+            console.log(payload)
+            state.userBookmarks = payload
         })
     }
 })

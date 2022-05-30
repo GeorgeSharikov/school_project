@@ -207,5 +207,39 @@ class Article{
             }
         }
     }
+    async addBookmark(articleId){
+        try{
+            const data = await instance.post(`${this.apiBase}/bookmark/?id=${articleId}`, {},{
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+    async getBookmarks(){
+        try{
+            const data = await instance.get(`${this.apiBase}/getBookmarks`, {
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
 }
 export const ArticleApi = new Article('article')
