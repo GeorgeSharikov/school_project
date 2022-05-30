@@ -1,14 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {articleActions, articleSelectors, getArticlesTotalCount, getFeedArticles} from "./model/slice.js";
+import {articleActions, articleSelectors, getArticlesTotalCount, getBookmarks, getFeedArticles} from "./model/slice.js";
 import {PostItem} from "../../entities/Post/ui/PostItem/index.js";
 import Skeleton from "@mui/material/Skeleton";
 import {useActions} from "../../shared/hooks/useActions.jsx";
+import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
 
 export const ShowArticles = () => {
     const dispatch = useDispatch()
     const {setFeedArticles} = useActions(articleActions)
 
+    const authUserId = useSelector(state => userAuthSelectors.getUserPersonalId(state))
     const articlesFeed = useSelector(state => articleSelectors.getArticles(state))
     const totalCount = useSelector(state => articleSelectors.totalArticlesCount(state))
     const [page, setPage] = useState(1)
@@ -24,8 +26,6 @@ export const ShowArticles = () => {
                 }
             })
     );
-
-
 
     useEffect(() => {
         const currentElement = lastElement;
@@ -44,16 +44,16 @@ export const ShowArticles = () => {
     }, [lastElement]);
 
     useEffect(() => {
+        dispatch(getBookmarks())
         dispatch(getArticlesTotalCount({isModerated: true, id: null}))
         return () => {
             setFeedArticles([])
         }
     }, [dispatch])
     useEffect(() => {
-        console.log(page, dispatch, totalCount)
+        const maxPage = Math.ceil(totalCount/5)
         setLoading(true)
-        if(page*5 <= totalCount || (totalCount < 5 && totalCount !== 0)){
-            console.log('here')
+        if(page <= maxPage || (totalCount < 5 && totalCount !== 0)){
             dispatch(getFeedArticles(page))
         }
         setLoading(false)
@@ -63,10 +63,10 @@ export const ShowArticles = () => {
                 {articlesFeed.length > 0 && articlesFeed.map((el, i) => {
                     if(i === articlesFeed.length-1 && !loading && page*5 <= totalCount ){
                         return <div key={el.id} ref={setLastElement}>
-                            <PostItem  post={el} />
+                            <PostItem  post={el} authUserId={authUserId}/>
                         </div>
                     }
-                    return <PostItem post={el} key={el.id}/>
+                    return <PostItem post={el} key={el.id} authUserId={authUserId}/>
                 })}
             {loading && <div>
                 <Skeleton variant="text" />

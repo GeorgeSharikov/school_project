@@ -5,7 +5,7 @@ import { PostContent } from "../PostContent"
 import { PostHeader } from "../PostHeader"
 import styles from './ui.module.css'
 
-export const PostItem = ({post}) => {
+export const PostItem = ({post, authUserId}) => {
     const {id:articleId, title, title_paragraph, title_image: secondTitleBlock, like_count: likesCount, userId: authorId, first_name, last_name, createdAt, likes, dislikes} = post
     const author = `${first_name} ${last_name}`
     return(
@@ -16,10 +16,10 @@ export const PostItem = ({post}) => {
             </NavLink>
             <div className={styles.footer}>
                 <div className={styles.footerItem}>
-                    <AddToBookMarks />
+                    <AddToBookMarks articleId={articleId} authUserId={authUserId} />
                 </div>
                 <div>
-                    <Like likesCount={likesCount} likes={likes} dislikes={dislikes} authorId={authorId} articleId={articleId}/>
+                    <Like likesCount={likesCount} likes={likes} dislikes={dislikes} articleId={articleId} authUserId={authUserId}/>
                 </div>
             </div>
         </div>
