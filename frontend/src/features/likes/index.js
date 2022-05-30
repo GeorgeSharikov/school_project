@@ -1,22 +1,78 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styles from './ui/style.module.css'
+import {ArticleApi} from "../../shared/api/api.js";
+import {useSelector} from "react-redux";
+import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
+import {LoginModal} from "../loginModal/index.js";
 
-export const Like = ({likesCount}) => {
+export const Like = ({likesCount, likes, dislikes, articleId}) => {
+    let userId = useSelector(state => userAuthSelectors.getUserPersonalId(state))
+    const [isLiked, setIsLiked] = useState(null)
+    const [count, setCount] = useState(likesCount)
+    const [isOpen, setIsOpen] = useState(false)
 
+    useEffect(() => {
+        if(userId){
+            userId = String(userId)
+            if(likes?.includes(userId)){
+                setIsLiked(true)
+            }
+            if(dislikes?.includes(userId)){
+                setIsLiked(false)
+            }
+        }
+    },[likes, dislikes])
+
+    const handleLike = async () => {
+        try{
+            if(!userId) {
+                return setIsOpen(true)
+            }
+            const {likeCount} = await ArticleApi.like(articleId)
+            if(isLiked === true){
+                setIsLiked(null)
+            }else{
+                setIsLiked(true)
+            }
+            setCount(likeCount)
+        }catch (e) {
+            console.log(e)
+        }
+    }
+
+    const handleDislike = async () => {
+        try{
+            if(!userId) {
+                return setIsOpen(true)
+            }
+            const {likeCount} = await ArticleApi.disLike(articleId)
+            if(isLiked === false){
+                setIsLiked(null)
+            }else{
+                setIsLiked(false)
+            }
+            setCount(likeCount)
+        }catch (e) {
+            console.log(e)
+        }
+    }
+    console.log(isLiked)
     return (
-        <div className={styles.container}>
-            <div className={`${styles.arrow}`}>
-                <ExpandLessIcon className={styles.icon}/>
+        <>
+            <div className={styles.container}>
+                <div className={`${styles.arrow} ${isLiked && styles.likesGreen}`} onClick={handleLike}>
+                    <ExpandLessIcon className={styles.icon}/>
+                </div>
+                <div className={`${styles.likeCounts} ${count === 0 ? styles.defaultColor : count > 0 ? styles.likesGreen : styles.likesRed}`}>
+                    {count}
+                </div>
+                <div className={`${styles.arrow} ${isLiked === false && isLiked !== null && styles.likesRed}`} onClick={handleDislike}>
+                    <ExpandMoreIcon className={styles.icon}/>
+                </div>
             </div>
-
-            <div className={`${styles.likeCounts} ${likesCount === 0 ? styles.defaultColor : likesCount > 0 ? styles.likesGreen : styles.likesRed}`}>
-                {likesCount}
-            </div>
-            <div className={`${styles.arrow}`}>
-                <ExpandMoreIcon className={styles.icon}/>
-            </div>
-        </div>
+            {isOpen && <LoginModal isModalVisible={isOpen} closeHandler={() => setIsOpen(false)} setModalVisible={setIsOpen}/>}
+        </>
     );
 }
