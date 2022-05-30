@@ -1,6 +1,5 @@
 import {ArticleModel, UserModel} from "../../db/models/models.js";
 import {ApiError} from "../../error/ApiError.js";
-import {Error, Op} from "sequelize";
 
 class Article{
     async getFeedArticlesByPage(page){
@@ -10,8 +9,8 @@ class Article{
                 where: {
                     is_moderated: true,
                 },
-                attributes: ['id','title','title_paragraph','title_image','content','like_count','userId', 'first_name', 'last_name', 'createdAt'],
-                order: [['updatedAt', 'DESC']],
+                attributes: ['id','title','title_paragraph','title_image','content','like_count','userId', 'first_name', 'last_name', 'createdAt', 'likes', 'dislikes'],
+                order: [['createdAt', 'DESC']],
                 offset: amount-5,
                 limit: 5
             })
@@ -33,8 +32,8 @@ class Article{
             if(!article){
                 next(ApiError.badRequest('Статья  не найдена'))
             }else{
-                const {content, title, userId, first_name, last_name, like_count, createdAt} = article
-                return {content, title, userId, first_name, last_name, like_count, createdAt}
+                const {content, title, userId, first_name, last_name, like_count, createdAt, likes, dislikes} = article
+                return {content, title, userId, first_name, last_name, like_count, createdAt, likes, dislikes}
             }
         }catch (e) {
             next(ApiError.badRequest('Неизвестная ошибка.'))
@@ -73,6 +72,96 @@ class Article{
             })
         }catch (e) {
             console.log('error rep', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async like(articleId, userId, next){
+        userId = String(userId)
+        try{
+            let {likes, dislikes, like_count: likeCount} = await ArticleModel.findOne({where: {id: articleId}})
+            console.log(likes)
+            likes = likes.split(" ")
+            console.log(likes)
+            dislikes = dislikes.split(" ")
+
+            if(!likes.includes(userId) &&!dislikes.includes(userId)){
+                likeCount+=1
+                likes.push(userId)
+                likes = likes.join(" ")
+
+                await ArticleModel.update(
+                    {like_count: likeCount, likes: likes},
+                    {where: {id: articleId}}
+                )
+                return likeCount
+            }else if(dislikes.includes(userId)){
+                likeCount+=2
+                dislikes = dislikes.filter(el => el !== userId)
+                dislikes = dislikes.join(" ")
+                likes.push(userId)
+                likes = likes.join(" ")
+                await ArticleModel.update(
+                    {like_count: likeCount, likes: likes, dislikes: dislikes},
+                    {where: {id: articleId}}
+                )
+                return likeCount
+            } else{
+                likeCount-=1
+                likes = likes.filter(el => el !== userId)
+                likes = likes.join(" ")
+                await ArticleModel.update(
+                    {like_count: likeCount, likes: likes},
+                    {where: {id: articleId}}
+                )
+                return likeCount
+            }
+        }catch (e) {
+            console.log('error rep', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async dislike(articleId, userId, next){
+        userId = String(userId)
+        try{
+            let {likes, dislikes, like_count: likeCount} = await ArticleModel.findOne({where: {id: articleId}})
+            likes = likes.split(" ")
+            dislikes = dislikes.split(" ")
+
+            if(!dislikes.includes(userId) && !likes.includes(userId)){
+                likeCount-=1
+                dislikes.push(userId)
+                dislikes = dislikes.join(" ")
+                await ArticleModel.update(
+                    {like_count: likeCount, dislikes: dislikes},
+                    {where: {id: articleId}}
+                )
+                return likeCount
+            }else if(likes.includes(userId)){
+                likeCount-=2
+                likes = likes.filter(el => el !== userId)
+                likes = likes.join(" ")
+                dislikes.push(userId)
+                dislikes = dislikes.join(" ")
+                await ArticleModel.update(
+                    {like_count: likeCount, likes: likes, dislikes: dislikes},
+                    {where: {id: articleId}}
+                )
+                return likeCount
+            } else{
+                likeCount+=1
+                dislikes = dislikes.filter(el => el !== userId)
+                dislikes = dislikes.join(" ")
+                await ArticleModel.update(
+                    {like_count: likeCount, dislikes: dislikes},
+                    {where: {id: articleId}}
+                )
+                return likeCount
+            }
+        }catch (e) {
+            console.log('here')
+            console.log('error repasd', e)
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }

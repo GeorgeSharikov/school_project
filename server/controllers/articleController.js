@@ -36,6 +36,31 @@ class Article{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+    async like(req, res, next){
+        try{
+            const id = req.user.id
+            const articleId = req.query.id
+
+            const likeCount = await ArticleService.like(articleId, id, next)
+            res.send({likeCount})
+        }catch (e) {
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async dislike(req, res, next){
+        try{
+            const id = req.user.id
+            const articleId = req.query.id
+
+            const likeCount = await ArticleService.dislike(articleId, id, next)
+            res.send({likeCount})
+        }catch (e) {
+            console.log(e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
 }
 
 export const ArticleController = new Article()

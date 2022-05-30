@@ -40,6 +40,25 @@ class ArticleServiceClass{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+
+    async like(articleId, userId, next){
+        try{
+            return await ArticleRepository.like(articleId, userId, next)
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async dislike(articleId, userId, next){
+        try{
+            return await ArticleRepository.dislike(articleId, userId, next)
+        }catch (e) {
+
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
 }
 
 export const ArticleService = new ArticleServiceClass()

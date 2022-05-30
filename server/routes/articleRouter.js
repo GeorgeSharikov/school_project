@@ -8,5 +8,10 @@ router.get('/getFeedArticles',ArticleController.getFeedArticles)
 router.get('/getCountOfAllArticles', ArticleController.getCountOfAllArticles)
 router.get('/getArticle', ArticleController.getArticle)
 router.post('/createArticle', CheckAuth, ArticleController.createArticle)
+router.post('/like',CheckAuth, ArticleController.like)
+router.post('/dislike',CheckAuth, ArticleController.dislike)
+
+
+
 
 export const articleRouter = router

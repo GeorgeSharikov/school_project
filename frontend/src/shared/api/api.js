@@ -173,5 +173,39 @@ class Article{
             }
         }
     }
+    async like(articleId){
+        try{
+            const {data} = await instance.post(`${this.apiBase}/like/?id=${articleId}`, {},{
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+    async disLike(articleId){
+        try{
+            const {data} = await instance.post(`${this.apiBase}/dislike/?id=${articleId}`, {},{
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
 }
 export const ArticleApi = new Article('article')
