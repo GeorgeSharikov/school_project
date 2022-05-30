@@ -24,13 +24,7 @@ export const ShowArticles = () => {
                 }
             })
     );
-    useEffect(() => {
-        setLoading(true)
-        if(page*5 <= totalCount){
-            dispatch(getFeedArticles(page))
-        }
-        setLoading(false)
-    }, [page, dispatch, totalCount])
+
 
 
     useEffect(() => {
@@ -55,6 +49,15 @@ export const ShowArticles = () => {
             setFeedArticles([])
         }
     }, [dispatch])
+    useEffect(() => {
+        console.log(page, dispatch, totalCount)
+        setLoading(true)
+        if(page*5 <= totalCount || (totalCount < 5 && totalCount !== 0)){
+            console.log('here')
+            dispatch(getFeedArticles(page))
+        }
+        setLoading(false)
+    }, [page, dispatch, totalCount])
     return (
         <div>
                 {articlesFeed.length > 0 && articlesFeed.map((el, i) => {
