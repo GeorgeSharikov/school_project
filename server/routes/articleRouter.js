@@ -10,6 +10,8 @@ router.get('/getArticle', ArticleController.getArticle)
 router.post('/createArticle', CheckAuth, ArticleController.createArticle)
 router.post('/like',CheckAuth, ArticleController.like)
 router.post('/dislike',CheckAuth, ArticleController.dislike)
+router.post('/bookmark',CheckAuth, ArticleController.addBookmark)
+router.get('/getBookmarks',CheckAuth, ArticleController.getBookmarks)
 
 
 

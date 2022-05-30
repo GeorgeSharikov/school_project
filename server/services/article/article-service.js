@@ -59,6 +59,24 @@ class ArticleServiceClass{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+
+    async addBookmark(articleId, userId, next){
+        try{
+            return await ArticleRepository.addBookmark(articleId, userId, next)
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async getBookmarks(userId, next){
+        try{
+            return await ArticleRepository.getBookmarks(userId, next)
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
 }
 
 export const ArticleService = new ArticleServiceClass()

@@ -79,7 +79,10 @@ class Article{
     async like(articleId, userId, next){
         userId = String(userId)
         try{
-            let {likes, dislikes, like_count: likeCount} = await ArticleModel.findOne({where: {id: articleId}})
+            let {likes, dislikes, like_count: likeCount, is_moderated, is_draft} = await ArticleModel.findOne({where: {id: articleId}})
+            if(!is_moderated || is_draft){
+                return next(ApiError.internal('Статьи не найдено'))
+            }
             console.log(likes)
             likes = likes.split(" ")
             console.log(likes)
@@ -125,7 +128,10 @@ class Article{
     async dislike(articleId, userId, next){
         userId = String(userId)
         try{
-            let {likes, dislikes, like_count: likeCount} = await ArticleModel.findOne({where: {id: articleId}})
+            let {likes, dislikes, like_count: likeCount, is_moderated, is_draft} = await ArticleModel.findOne({where: {id: articleId}})
+            if(!is_moderated || is_draft){
+                return next(ApiError.internal('Статьи не найдено'))
+            }
             likes = likes.split(" ")
             dislikes = dislikes.split(" ")
 
@@ -160,7 +166,51 @@ class Article{
                 return likeCount
             }
         }catch (e) {
-            console.log('here')
+            console.log('error repasd', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+    async addBookmark(articleId, userId, next){
+        try{
+            const article = await ArticleModel.findOne({where: {id: articleId}})
+            if(!article){
+                return next(ApiError.internal('Такая статья не существует'))
+            }
+            const {is_moderated, is_draft} = article
+            let {bookmarks} = await UserModel.findOne({where: {id: userId}})
+
+            if(!is_moderated || is_draft){
+                return next(ApiError.internal('Статьи не найдено'))
+            }
+            if(bookmarks === null){
+                bookmarks = ''
+            }
+            bookmarks = bookmarks.split(" ")
+            if(!bookmarks.includes(articleId)){
+                bookmarks.push(articleId)
+            }else{
+                bookmarks = bookmarks.filter(el => el !== articleId)
+            }
+            bookmarks = bookmarks.join(" ")
+            await UserModel.update(
+                {bookmarks: bookmarks},
+                {where: {id: userId}}
+            )
+            return bookmarks.split(" ")
+        }catch (e) {
+            console.log('error repasd', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async getBookmarks( userId, next){
+        try{
+            let {bookmarks} = await UserModel.findOne({where: {id: userId}})
+            if(bookmarks === null){
+                bookmarks = ''
+            }
+            return bookmarks.split(" ")
+        }catch (e) {
             console.log('error repasd', e)
             next(ApiError.internal('Неизвестная ошибка'))
         }

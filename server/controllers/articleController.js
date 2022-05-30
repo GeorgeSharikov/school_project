@@ -61,6 +61,34 @@ class Article{
         }
     }
 
+    async addBookmark(req, res, next){
+        try{
+            const id = req.user.id
+            const articleId = req.query.id
+
+            const bookmarks = await ArticleService.addBookmark(articleId, id, next)
+            if(bookmarks){
+                res.send(bookmarks)
+            }
+        }catch (e) {
+            console.log(e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async getBookmarks(req, res, next){
+        try{
+            const userId = req.user.id
+
+            const bookmarks = await ArticleService.getBookmarks(userId, next)
+            if(bookmarks){
+                res.send(bookmarks)
+            }
+        }catch (e) {
+            console.log(e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
 }
 
 export const ArticleController = new Article()
