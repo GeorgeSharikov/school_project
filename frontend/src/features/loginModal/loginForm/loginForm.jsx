@@ -6,9 +6,11 @@ import { userAuthSelectors } from '../../../store/userAuthSlice/slice';
 import {useActions} from '../../../shared/hooks/useActions'
 import styles from './ui.module.css'
 import { getPersonalData } from '../../../store/userPersonalData/slice';
+import {articleActions, getArticlesTotalCount, getFeedArticles} from "../../showArticles/model/slice.js";
 
 export const LoginForm = ({setModalVisible}) => {
     const dispatch = useDispatch()
+    const {setFeedArticles} = useActions(articleActions)
     const {setLoginError} = useActions(userAuthActions)
     const loginErrors = useSelector(state => userAuthSelectors.getIsLoginError(state))
     const [error, setError] = useState(loginErrors)
@@ -34,6 +36,9 @@ export const LoginForm = ({setModalVisible}) => {
     const logIn = async (data, callbackSubmit) => {
             dispatch(userLogIn(data))
                 .then((res) => {
+                    setFeedArticles([])
+                    dispatch(getFeedArticles(1))
+                    dispatch(getArticlesTotalCount({isModerated: true, id: null}))
                     if(!('error' in res)){
                         setModalVisible(false)
                     }
