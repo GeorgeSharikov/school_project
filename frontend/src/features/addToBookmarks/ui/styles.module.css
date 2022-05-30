@@ -2,8 +2,13 @@
     transition: color 0.1s;
     cursor: pointer;
     color: var(--gray-color);
+    fill: var(--gray-color);
     display: flex;
     align-items: center;
+}
+
+.bookmarkAddedColor {
+    fill: #4683d9 !important;
 }
 
 .bookmark:hover{
