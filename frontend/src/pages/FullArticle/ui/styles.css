@@ -1,15 +1,16 @@
 .page-wrapper{
     max-width: 1020px;
     margin: 0 auto;
+    padding-bottom: 30px;
+    background-color: #fff;
 }
 
 .content_wrapper{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
-    background-color: #fff;
     padding-top: 24px;
-    padding-bottom: 30px;
 }
 
 .content_wrapper .I-island-c{
@@ -78,8 +79,8 @@
 
 .content p{
     margin-bottom: 12px;
-    line-height: 26px;
-    font-size: 17px;
+    line-height: 25px;
+    font-size: 17.5px;
 }
 
 .content h2,h3,h4, h5, h6{
@@ -272,8 +273,19 @@
     }
 }
 
-
 .page-mask{
     display: flex;
     flex-direction: column;
+}
+
+.article-footer{
+
+}
+
+.footer-tools{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    font-size: 15px;
+    align-items: center;
 }
