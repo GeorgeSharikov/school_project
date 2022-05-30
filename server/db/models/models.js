@@ -21,6 +21,8 @@ export const ArticleModel = sequelize.define('article', {
     title_image: {type: DataTypes.TEXT},
     content: {type: DataTypes.TEXT},
     like_count: {type: DataTypes.INTEGER},
+    likes: {type: DataTypes.TEXT, defaultValue: "", allowNull: false},
+    dislikes: {type: DataTypes.TEXT, defaultValue: "", allowNull: false},
     userId: {type: DataTypes.INTEGER, foreignKey: true},
     is_moderated: {type: DataTypes.BOOLEAN, defaultValue: false},
     is_draft: {type: DataTypes.BOOLEAN, defaultValue: false},
@@ -29,7 +31,6 @@ export const ArticleModel = sequelize.define('article', {
     first_name: {type: DataTypes.STRING},
     last_name: {type: DataTypes.STRING},
 })
-
 UserModel.hasMany(ArticleModel)
 ArticleModel.belongsTo(UserModel)
 
