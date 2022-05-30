@@ -14,7 +14,7 @@ export const UserModel = sequelize.define('user', {
     role: {type: DataTypes.STRING, defaultValue: 'USER'},
     status: {type: DataTypes.STRING},
     avatar: {type: DataTypes.STRING, defaultValue: false},
-    bookmarks: {type: DataTypes.STRING},
+    bookmarks: {type: DataTypes.TEXT},
 })
 
 export const ArticleModel = sequelize.define('article', {
