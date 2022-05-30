@@ -3,12 +3,10 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styles from './ui/style.module.css'
 import {ArticleApi} from "../../shared/api/api.js";
-import {useSelector} from "react-redux";
-import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
 import {LoginModal} from "../loginModal/index.js";
 
-export const Like = ({likesCount, likes, dislikes, articleId}) => {
-    let userId = useSelector(state => userAuthSelectors.getUserPersonalId(state))
+export const Like = ({likesCount, likes, dislikes, articleId, authUserId}) => {
+    let userId = authUserId
     const [isLiked, setIsLiked] = useState(null)
     const [count, setCount] = useState(likesCount)
     const [isOpen, setIsOpen] = useState(false)
@@ -58,7 +56,6 @@ export const Like = ({likesCount, likes, dislikes, articleId}) => {
             console.log(e)
         }
     }
-    console.log(isLiked)
     return (
         <>
             <div className={styles.container}>
