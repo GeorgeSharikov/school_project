@@ -21,6 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "sequelize": "^6.17.0",
+    "sequelize-date-no-tz-postgres": "^1.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
