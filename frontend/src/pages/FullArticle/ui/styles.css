@@ -58,6 +58,11 @@
     margin-bottom: 12px;
 }
 
+.content p a{
+    color: #3766a9!important;
+    border-bottom: 1px solid #bed0ea!important;
+    cursor: pointer;
+}
 
 .content ol, .content ul{
     margin: 12px 0;
