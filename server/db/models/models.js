@@ -1,6 +1,9 @@
 import {sequelize} from '../dbConnection.js'
 import pkg from "sequelize";
 const {DataTypes} = pkg
+import withDateNoTz from 'sequelize-date-no-tz-postgres'
+
+const CustomDataTypes = withDateNoTz(DataTypes)
 
 export const UserModel = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -30,7 +33,8 @@ export const ArticleModel = sequelize.define('article', {
     show_blocks_id: {type: DataTypes.STRING},
     first_name: {type: DataTypes.STRING},
     last_name: {type: DataTypes.STRING},
+    createdAt: {type: CustomDataTypes.DATE_NO_TZ},
+    updatedAt: {type: CustomDataTypes.DATE_NO_TZ},
 })
 UserModel.hasMany(ArticleModel)
 ArticleModel.belongsTo(UserModel)
-
