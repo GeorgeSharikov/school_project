@@ -6,7 +6,7 @@ import { userAuthSelectors } from '../../../store/userAuthSlice/slice';
 import {useActions} from '../../../shared/hooks/useActions'
 import styles from './ui.module.css'
 import { getPersonalData } from '../../../store/userPersonalData/slice';
-import {articleActions, getArticlesTotalCount, getFeedArticles} from "../../showArticles/model/slice.js";
+import {articleActions, getArticlesTotalCount, getBookmarks, getFeedArticles} from "../../showArticles/model/slice.js";
 
 export const LoginForm = ({setModalVisible}) => {
     const dispatch = useDispatch()
@@ -44,6 +44,7 @@ export const LoginForm = ({setModalVisible}) => {
                     }
                     callbackSubmit(false)
                     dispatch(getPersonalData())
+                    dispatch(getBookmarks())
                 })
     }
 
