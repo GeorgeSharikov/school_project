@@ -33,15 +33,17 @@ export const Profile = (props) => {
                             <Link to='' className={styles.tab}>
                                 <span>Статьи</span>
                             </Link>
-                            <Link to='drafts' className={styles.tab}>
+                            {isMyOwn && <Link to='drafts' className={styles.tab}>
                                 <span>Черновики</span>
-                            </Link> 
+                            </Link>}
                         </div>
                     </div>
             </div>
 
             <div className={styles.profileContentWrapper}>
-                <Outlet />
+                <div className={styles.articlesWrapper}>
+                    <Outlet />
+                </div>
             </div>
         </div>
     );
