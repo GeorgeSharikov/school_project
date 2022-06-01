@@ -135,6 +135,78 @@ class Article{
         }
     }
 
+    async getFeedArticlesById(page, id){
+        try{
+            const response = await instance.get(`${this.apiBase}/getProfileArticles/?page=${page}&id=${id}`, {
+                headers: getAuthHeaders()
+            })
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
+    async getDraftsArticles(page, id){
+        try{
+            const response = await instance.get(`${this.apiBase}/getDraftsArticles`, {
+                headers: getAuthHeaders()
+            })
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
+    async getFeedArticlesByBookmarks(){
+        try{
+            const response = await instance.get(`${this.apiBase}/getBookmarksArticles/`, {
+                headers: getAuthHeaders()
+            })
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
+    async getModerationArticles(page, id){
+        try{
+            const response = await instance.get(`${this.apiBase}/getArticlesForModeration`, {
+                headers: getAuthHeaders()
+            })
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
     async getArticlesTotalCount({isModerated, id}){
         try{
             let queryStrID = id ? `profileId=${id}` : ''

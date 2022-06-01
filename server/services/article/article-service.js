@@ -5,7 +5,9 @@ import {ApiError} from "../../error/ApiError.js";
 class ArticleServiceClass{
     async getFeed(page){
         try{
-            return await ArticleRepository.getFeedArticlesByPage(page)
+            const condition = {is_moderated: true}
+
+            return await ArticleRepository.getFeedArticlesByPage(page, condition)
         }catch (e) {
             throw new Error(e)
         }
@@ -72,6 +74,55 @@ class ArticleServiceClass{
     async getBookmarks(userId, next){
         try{
             return await ArticleRepository.getBookmarks(userId, next)
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async getFeedArticlesById(id, page, next){
+        try{
+            id = Number(id)
+            const condition = {is_moderated: true, userId: id}
+            return await ArticleRepository.getFeedArticlesByPage(page, condition)
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async getDraftsArticlesById(id, page, next){
+        try{
+            id = Number(id)
+            const condition = {is_moderated: false, userId: id, is_draft: true}
+
+            return await ArticleRepository.getFeedArticlesByPage(page, condition)
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async getFeedArticlesByBookmarks(profileId, page, next){
+        try{
+            let bookmarks = await ArticleRepository.getBookmarks(profileId)
+            if(!bookmarks || bookmarks.length === 0 || (bookmarks[0] === '' && bookmarks.length === 1)){
+                return []
+            }
+            bookmarks = bookmarks.filter(el => el !== '')
+            bookmarks = bookmarks.map(el => Number(el))
+            const condition = {id:  bookmarks}
+            return await ArticleRepository.getFeedArticlesByPage(page, condition)
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+    async getModerationArticles(page, next){
+        try{
+            const condition = {is_moderated: true, is_draft: false}
+
+            return await ArticleRepository.getFeedArticlesByPage(page, condition)
         }catch (e) {
             console.log('error ser', e)
             next(ApiError.internal('Неизвестная ошибка'))

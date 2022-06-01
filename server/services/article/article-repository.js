@@ -2,13 +2,11 @@ import {ArticleModel, UserModel} from "../../db/models/models.js";
 import {ApiError} from "../../error/ApiError.js";
 
 class Article{
-    async getFeedArticlesByPage(page){
+    async getFeedArticlesByPage(page, condition){
         try{
             const amount = page*5
             const articles = await ArticleModel.findAll({
-                where: {
-                    is_moderated: true,
-                },
+                where: condition,
                 attributes: ['id','title','title_paragraph','title_image','content','like_count','userId', 'first_name', 'last_name', 'createdAt', 'likes', 'dislikes'],
                 order: [['createdAt', 'DESC']],
                 offset: amount-5,

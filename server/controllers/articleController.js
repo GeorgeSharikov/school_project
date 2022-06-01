@@ -5,6 +5,7 @@ class Article{
     async getFeedArticles(req, res, next){
         try{
             const page = req.query.page
+
             const articles = await ArticleService.getFeed(page)
             res.send(articles)
         }catch (e) {
@@ -84,6 +85,67 @@ class Article{
             if(bookmarks){
                 res.send(bookmarks)
             }
+        }catch (e) {
+            console.log(e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+
+    async getFeedArticlesById(req, res, next){
+        try{
+            const profileId = req.query.id
+            const page = req.query.page
+
+            const articles = await ArticleService.getFeedArticlesById(profileId, page, next)
+            res.send(articles)
+        }catch (e) {
+            console.log(e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+
+    async getDraftsArticles(req, res, next){
+        try{
+            let profileId = req.query.id
+            profileId = Number(profileId)
+            const authUserId = req.user.id
+            const page = req.query.page
+
+            if(authUserId !== profileId){
+                next(ApiError.badRequest('Статей не найдено.'))
+            }
+            const articles = await ArticleService.getDraftsArticlesById(profileId, page, next)
+            res.send(articles)
+        }catch (e) {
+            console.log(e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+    async getFeedArticlesByBookmarks(req, res, next){
+        try{
+            let profileId = req.query.id
+            profileId = Number(profileId)
+            const page = req.query.page
+            const authUserId = req.user.id
+            console.log(authUserId, profileId)
+            if(authUserId !== profileId){
+                next(ApiError.badRequest('Статей не найдено.'))
+            }
+            const articles = await ArticleService.getFeedArticlesByBookmarks(profileId, page, next)
+            res.send(articles)
+        }catch (e) {
+            console.log(e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async getModerationArticles(req, res, next){
+        try{
+            const page = req.query.page
+            const articles = await ArticleService.getModerationArticles(page)
+            res.send(articles)
         }catch (e) {
             console.log(e)
             next(ApiError.internal('Неизвестная ошибка'))
