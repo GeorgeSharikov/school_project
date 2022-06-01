@@ -8,7 +8,7 @@
     align-items: stretch;
     font-size: 16px;
     line-height: 1.5em;
-
+    justify-content: space-between;
 }
 .header a{
     transition: color 0.2s;
@@ -17,3 +17,6 @@
     color: var(--blue-hover-color);
 }
 
+.info{
+    display: flex;
+}
