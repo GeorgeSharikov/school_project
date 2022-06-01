@@ -81,9 +81,7 @@ class Article{
             if(!is_moderated || is_draft){
                 return next(ApiError.internal('Статьи не найдено'))
             }
-            console.log(likes)
             likes = likes.split(" ")
-            console.log(likes)
             dislikes = dislikes.split(" ")
 
             if(!likes.includes(userId) &&!dislikes.includes(userId)){
@@ -213,6 +211,22 @@ class Article{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+
+    async getBookmarksTotalCount( userId, next){
+        try{
+            let {bookmarks} = await UserModel.findOne({where: {id: userId}})
+            if(bookmarks === null){
+                bookmarks = ''
+            }
+            bookmarks = bookmarks.split(" ")
+            bookmarks = bookmarks.filter(el => el !== '')
+            return bookmarks.length
+        }catch (e) {
+            console.log('error repasd', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
 }
 
 export const ArticleRepository = new Article()

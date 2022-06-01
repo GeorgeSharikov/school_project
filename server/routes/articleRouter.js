@@ -16,6 +16,8 @@ router.post('/dislike',CheckAuth, ArticleController.dislike)
 
 router.post('/bookmark',CheckAuth, ArticleController.addBookmark)
 router.get('/getBookmarks',CheckAuth, ArticleController.getBookmarks)
+router.get('/getBookmarksTotalCount',CheckAuth, ArticleController.getBookmarksTotalCount)
+
 
 router.get('/getFeedArticlesById', ArticleController.getFeedArticlesById)
 router.get('/getDraftsArticles',CheckAuth, ArticleController.getDraftsArticles)

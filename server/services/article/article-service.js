@@ -71,6 +71,15 @@ class ArticleServiceClass{
         }
     }
 
+    async getBookmarksTotalCount(userId, next){
+        try{
+            return await ArticleRepository.getBookmarksTotalCount(userId, next)
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
     async getBookmarks(userId, next){
         try{
             return await ArticleRepository.getBookmarks(userId, next)
@@ -79,7 +88,6 @@ class ArticleServiceClass{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
-
     async getFeedArticlesById(id, page, next){
         try{
             id = Number(id)

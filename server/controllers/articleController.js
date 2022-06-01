@@ -91,6 +91,17 @@ class Article{
         }
     }
 
+    async getBookmarksTotalCount(req, res, next){
+        try{
+            const userId = req.user.id
+
+            const count = await ArticleService.getBookmarksTotalCount(userId, next)
+             res.send({totalCount: count})
+        }catch (e) {
+            console.log(e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
 
     async getFeedArticlesById(req, res, next){
         try{
@@ -125,14 +136,9 @@ class Article{
     }
     async getFeedArticlesByBookmarks(req, res, next){
         try{
-            let profileId = req.query.id
+            let profileId = req.user.id
             profileId = Number(profileId)
             const page = req.query.page
-            const authUserId = req.user.id
-            console.log(authUserId, profileId)
-            if(authUserId !== profileId){
-                next(ApiError.badRequest('Статей не найдено.'))
-            }
             const articles = await ArticleService.getFeedArticlesByBookmarks(profileId, page, next)
             res.send(articles)
         }catch (e) {
@@ -151,6 +157,7 @@ class Article{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+
 }
 
 export const ArticleController = new Article()
