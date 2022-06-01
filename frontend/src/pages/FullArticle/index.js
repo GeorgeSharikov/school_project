@@ -9,11 +9,14 @@ import {Navigate} from "react-router-dom";
 import Skeleton from "@mui/material/Skeleton";
 import {useActions} from "../../shared/hooks/useActions.jsx";
 import {Like} from "../../features/likes/index.js";
+import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
+import {AddToBookMarks} from "../../features/addToBookmarks/index.js";
 
 export const FullArticle = (props) => {
     const {setErrorMessage, setArticleInformation} = useActions(articleInfoActions)
     const dispatch = useDispatch()
 
+    const authUserId = useSelector(state => userAuthSelectors.getUserPersonalId(state))
     const {id} = useParams()
     const [isFetching, setIsFetching] = useState(true)
     const {content, userId, first_name: firstName, last_name: lastName, like_count: likeCount, createdAt, likes, dislikes} = useSelector(state => articleInfoSelectors.getArticleInfo(state))
@@ -33,7 +36,8 @@ export const FullArticle = (props) => {
     }
 
     return (
-        <div className={'page-wrapper'}>
+        <div className={'full-article'}>
+            <div className={'page-wrapper'}>
                 <div className={'content_wrapper'}>
                     {isFetching
                         ? <div className={'page-mask I-island-a'}>
@@ -50,13 +54,18 @@ export const FullArticle = (props) => {
                             <div className={'article-footer I-island-a'}>
                                 <div className={'footer-tools'}>
                                     <ArticleAvatar author={`${firstName} ${lastName}`} authorId={userId} sizeH={40} sizeW={40}/>
-                                    <Like likesCount={likeCount} likes={likes} dislikes={dislikes} authorId={userId} articleId={id}/>
+                                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                        <Like likesCount={likeCount} likes={likes} dislikes={dislikes} authUserId={authUserId} articleId={id}/>
+                                        <div style={{marginLeft: '20px'}}>
+                                            <AddToBookMarks articleId={id} authUserId={authUserId} />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </>
                     }
                 </div>
+            </div>
         </div>
-
     );
 }
