@@ -155,7 +155,7 @@ class Article{
 
     async getDraftsArticles(page, id){
         try{
-            const response = await instance.get(`${this.apiBase}/getDraftsArticles`, {
+            const response = await instance.get(`${this.apiBase}/getDraftsArticles?id=${id}&page=${page}`, {
                 headers: getAuthHeaders()
             })
             return response
@@ -170,6 +170,25 @@ class Article{
             }
         }
     }
+
+    async getDraftsTotalCount(){
+        try{
+            const response = await instance.get(`${this.apiBase}/getDraftsTotalCount`, {
+                headers: getAuthHeaders()
+            })
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
 
     async getFeedArticlesByBookmarks(page){
         try{
