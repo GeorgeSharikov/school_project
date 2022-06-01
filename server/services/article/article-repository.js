@@ -30,8 +30,8 @@ class Article{
             if(!article){
                 next(ApiError.badRequest('Статья  не найдена'))
             }else{
-                const {content, title, userId, first_name, last_name, like_count, createdAt, likes, dislikes} = article
-                return {content, title, userId, first_name, last_name, like_count, createdAt, likes, dislikes}
+                const {content, title, userId, first_name, last_name, like_count, createdAt, likes, dislikes, is_draft: isDraft} = article
+                return {content, title, userId, first_name, last_name, like_count, createdAt, likes, dislikes, isDraft}
             }
         }catch (e) {
             next(ApiError.badRequest('Неизвестная ошибка.'))

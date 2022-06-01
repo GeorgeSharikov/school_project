@@ -14,12 +14,13 @@ import {AddToBookMarks} from "../../features/addToBookmarks/index.js";
 
 export const FullArticle = (props) => {
     const {setErrorMessage, setArticleInformation} = useActions(articleInfoActions)
+
     const dispatch = useDispatch()
 
     const authUserId = useSelector(state => userAuthSelectors.getUserPersonalId(state))
     const {id} = useParams()
     const [isFetching, setIsFetching] = useState(true)
-    const {content, userId, first_name: firstName, last_name: lastName, like_count: likeCount, createdAt, likes, dislikes} = useSelector(state => articleInfoSelectors.getArticleInfo(state))
+    const {content, userId, first_name: firstName, last_name: lastName, like_count: likeCount, createdAt, likes, dislikes, isDraft} = useSelector(state => articleInfoSelectors.getArticleInfo(state))
     const errorMessage = useSelector(state => articleInfoSelectors.getArticleError(state))
 
     useEffect(() => {
@@ -54,12 +55,18 @@ export const FullArticle = (props) => {
                             <div className={'article-footer I-island-a'}>
                                 <div className={'footer-tools'}>
                                     <ArticleAvatar author={`${firstName} ${lastName}`} authorId={userId} sizeH={40} sizeW={40}/>
-                                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                                        <Like likesCount={likeCount} likes={likes} dislikes={dislikes} authUserId={authUserId} articleId={id}/>
+                                    {!isDraft && <div style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center'
+                                    }}>
+                                        <Like likesCount={likeCount} likes={likes} dislikes={dislikes}
+                                              authUserId={authUserId} articleId={id}/>
                                         <div style={{marginLeft: '20px'}}>
-                                            <AddToBookMarks articleId={id} authUserId={authUserId} />
+                                            <AddToBookMarks articleId={id} authUserId={authUserId}/>
                                         </div>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </>
