@@ -1,15 +1,15 @@
-import {Link, Outlet, useParams} from "react-router-dom";
+import {NavLink, Outlet, useLocation, useParams} from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { userAuthSelectors } from "../../store/userAuthSlice/slice";
 import { getOtherPersonalData, getPersonalData, personalDataSelectors } from "../../store/userPersonalData/slice";
 import { useEffect } from "react";
-import styles from './ui.module.css'
+import styles from './styles.module.css'
 import { ProfileAvatar } from "../../features/avatar";
 import { ProfileStatus } from "../../features/status";
-import {ProfileArticleFeed} from "../profileArticleFeed/index.js";
 
 export const Profile = (props) => {
     const dispatch = useDispatch()
+    const location = useLocation()
 
     const {id} = useParams()
     const myId = useSelector(state => userAuthSelectors.getUserPersonalId(state)) 
@@ -25,6 +25,13 @@ export const Profile = (props) => {
         }
     }, [isMyOwn,id,dispatch])
 
+    const checkIfActive = () => {
+        const path = location.pathname.split('/')
+        if(path[path.length - 1] !== 'drafts'){
+            return `${styles.tab} ${styles.tabActive}`
+        }
+        return `${styles.tab}`
+    }
     const userData = useSelector(state => personalDataSelectors.getPeronalDataSelector(state, isMyOwn))
     return (
         <div className={styles.wrapper}>
@@ -34,12 +41,12 @@ export const Profile = (props) => {
                     <ProfileStatus status={userData.status}/>
                     <div className={styles.headerTabs}>
                         <div className={styles.tabsList}>
-                            <Link to='' className={styles.tab}>
+                            <NavLink to="" className={checkIfActive}>
                                 <span>Статьи</span>
-                            </Link>
-                            {isMyOwn && <Link to='drafts' className={styles.tab}>
+                            </NavLink>
+                            {isMyOwn && <NavLink to='drafts' className={({isActive}) => isActive ? `${styles.tab} ${styles.tabActive}` : `${styles.tab}`}>
                                 <span>Черновики</span>
-                            </Link>}
+                            </NavLink>}
                         </div>
                     </div>
             </div>
