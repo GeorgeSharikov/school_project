@@ -1,6 +1,5 @@
 import { SidebarToggle } from "../../features/sidebarToggle"
 import Box from "@mui/material/Box";
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import {AppBarStl, ToolbarStl} from "./ui/styledComponents.js";
 import {Link} from "react-router-dom";
 import {Search} from "../../features/search";
@@ -12,9 +11,10 @@ export const Header = () => {
             <AppBarStl>
                 <ToolbarStl>
                     <SidebarToggle />
-                    <Box sx={{pr: 2}}>
-                        <Link to={'/'}>
-                            <MeetingRoomIcon sx={{fontSize: 50, color: 'black'}}/>
+                    <Box>
+                        <Link to={'/'} style={{color: 'black', paddingRight: '20px', userSelect: 'none' , fontSize: '20px'}}>
+                            <span>Лицей</span>
+                            Days
                         </Link>
                     </Box>
                     <Search/>

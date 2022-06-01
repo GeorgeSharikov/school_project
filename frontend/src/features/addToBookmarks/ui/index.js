@@ -32,7 +32,6 @@ export const AddToBookMarks = ({articleId, authUserId}) => {
             setIsInBookmarks(true)
         }
     }
-    console.log(userBookmarks, userBookmarks.includes(articleId))
     return (
         <div className={styles.bookmark}>
             {isInBookmarks

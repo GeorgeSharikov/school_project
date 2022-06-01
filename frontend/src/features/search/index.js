@@ -3,6 +3,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import Box from "@mui/material/Box";
 import {FormStyled, InputStld} from "./ui/styledComponents.js";
 
+
+
 export const Search = (props) => {
     return (
     <Box  sx={{flexGrow: 1, maxWidth: '320px', mr: '12px'}}>
