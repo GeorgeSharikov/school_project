@@ -28,13 +28,14 @@ export const Like = ({likesCount, likes, dislikes, articleId, authUserId}) => {
             if(!userId) {
                 return setIsOpen(true)
             }
-            const {likeCount} = await ArticleApi.like(articleId)
+            const response = await ArticleApi.like(articleId)
+
             if(isLiked === true){
                 setIsLiked(null)
             }else{
                 setIsLiked(true)
             }
-            setCount(likeCount)
+            setCount(response.likeCount)
         }catch (e) {
             console.log(e)
         }

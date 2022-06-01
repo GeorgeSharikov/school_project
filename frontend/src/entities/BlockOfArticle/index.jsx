@@ -4,7 +4,7 @@ import Skeleton from "@mui/material/Skeleton";
 import {useDispatch, useSelector} from "react-redux";
 import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
 
-export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5, showOpt, showDelOpt, showEditOpt, setter, selectors}) => {
+export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5, showOpt, showDelOpt, showEditOpt, setter, selectors, isDraft}) => {
     const dispatch = useDispatch()
 
     const authUserId = useSelector(state => userAuthSelectors.getUserPersonalId(state))
@@ -65,7 +65,7 @@ export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5,
                         <PostItem  post={el} authUserId={authUserId}/>
                     </div>
                 }
-                return <PostItem post={el} key={el.id} authUserId={authUserId} showActions={showOpt} showDelAction={showDelOpt} showEditAction={showEditOpt}/>
+                return <PostItem post={el} key={el.id} authUserId={authUserId} isDraft={isDraft} showActions={showOpt} showDelAction={showDelOpt} showEditAction={showEditOpt}/>
             })}
             {loading && <div>
                 <Skeleton variant="text" />
