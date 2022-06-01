@@ -5,6 +5,7 @@ import {useEffect} from "react";
 import { useDispatch } from 'react-redux';
 import {checkUserAuth} from '../store/userAuthSlice/slice'
 import { getPersonalData } from '../store/userPersonalData/slice';
+import {getBookmarks} from "../features/showArticles/model/slice.js";
 
 
 export function App() {
@@ -12,7 +13,8 @@ export function App() {
 
   useEffect(() => {
       dispatch(checkUserAuth()).then(() => {
-        dispatch(getPersonalData())
+          dispatch(getPersonalData())
+          dispatch(getBookmarks())
       })
   }, [dispatch])
 
