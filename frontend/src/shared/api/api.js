@@ -137,7 +137,7 @@ class Article{
 
     async getFeedArticlesById(page, id){
         try{
-            const response = await instance.get(`${this.apiBase}/getProfileArticles/?page=${page}&id=${id}`, {
+            const response = await instance.get(`${this.apiBase}/getFeedArticlesById?page=${page}&id=${id}`, {
                 headers: getAuthHeaders()
             })
             return response
@@ -171,9 +171,9 @@ class Article{
         }
     }
 
-    async getFeedArticlesByBookmarks(){
+    async getFeedArticlesByBookmarks(page){
         try{
-            const response = await instance.get(`${this.apiBase}/getBookmarksArticles/`, {
+            const response = await instance.get(`${this.apiBase}/getFeedArticlesByBookmarks?page=${page}`, {
                 headers: getAuthHeaders()
             })
             return response
@@ -211,6 +211,24 @@ class Article{
         try{
             let queryStrID = id ? `profileId=${id}` : ''
             const response = await instance.get(`${this.apiBase}/getCountOfAllArticles/?isModerated=${isModerated}&${queryStrID}`, {
+                headers: getAuthHeaders()
+            })
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
+    async getBookmarksTotalCount(){
+        try{
+            const response = await instance.get(`${this.apiBase}/getBookmarksTotalCount`, {
                 headers: getAuthHeaders()
             })
             return response
