@@ -11,10 +11,14 @@ import {FullArticle} from "./FullArticle/index.js";
 import {PageNotFound} from "./PageNotFound/index.js";
 import {useActions} from "../shared/hooks/useActions.jsx";
 import {useEffect} from "react";
+import {Bookmarks} from "./Bookmarks/index.js";
+import {userAuthSelectors} from "../store/userAuthSlice/slice.js";
 
 export const Routing = () => {
     const isSidebarActive = useSelector(sideBarSelectors.getSidebarIsActive)
     const {setActive} = useActions(toggleActions)
+    const isAuth = useSelector(state => userAuthSelectors.getIsUserAuth(state))
+
     useEffect(() => {
         if(window.innerWidth < 859 && isSidebarActive){
             setActive()
@@ -31,6 +35,7 @@ export const Routing = () => {
                             <Route path="" element={<ProfileArticleFeed />} />
                             <Route path="drafts" element={<ProfileDraftsFeed />} />
                         </Route>
+                        {isAuth && <Route path={"/bookmarks"} element={<Bookmarks/>}/>}
                         <Route path={"/error-page-not-found"} element={<PageNotFound/>}/>
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>
