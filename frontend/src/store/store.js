@@ -4,6 +4,8 @@ import { userAuthSlice } from "./userAuthSlice/slice.js";
 import { personalDataSlice } from "./userPersonalData/slice.js";
 import {articleSlice} from "../features/showArticles/model/slice.js";
 import {articleInfoSlice} from "../features/getArticle/slice.js";
+import {articlesProfileSlice} from "../pages/profileArticleFeed/model/slice.js";
+import {BookmarksSlice} from "../pages/Bookmarks/model/slice.js";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +13,9 @@ export const store = configureStore({
         userAuth: userAuthSlice,
         personalData: personalDataSlice,
         article: articleSlice,
-        getArticle: articleInfoSlice
-    }
+        getArticle: articleInfoSlice,
+        profileArticles: articlesProfileSlice,
+        bookmarks: BookmarksSlice
+    },
+    devTools: true
 })
