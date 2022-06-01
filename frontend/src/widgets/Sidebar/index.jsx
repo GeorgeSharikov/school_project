@@ -9,13 +9,15 @@ import {useActions} from "../../shared/hooks/useActions.jsx";
 import {toggleActions} from "../../features/sidebarToggle/model/slice.js";
 import {SidebarToggle} from "../../features/sidebarToggle/index.jsx";
 import Box from "@mui/material/Box";
+import {useSelector} from "react-redux";
+import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
 
 export const SideBar = () => {
     const {setActive} = useActions(toggleActions)
+    const isAuth = useSelector(state => userAuthSelectors.getIsUserAuth(state))
 
     const ref = useRef()
     const handleClose = (event) => {
-        console.log(window.innerWidth)
         if(window.innerWidth < 859){
             setActive()
         }
@@ -53,12 +55,13 @@ export const SideBar = () => {
                             <p>Статьи</p>
                         </NavLink>
                     </div>
-                    <div className={styles.element} onClick={handleClose}>
-                        <NavLink to={'/bookmarks'} className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+                    {isAuth && <div className={styles.element} onClick={handleClose}>
+                        <NavLink to={'/bookmarks'}
+                                 className={({isActive}) => isActive ? styles.activeLink : styles.link}>
                             <BookmarkBorderOutlinedIcon className={styles.itemsIcons}/>
                             <p>Закладки</p>
                         </NavLink>
-                    </div>
+                    </div>}
                     <div className={styles.element} onClick={handleClose}>
                         <NavLink to={'/authors'} className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
                             <PeopleOutlineOutlinedIcon className={styles.itemsIcons}/>
