@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import styles from './ui.module.css'
 import { ProfileAvatar } from "../../features/avatar";
 import { ProfileStatus } from "../../features/status";
+import {ProfileArticleFeed} from "../profileArticleFeed/index.js";
 
 export const Profile = (props) => {
     const dispatch = useDispatch()
@@ -17,7 +18,10 @@ export const Profile = (props) => {
         if(isMyOwn){
             dispatch(getPersonalData())
         }else{
-             dispatch(getOtherPersonalData({id}))
+            if(myId !== null && id!==null){
+                dispatch(getOtherPersonalData({id}))
+            }
+
         }
     }, [isMyOwn,id,dispatch])
 
