@@ -10,6 +10,14 @@ export const getFeedArticles = createAsyncThunk(
     }
 )
 
+export const getFeedArticlesById = createAsyncThunk(
+    'article/getFeedArticlesById',
+    async ({page, id}, thunkAPI) => {
+        const {data} = await ArticleApi.getFeedArticlesById(page, id)
+        return data
+    }
+)
+
 export const getArticlesTotalCount = createAsyncThunk(
     'article/getArticlesTotalCount',
     async (params, thunkAPI) => {
@@ -17,6 +25,7 @@ export const getArticlesTotalCount = createAsyncThunk(
         return data
     }
 )
+
 
 export const addBookmark = createAsyncThunk(
     'article/addBookmark',
@@ -49,6 +58,10 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(getFeedArticles.fulfilled, (state, {payload}) => {
+            state.feedArticles = [...state.feedArticles, ...payload]
+            state.isFetching = false
+        })
+        builder.addCase(getFeedArticlesById.fulfilled, (state, {payload}) => {
             state.feedArticles = [...state.feedArticles, ...payload]
             state.isFetching = false
         })
