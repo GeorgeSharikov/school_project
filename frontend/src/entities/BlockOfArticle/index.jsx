@@ -2,25 +2,18 @@ import React, {useEffect, useRef, useState} from 'react';
 import {PostItem} from "../Post/ui/PostItem/index.js";
 import Skeleton from "@mui/material/Skeleton";
 import {useDispatch, useSelector} from "react-redux";
-import {useActions} from "../../shared/hooks/useActions.jsx";
-import {
-    articleActions,
-    articleSelectors,
-    getArticlesTotalCount,
-    getFeedArticles
-} from "../../features/showArticles/model/slice.js";
 import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
 
-export const BlockOfArticle = ({getArticles, getTotalCount, amount=5, showOpt, showDelOpt, showEditOpt}) => {
+export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5, showOpt, showDelOpt, showEditOpt, setter, selectors}) => {
     const dispatch = useDispatch()
-    const {setFeedArticles} = useActions(articleActions)
 
     const authUserId = useSelector(state => userAuthSelectors.getUserPersonalId(state))
-    const articlesFeed = useSelector(state => articleSelectors.getArticles(state))
-    const totalCount = useSelector(state => articleSelectors.totalArticlesCount(state))
+    const articlesFeed = useSelector(state => selectors.getArticles(state))
+    const totalCount = useSelector(state => selectors.totalArticlesCount(state))
     const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(false)
     const [lastElement, setLastElement] = useState(null);
+
 
     const observer = useRef(
         new IntersectionObserver(
@@ -51,9 +44,10 @@ export const BlockOfArticle = ({getArticles, getTotalCount, amount=5, showOpt, s
     useEffect(() => {
         dispatch(getTotalCount())
         return () => {
-            setFeedArticles([])
+            setter([])
         }
     }, [dispatch])
+
     useEffect(() => {
         const maxPage = Math.ceil(totalCount/amount)
         setLoading(true)
@@ -66,7 +60,7 @@ export const BlockOfArticle = ({getArticles, getTotalCount, amount=5, showOpt, s
     return (
         <div>
             {articlesFeed.length > 0 && articlesFeed.map((el, i) => {
-                if(i === articlesFeed.length-1 && !loading && page*5 <= totalCount ){
+                if(i === articlesFeed.length-1 && !loading && page*5 <= totalCount  ){
                     return <div key={el.id} ref={setLastElement}>
                         <PostItem  post={el} authUserId={authUserId}/>
                     </div>
@@ -79,4 +73,4 @@ export const BlockOfArticle = ({getArticles, getTotalCount, amount=5, showOpt, s
             </div>}
         </div>
     );
-}
+})
