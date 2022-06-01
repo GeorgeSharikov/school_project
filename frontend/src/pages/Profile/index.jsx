@@ -6,10 +6,12 @@ import { useEffect } from "react";
 import styles from './styles.module.css'
 import { ProfileAvatar } from "../../features/avatar";
 import { ProfileStatus } from "../../features/status";
+import {useNavigate} from "react-router-dom";
 
 export const Profile = (props) => {
     const dispatch = useDispatch()
     const location = useLocation()
+    const navigate = useNavigate()
 
     const {id} = useParams()
     const myId = useSelector(state => userAuthSelectors.getUserPersonalId(state)) 
@@ -23,7 +25,14 @@ export const Profile = (props) => {
             }
 
         }
-    }, [isMyOwn,id,dispatch])
+    }, [isMyOwn,myId,dispatch])
+    const path = location.pathname.split('/')
+    useEffect(() => {
+        if(!isMyOwn && myId !== null && id!==null && path[path.length - 1] === 'drafts'){
+            console.log('here')
+            return navigate('/')
+        }
+    }, [location.pathname, myId])
 
     const checkIfActive = () => {
         const path = location.pathname.split('/')
