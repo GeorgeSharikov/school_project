@@ -17,3 +17,14 @@
     padding-top: 16px;
     padding-bottom: 16px;
 }
+
+.rightPart{
+    display: inline-block;
+    width: 145px;
+}
+
+@media (max-width: 999px){
+    .rightPart{
+        display: none;
+    }
+}
