@@ -104,7 +104,7 @@ constructor() {
         return `<figure class="figure-image">
             <div class="I-island-c">
                 <div class='content-image '>
-                    <div style="max-width: 1020px;max-height: ${height}px; width: 1024px">
+                    <div style="max-width: 1020px;max-height: ${height}px;">
                         <div class="image-inner" style="padding-bottom: 0px; background: transparent;">
                             <img src="${url}"/>
                         </div>
