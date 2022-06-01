@@ -56,7 +56,6 @@ class ArticleServiceClass{
         try{
             return await ArticleRepository.dislike(articleId, userId, next)
         }catch (e) {
-
             console.log('error ser', e)
             next(ApiError.internal('Неизвестная ошибка'))
         }
@@ -133,6 +132,17 @@ class ArticleServiceClass{
             return await ArticleRepository.getFeedArticlesByPage(page, condition)
         }catch (e) {
             console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+
+    async getDraftsTotalCount(id, next){
+        try{
+            const condition = {userId: id, is_draft: true, is_moderated: false}
+            return await ArticleRepository.count(condition, next)
+        }catch (e) {
+            console.log('error repasd', e)
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }

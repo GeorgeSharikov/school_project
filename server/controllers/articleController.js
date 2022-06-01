@@ -55,7 +55,7 @@ class Article{
             const articleId = req.query.id
 
             const likeCount = await ArticleService.dislike(articleId, id, next)
-            res.send({likeCount})
+             res.send({likeCount})
         }catch (e) {
             console.log(e)
             next(ApiError.internal('Неизвестная ошибка'))
@@ -154,6 +154,18 @@ class Article{
             res.send(articles)
         }catch (e) {
             console.log(e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+
+    async getDraftsTotalCount(req, res, next){
+        try{
+            const id = req.user.id
+            const count = await ArticleService.getDraftsTotalCount(id,next)
+            res.send({totalCount: count})
+        }catch (e) {
+            console.log('error repasd', e)
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }

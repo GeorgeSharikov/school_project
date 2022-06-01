@@ -79,8 +79,10 @@ class Article{
         try{
             let {likes, dislikes, like_count: likeCount, is_moderated, is_draft} = await ArticleModel.findOne({where: {id: articleId}})
             if(!is_moderated || is_draft){
-                return next(ApiError.internal('Статьи не найдено'))
+                next(ApiError.internal('Статьи не найдено'))
+                return likeCount
             }
+
             likes = likes.split(" ")
             dislikes = dislikes.split(" ")
 
@@ -126,8 +128,10 @@ class Article{
         try{
             let {likes, dislikes, like_count: likeCount, is_moderated, is_draft} = await ArticleModel.findOne({where: {id: articleId}})
             if(!is_moderated || is_draft){
-                return next(ApiError.internal('Статьи не найдено'))
+                next(ApiError.internal('Статьи не найдено'))
+                return likeCount
             }
+
             likes = likes.split(" ")
             dislikes = dislikes.split(" ")
 

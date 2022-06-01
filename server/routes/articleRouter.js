@@ -20,7 +20,10 @@ router.get('/getBookmarksTotalCount',CheckAuth, ArticleController.getBookmarksTo
 
 
 router.get('/getFeedArticlesById', ArticleController.getFeedArticlesById)
+
 router.get('/getDraftsArticles',CheckAuth, ArticleController.getDraftsArticles)
+router.get('/getDraftsTotalCount',CheckAuth, ArticleController.getDraftsTotalCount)
+
 router.get('/getFeedArticlesByBookmarks',CheckAuth, ArticleController.getFeedArticlesByBookmarks)
 router.get('/getModerationArticles',CheckAccess('ADMIN'), ArticleController.getModerationArticles)
 
