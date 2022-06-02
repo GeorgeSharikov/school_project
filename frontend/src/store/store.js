@@ -7,6 +7,7 @@ import {articleInfoSlice} from "../features/getArticle/slice.js";
 import {articlesProfileSlice} from "../pages/profileArticleFeed/model/slice.js";
 import {BookmarksSlice} from "../pages/Bookmarks/model/slice.js";
 import {draftsSlice} from "../pages/profileDraftsFeed/model/slice.js";
+import {adminModerationSlice} from "../pages/AdminModerationFeed/model/slice.js";
 
 export const store = configureStore({
     reducer: {
@@ -17,7 +18,8 @@ export const store = configureStore({
         getArticle: articleInfoSlice,
         profileArticles: articlesProfileSlice,
         bookmarks: BookmarksSlice,
-        drafts: draftsSlice
+        drafts: draftsSlice,
+        adminModeration: adminModerationSlice
     },
     devTools: true
 })

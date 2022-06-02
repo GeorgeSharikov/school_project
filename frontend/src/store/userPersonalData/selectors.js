@@ -5,3 +5,7 @@ export const getPeronalDataSelector = (state, isOwn = true) => {
     return state.personalData.otherAccountData
 }
 export const getIsFetching = (state) => state.personalData.isFetching
+export const getUserFullName = (state) => {
+    let {firstName, lastName} = state.personalData.personalData
+    return `${firstName} ${lastName}`
+}

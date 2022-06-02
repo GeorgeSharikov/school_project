@@ -10,7 +10,7 @@ export const PostItem = ({post, authUserId, showActions = false, showDelAction=f
     const author = `${first_name} ${last_name}`
     return(
         <div className={styles.post}>
-            <PostHeader author={author} date={createdAt} authorId={authorId} showActions={showActions} showDelAction={showDelAction} showEditAction={showEditAction}/>
+            <PostHeader articleId={articleId} author={author} date={createdAt} authorId={authorId} showActions={showActions} showDelAction={showDelAction} showEditAction={showEditAction}/>
             <NavLink to={`/articles/${articleId}`}>
                 <PostContent title={title} titleParagraph={title_paragraph} secondTitleBlock={secondTitleBlock}/>
             </NavLink>

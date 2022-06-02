@@ -19,6 +19,13 @@ class Article{
             res.send(article)
         }
     }
+
+    async getArticleForEdit(req, res, next){
+        const id = req.query.id
+        const articleData = await ArticleService.getOneEditArticle(id, next)
+        res.send(articleData)
+    }
+
     async createArticle(req, res, next){
         try{
             const articleData = req.body
@@ -29,6 +36,40 @@ class Article{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+
+    async updateArticle(req, res, next){
+        try{
+            const articleData = req.body
+            const status = await ArticleService.update(articleData, next)
+            res.send({status})
+        }catch (e) {
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+    async delete(req, res, next){
+        try{
+            const articleId = req.query.articleId
+            const userId = req.user.id
+
+
+            const status = await ArticleService.delete(userId,articleId , next)
+            res.send({status})
+        }catch (e) {
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async deleteArticleByAdmin(req, res, next){
+        try{
+            const articleId = req.query.articleId
+
+            const status = await ArticleService.deleteArticleByAdmin(articleId , next)
+            res.send({status})
+        }catch (e) {
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
     async getCountOfAllArticles(req, res, next){
         try{
             const count = await ArticleService.countArticles(req.query, next)
@@ -157,7 +198,6 @@ class Article{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
-
 
     async getDraftsTotalCount(req, res, next){
         try{

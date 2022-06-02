@@ -5,15 +5,15 @@ import {ArticleAvatar} from "../../../../shared/assets/articleAvatar/index.jsx";
 import {ArticleDate} from "../../../../shared/assets/articleDate/index.jsx";
 import {PostActions} from "../../../../features/postActions/index.jsx";
 
-export const PostHeader = ({author,date, authorId, showActions, showEditAction, showDelAction}) => {
+export const PostHeader = ({author,date, authorId, showActions, showEditAction, showDelAction, articleId}) => {
     // toHumanDateFormat(date)
     return (
         <div className={styles.header}>
             <div className={styles.info}>
                 <ArticleAvatar author={author} authorId={authorId}/>
-                <ArticleDate date={date}/>
+                {/*<ArticleDate date={date}/>*/}
             </div>
-            {showActions && <PostActions showDelAction={showDelAction} showEditAction={showEditAction}/>}
+            {showActions && <PostActions showDelAction={showDelAction} showEditAction={showEditAction} articleId={articleId}/>}
         </div>
     );
 }

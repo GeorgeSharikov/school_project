@@ -4,6 +4,7 @@
     flex-direction: column;
     min-height: 0;
     flex: 1;
+    position: relative;
 }
 
 
@@ -50,6 +51,7 @@
     display: flex;
     align-items: center;
     position: relative;
+    justify-content: space-between;
 }
 
 .authorSelect{
@@ -165,4 +167,23 @@
     text-overflow: ellipsis;
     padding: 0 16px;
     margin: 0 auto;
+}
+
+.closeButton{
+    width: 26px;
+    height: 26px;
+    margin: 18px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-sizing: border-box;
+    user-select: none;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.closeButton:hover{
+    opacity: 1;
 }

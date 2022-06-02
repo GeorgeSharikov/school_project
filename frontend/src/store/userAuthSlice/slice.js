@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import jwt_decode from "jwt-decode";
 import * as selectors from './selectors.js'
 import {UserApi} from '../../shared/api/api'
+import {deleteCookie} from "../../shared/helpers/deleteCookie.js";
 
 export const checkUserAuth = createAsyncThunk(
     'userInfo/checkUserAuth',
@@ -39,6 +40,13 @@ const slice = createSlice({
         },
         setLoginError(state, {payload}){
             state.errorLoginMessage = payload
+        },
+        logOut(state, {payload}){
+            state.isAuth = false
+            state.userId = null
+            state.role = false
+            state.errorLoginMessage = null
+            deleteCookie()
         }
     },
     extraReducers: (builder) => {

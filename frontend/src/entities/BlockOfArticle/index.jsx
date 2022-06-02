@@ -3,6 +3,7 @@ import {PostItem} from "../Post/ui/PostItem/index.js";
 import Skeleton from "@mui/material/Skeleton";
 import {useDispatch, useSelector} from "react-redux";
 import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
+import styles from './styles.module.css'
 
 export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5, showOpt, showDelOpt, showEditOpt, setter, selectors, isDraft}) => {
     const dispatch = useDispatch()
@@ -11,7 +12,7 @@ export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5,
     const articlesFeed = useSelector(state => selectors.getArticles(state))
     const totalCount = useSelector(state => selectors.totalArticlesCount(state))
     const [page, setPage] = useState(1)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [lastElement, setLastElement] = useState(null);
 
 
@@ -56,7 +57,6 @@ export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5,
         }
         setLoading(false)
     }, [page, dispatch, totalCount])
-
     return (
         <div>
             {articlesFeed.length > 0 && articlesFeed.map((el, i) => {
@@ -70,6 +70,9 @@ export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5,
             {loading && <div>
                 <Skeleton variant="text" />
                 <Skeleton variant="rectangular" width={640} height={700} />
+            </div>}
+            {!loading && articlesFeed.length === 0 && <div className={styles.emptyPage}>
+                <div className={styles.emptyPageText}>Здесь еще нет статей.</div>
             </div>}
         </div>
     );

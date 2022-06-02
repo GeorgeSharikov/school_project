@@ -47,6 +47,11 @@ const slice = createSlice({
             state.feedArticles = payload
             state.totalArticlesCount = 0
         },
+        setEmpty(state, {payload}){
+            state.feedArticles = []
+            state.totalArticlesCount = 0
+            state.userBookmarks = []
+        }
     },
     extraReducers: builder => {
         builder.addCase(getFeedArticles.fulfilled, (state, {payload}) => {

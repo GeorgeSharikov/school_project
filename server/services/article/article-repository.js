@@ -38,6 +38,23 @@ class Article{
         }
     }
 
+    async getOneEditArticle(articleId, next){
+        try{
+            const article = await ArticleModel.findOne({
+                where: {
+                    id: articleId
+                }
+            })
+            if(!article){
+                next(ApiError.badRequest('Статья  не найдена'))
+            }else{
+                const {id, title, json_article_data, show_blocks_id} = article
+                return {id, title, json_article_data, show_blocks_id}
+            }
+        }catch (e) {
+            next(ApiError.badRequest('Неизвестная ошибка.'))
+        }
+    }
     async createOne(id, article, next){
         try{
             const user = await UserModel.findOne({where: {id: id}})
@@ -49,7 +66,7 @@ class Article{
                 content: articleHTML,
                 like_count: 0,
                 userId: id,
-                is_moderated: true,
+                is_moderated,
                 is_draft,
                 json_article_data: JSON.stringify(data),
                 show_blocks_id: blocksToFeed,
@@ -63,6 +80,42 @@ class Article{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+
+    async update(articleId, article, next){
+        try{
+            const {title, data, is_moderated, is_draft, articleHTML, title_paragraph, title_image, blocksToFeed} = article
+            await ArticleModel.update(
+                {
+                    title,
+                    title_paragraph,
+                    title_image,
+                    json_article_data: JSON.stringify(data),
+                    is_moderated,
+                    is_draft,
+                    content: articleHTML,
+                    show_blocks_id: blocksToFeed,
+                },
+                {where: {id: articleId}}
+            )
+            return 200
+        }catch (e) {
+            console.log('error rep', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async delete(condition, next){
+        try{
+            await ArticleModel.destroy({
+                where: condition
+            })
+            return 200
+        }catch (e) {
+            console.log('error rep', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
     async count(condition, next){
         try{
             return await ArticleModel.count({

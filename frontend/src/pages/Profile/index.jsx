@@ -2,11 +2,12 @@ import {NavLink, Outlet, useLocation, useParams} from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { userAuthSelectors } from "../../store/userAuthSlice/slice";
 import { getOtherPersonalData, getPersonalData, personalDataSelectors } from "../../store/userPersonalData/slice";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import styles from './styles.module.css'
 import { ProfileAvatar } from "../../features/avatar";
 import { ProfileStatus } from "../../features/status";
 import {useNavigate} from "react-router-dom";
+import {sideBarSelectors} from "../../features/sidebarToggle/model/slice.js";
 
 export const Profile = (props) => {
     const dispatch = useDispatch()
@@ -14,13 +15,18 @@ export const Profile = (props) => {
     const navigate = useNavigate()
 
     const {id} = useParams()
-    const myId = useSelector(state => userAuthSelectors.getUserPersonalId(state)) 
+    const myId = useSelector(state => userAuthSelectors.getUserPersonalId(state))
+    const isAuth = useSelector(state => userAuthSelectors.getIsUserAuth(state))
+
     const isMyOwn = Number(id) === myId
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
     useEffect(() => {
         if(isMyOwn){
             dispatch(getPersonalData())
         }else{
-            if(myId !== null && id!==null){
+            if(((myId !== null && isAuth) || !isAuth) && id!==null){
                 dispatch(getOtherPersonalData({id}))
             }
 
@@ -43,7 +49,7 @@ export const Profile = (props) => {
     }
     const userData = useSelector(state => personalDataSelectors.getPeronalDataSelector(state, isMyOwn))
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} >
             <div className={styles.profileHeaderWrapper}>
                     <ProfileAvatar ava={userData.avatar}/>
                     <h1 className={styles.name}>{userData.firstName}{userData.lastName}</h1>

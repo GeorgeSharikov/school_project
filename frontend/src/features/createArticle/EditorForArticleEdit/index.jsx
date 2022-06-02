@@ -1,17 +1,27 @@
-import styles from './ui/styles.module.css'
+import styles from '.././ui/styles.module.css'
 import EditorJS from "@editorjs/editorjs";
-import {settings} from "../../constants/editorJsSetteng.js";
+import {settings} from "../../../constants/editorJsSetteng.js";
 import {useEffect, useMemo, useRef, useState} from "react";
 import Textarea from 'react-expanding-textarea'
-import { SmallAvatar } from '../../shared/assets/avatar/smallAvatar';
-import {setActiveBlocks} from "../../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
-import {ArticleApi} from "../../shared/api/api.js";
-import {useOnClickOutside} from "../../shared/hooks/useClickOutside.jsx";
-import CloseIcon from "@mui/icons-material/Close.js";
-import {NotificationManager} from "react-notifications";
+import { SmallAvatar } from '../../../shared/assets/avatar/smallAvatar';
+import {
+    setActiveBlocks
+} from "../../../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
+import {NotificationManager} from 'react-notifications';
+import {useOnClickOutside} from "../../../shared/hooks/useClickOutside.jsx";
+import {ArticleApi} from "../../../shared/api/api.js";
+import CloseIcon from '@mui/icons-material/Close';
 
-export const ArticleEditor = ({close}) => {
-    const editor = useMemo(() => new EditorJS(settings), [])
+export const EditorForEditArticle = ({close, articleData}) => {
+    const {showBlocksId, title, id: articleId, jsonData} = articleData
+    setActiveBlocks(showBlocksId)
+    console.log(showBlocksId)
+    const {holder,placeholder,tools,tunes,i18n,logLevel,onChange} = settings
+    const editor = useMemo(() => new EditorJS({
+        holder,placeholder,tools,tunes,i18n,logLevel,onChange,
+        data: jsonData
+    }), [])
+
     const inputRef = useRef()
     const editorRef = useRef()
 
@@ -22,16 +32,16 @@ export const ArticleEditor = ({close}) => {
             setActiveBlocks([])
             const article = {data, title}
             console.log(article)
-            await ArticleApi.createArticle({article, isModerated: false, isDraft: false})
+            await ArticleApi.update({article, isModerated: true, isDraft: false, articleId})
+            NotificationManager.success('Статья отправлена на проверку.', '', 2000)
             close()
-            NotificationManager.success('Отправлена на проверку.', '', 2000)
         }catch (e) {
             NotificationManager.error('Статья не отправлена.', '', 2000)
             console.log('Saving failed: ', e)
         }
     }
 
-    const [isDisable, setIsDisable] = useState(true)
+    const [isDisable, setIsDisable] = useState(false)
     const handleChange = (event) => {
         let tmp = event.target.value.split("").filter(el => el!=='')
         tmp = tmp.join("")
@@ -63,26 +73,23 @@ export const ArticleEditor = ({close}) => {
     }, [])
 
     const handleClose = async () => {
-        try {
+        try{
             const data = await editor.save()
             const title = document.getElementById('titleArea').value
             setActiveBlocks([])
             const article = {data, title}
             console.log(article)
-            if(title !== ''){
-                await ArticleApi.createArticle({article, isModerated: false, isDraft: true})
-                NotificationManager.success('Добавлена в черновики.', '', 2000)
-            }
+            await ArticleApi.update({article, isModerated: false, isDraft: true, articleId})
+            NotificationManager.success('Статья сохранена.', '',2000)
             close()
         }catch (e) {
-            NotificationManager.error('Не добавлена в черновики.', '', 2000)
+            NotificationManager.error('Статья не сохранена.', '', 2000)
         }
 
     }
 
     const clickRef = useRef()
     useOnClickOutside(clickRef, handleClose)
-
 
     return (
         <div className={styles.editorContainer} ref={clickRef}>
@@ -98,31 +105,31 @@ export const ArticleEditor = ({close}) => {
                     <span className={styles.selectImg}>
                         <SmallAvatar />
                     </span>
-                        <span className={styles.authorName}>
+                    <span className={styles.authorName}>
                         Мой блог
                     </span>
                 </div>
-
             </div>
             <div className={styles.editorContent}>
                 <div className={styles.Ieditor}>
                     <Textarea rows="1"
-                                onKeyDown={onTitleChange}
-                                onChange={handleChange}
-                                id={'titleArea'}
-                                ref={inputRef}
-                                placeholder="Заголовок"
-                                maxLength="120"
-                                className={styles.inputTitle}
-                                style={{minHeight: 47, overflowY: 'hidden'}}
-                                
-                              />
+                              onKeyDown={onTitleChange}
+                              onChange={handleChange}
+                              id={'titleArea'}
+                              ref={inputRef}
+                              placeholder="Заголовок"
+                              maxLength="120"
+                              className={styles.inputTitle}
+                              style={{minHeight: 47, overflowY: 'hidden'}}
+                              defaultValue={title}
+                    />
                 </div>
                 <div ref={editorRef} id={'editorjs'} className={`${styles.editorJS}`}/>
             </div>
             <div className={styles.closeButton} onClick={close}>
                 <CloseIcon sx={{fontSize: 26}}/>
             </div>
+
         </div>
 
     );

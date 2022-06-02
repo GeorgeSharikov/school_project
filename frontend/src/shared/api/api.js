@@ -117,6 +117,43 @@ class Article{
         }
     }
 
+    async update(data){
+        try{
+            const {article, isModerated:is_moderated, isDraft: is_draft, articleId} = data
+            const response = await instance.put(`${this.apiBase}/updateArticle`, {articleId, article, is_moderated, is_draft},{
+                headers: getAuthHeaders()
+            })
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
+    async delete(id){
+        try{
+            const response = await instance.delete(`${this.apiBase}/deleteArticle?articleId=${id}`, {
+                headers: getAuthHeaders()
+            })
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
     async getFeedArticlesByPortions(page){
         try{
             const response = await instance.get(`${this.apiBase}/getFeedArticles/?page=${page}`, {
@@ -282,6 +319,28 @@ class Article{
             }
         }
     }
+
+    async getArticleForEditor(id){
+        try{
+            const {data} = await instance.get(`${this.apiBase}/getArticleForEditor/?id=${id}`, {
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch (e) {
+            if(e.response){
+                if(e.response.status === 404){
+                    throw new Error(e?.response?.data?.message)
+                }
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
     async like(articleId){
         try{
             const {data} = await instance.post(`${this.apiBase}/like/?id=${articleId}`, {},{

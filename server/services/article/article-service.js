@@ -12,9 +12,15 @@ class ArticleServiceClass{
             throw new Error(e)
         }
     }
+
     async getOne(articleId, next){
         return await ArticleRepository.getOne(articleId, next)
     }
+
+    async getOneEditArticle(articleId, next){
+        return await ArticleRepository.getOneEditArticle(articleId, next)
+    }
+
     async create(articleData, userId, next){
         try{
             const {article, is_moderated, is_draft} = articleData
@@ -27,6 +33,54 @@ class ArticleServiceClass{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+
+    async update(articleData, next){
+        try{
+            const {article, is_moderated, is_draft, articleId} = articleData
+            const {title, data} = article
+            const {articleHTML, title_paragraph, title_image, blocksToFeed} = JSONToHtml.convert(article)
+            const code = await ArticleRepository.update(articleId, {title, data, is_moderated, is_draft, articleHTML, title_paragraph, title_image, blocksToFeed}, next)
+            return code
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+    async delete(userId, articleId, next){
+        try{
+            const condition = {id: articleId, userId: userId}
+            const code = await ArticleRepository.delete(condition, next)
+            return code
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async deleteArticleByAdmin(articleId, next){
+        try{
+            const condition = {id: articleId}
+            const code = await ArticleRepository.delete(condition, next)
+            return code
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
+    async updateAndPublishDraft(articleData, articleId, next){
+        try{
+            const {article, is_moderated, is_draft} = articleData
+            const {title, data} = article
+            const {articleHTML, title_paragraph, title_image, blocksToFeed} = JSONToHtml.convert(article)
+            const result = await ArticleRepository.createOne(userId, {title, data, is_moderated, is_draft, articleHTML, title_paragraph, title_image, blocksToFeed}, next)
+            return result
+        }catch (e) {
+            console.log('error ser', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
     async countArticles(conditions, next){
         const conditionalObj = {}
         if(conditions.isModerated){

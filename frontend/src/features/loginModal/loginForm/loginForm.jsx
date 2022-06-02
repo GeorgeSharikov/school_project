@@ -5,8 +5,12 @@ import { userAuthActions, userLogIn } from '../../../store/userAuthSlice/slice';
 import { userAuthSelectors } from '../../../store/userAuthSlice/slice';
 import {useActions} from '../../../shared/hooks/useActions'
 import styles from './ui.module.css'
-import { getPersonalData } from '../../../store/userPersonalData/slice';
+import {getPersonalData, personalDataActions} from '../../../store/userPersonalData/slice';
 import {articleActions, getArticlesTotalCount, getBookmarks, getFeedArticles} from "../../showArticles/model/slice.js";
+import {articlesProfileActions} from "../../../pages/profileArticleFeed/model/slice.js";
+import {BookmarksActions} from "../../../pages/Bookmarks/model/slice.js";
+import {draftsActions} from "../../../pages/profileDraftsFeed/model/slice.js";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export const LoginForm = ({setModalVisible}) => {
     const dispatch = useDispatch()
@@ -15,6 +19,15 @@ export const LoginForm = ({setModalVisible}) => {
     const loginErrors = useSelector(state => userAuthSelectors.getIsLoginError(state))
     const [error, setError] = useState(loginErrors)
     const [validateErrors, setValidateErrors] = useState(false)
+
+    const navigate = useNavigate()
+
+    const {logOut} = useActions(userAuthActions)
+    const {setEmptyPersonalData} = useActions(personalDataActions)
+    const {setEmpty} = useActions(articleActions)
+    const {setProfileArticles} = useActions(articlesProfileActions)
+    const {setBookmarks} = useActions(BookmarksActions)
+    const {setDrafts} = useActions(draftsActions)
 
     const validate = (values) => {
         const errors = {};
@@ -34,10 +47,16 @@ export const LoginForm = ({setModalVisible}) => {
       };
 
     const logIn = async (data, callbackSubmit) => {
+            setEmptyPersonalData()
+            logOut()
+            setEmpty()
+            setProfileArticles()
+            setBookmarks()
+            setDrafts()
             dispatch(userLogIn(data))
                 .then((res) => {
+                    navigate("/", { replace: true })
                     setFeedArticles([])
-                    dispatch(getFeedArticles(1))
                     dispatch(getArticlesTotalCount({isModerated: true, id: null}))
                     if(!('error' in res)){
                         setModalVisible(false)

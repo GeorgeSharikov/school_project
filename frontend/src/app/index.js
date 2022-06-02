@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import {checkUserAuth} from '../store/userAuthSlice/slice'
 import { getPersonalData } from '../store/userPersonalData/slice';
 import {getBookmarks} from "../features/showArticles/model/slice.js";
+import {NotificationContainer} from "react-notifications";
 
 
 export function App() {
@@ -22,6 +23,7 @@ export function App() {
     <div className={'app'}>
       <Header />
       <Routing />
+      <NotificationContainer leaveTimeout={200} enterTimeout={200}/>
     </div>
   );
 }
