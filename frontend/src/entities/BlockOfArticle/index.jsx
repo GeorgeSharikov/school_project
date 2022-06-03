@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
 import styles from './styles.module.css'
 
-export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5, showOpt, showDelOpt, showEditOpt, setter, selectors, isDraft}) => {
+export const BlockOfArticle = React.memo(({adminOptions, getArticles, getTotalCount, amount=5, showOpt, showDelOpt, showEditOpt, setter, selectors, isDraft}) => {
     const dispatch = useDispatch()
 
     const authUserId = useSelector(state => userAuthSelectors.getUserPersonalId(state))
@@ -52,6 +52,7 @@ export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5,
     useEffect(() => {
         const maxPage = Math.ceil(totalCount/amount)
         setLoading(true)
+        console.log(page <= maxPage, totalCount < amount && totalCount !== 0, maxPage, totalCount)
         if(page <= maxPage || (totalCount < amount && totalCount !== 0)){
             dispatch(getArticles(page))
         }
@@ -62,10 +63,10 @@ export const BlockOfArticle = React.memo(({getArticles, getTotalCount, amount=5,
             {articlesFeed.length > 0 && articlesFeed.map((el, i) => {
                 if(i === articlesFeed.length-1 && !loading && page*5 <= totalCount  ){
                     return <div key={el.id} ref={setLastElement}>
-                        <PostItem  post={el} authUserId={authUserId}/>
+                        <PostItem adminOptions={adminOptions} post={el} authUserId={authUserId} isDraft={isDraft} showActions={showOpt} showDelAction={showDelOpt} showEditAction={showEditOpt}/>
                     </div>
                 }
-                return <PostItem post={el} key={el.id} authUserId={authUserId} isDraft={isDraft} showActions={showOpt} showDelAction={showDelOpt} showEditAction={showEditOpt}/>
+                return <PostItem adminOptions={adminOptions} post={el} key={el.id} authUserId={authUserId} isDraft={isDraft} showActions={showOpt} showDelAction={showDelOpt} showEditAction={showEditOpt}/>
             })}
             {loading && <div>
                 <Skeleton variant="text" />

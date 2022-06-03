@@ -13,11 +13,13 @@ import {useActions} from "../shared/hooks/useActions.jsx";
 import {useEffect} from "react";
 import {Bookmarks} from "./Bookmarks/index.js";
 import {userAuthSelectors} from "../store/userAuthSlice/slice.js";
+import {AdminModerationFeed} from "./AdminModerationFeed/index.js";
 
 export const Routing = () => {
     const isSidebarActive = useSelector(sideBarSelectors.getSidebarIsActive)
     const {setActive} = useActions(toggleActions)
     const isAuth = useSelector(state => userAuthSelectors.getIsUserAuth(state))
+    const role = useSelector(state => userAuthSelectors.getUserRole(state))
 
     useEffect(() => {
         if(window.innerWidth < 859 && isSidebarActive){
@@ -29,6 +31,7 @@ export const Routing = () => {
             {isSidebarActive && <SideBar />}
             <div className={styles.content}>
                     <Routes>
+
                         <Route path={'/'} element={<ArticlesFeed />}/>
                         <Route path={'/articles/:id'} element={<FullArticle />}/>
                         <Route path={'/profile/:id'} element={<Profile/>}>
@@ -36,6 +39,10 @@ export const Routing = () => {
                             <Route path="drafts" element={<ProfileDraftsFeed />} />
                         </Route>
                         {isAuth && <Route path={"/bookmarks"} element={<Bookmarks/>}/>}
+
+                        {role === 'ADMIN' && <Route path={"/moderation"} element={<AdminModerationFeed />}/>}
+                        {/*{role === 'ADMIN' && <Route path={"/moderation"} element={<AdminModerationFeed />}/>}*/}
+                        
                         <Route path={"/error-page-not-found"} element={<PageNotFound/>}/>
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>

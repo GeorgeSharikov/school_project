@@ -3,17 +3,17 @@ import {ArticleApi} from "../../../shared/api/api.js";
 import * as selectors from './selectors.js'
 
 export const getAdminModerationArticles = createAsyncThunk(
-    'profileArticles/getFeedArticlesById',
+    'adminModeration/getAdminModerationArticles',
     async (page, thunkAPI) => {
-        const {data} = await ArticleApi.getFeedArticlesById(page)
+        const {data} = await ArticleApi.getModerationArticles(page)
         return data
     }
 )
 
 export const getAdminModerationTotalCount = createAsyncThunk(
-    'profileArticles/getArticlesTotalCount',
+    'adminModeration/getAdminModerationTotalCount',
     async (params, thunkAPI) => {
-        const {data} = await ArticleApi.getArticlesTotalCount(params)
+        const {data} = await ArticleApi.getModerationTotalCount()
         return data
     }
 )

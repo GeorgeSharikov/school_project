@@ -22,6 +22,7 @@ import {articleActions, getArticlesTotalCount, getFeedArticles} from "../showArt
 import {articlesProfileActions} from "../../pages/profileArticleFeed/model/slice.js";
 import {BookmarksActions} from "../../pages/Bookmarks/model/slice.js";
 import {draftsActions} from "../../pages/profileDraftsFeed/model/slice.js";
+import {adminModerationActions} from "../../pages/AdminModerationFeed/model/slice.js";
 
 export const NavigationUser = (props) => {
     const [isModalVisible, setModalVisible] = useState(false)
@@ -34,6 +35,7 @@ export const NavigationUser = (props) => {
     const {setProfileArticles} = useActions(articlesProfileActions)
     const {setBookmarks} = useActions(BookmarksActions)
     const {setDrafts} = useActions(draftsActions)
+    const {setAdminModeration} = useActions(adminModerationActions)
 
     const navigate = useNavigate()
 
@@ -53,6 +55,7 @@ export const NavigationUser = (props) => {
         setProfileArticles()
         setBookmarks()
         setDrafts()
+        setAdminModeration()
         setIsListOpen(false)
         navigate("/", { replace: true })
         dispatch(getArticlesTotalCount({isModerated: true, id: null}))

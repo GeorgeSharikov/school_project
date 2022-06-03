@@ -181,7 +181,7 @@ class ArticleServiceClass{
     }
     async getModerationArticles(page, next){
         try{
-            const condition = {is_moderated: true, is_draft: false}
+            const condition = {is_moderated: false, is_draft: false}
 
             return await ArticleRepository.getFeedArticlesByPage(page, condition)
         }catch (e) {
@@ -200,6 +200,17 @@ class ArticleServiceClass{
             next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+
+    async getModerationTotalCount(next){
+        try{
+            const condition = {is_draft: false, is_moderated: false}
+            return await ArticleRepository.count(condition, next)
+        }catch (e) {
+            console.log('error repasd', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
 }
 
 export const ArticleService = new ArticleServiceClass()

@@ -1,18 +1,16 @@
-import styles from '.././ui/styles.module.css'
-import EditorJS from "@editorjs/editorjs";
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {setActiveBlocks} from "../../../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
 import {settings} from "../../../constants/editorJsSetteng.js";
-import {useEffect, useMemo, useRef, useState} from "react";
-import Textarea from 'react-expanding-textarea'
-import { SmallAvatar } from '../../../shared/assets/avatar/smallAvatar';
-import {
-    setActiveBlocks
-} from "../../../shared/helpers/showInFeedEditorBlockTune/showInFeedEditorBlockTune.js";
-import {NotificationManager} from 'react-notifications';
-import {useOnClickOutside} from "../../../shared/hooks/useClickOutside.jsx";
+import EditorJS from "@editorjs/editorjs";
 import {ArticleApi} from "../../../shared/api/api.js";
-import CloseIcon from '@mui/icons-material/Close';
+import {NotificationManager} from "react-notifications";
+import {useOnClickOutside} from "../../../shared/hooks/useClickOutside.jsx";
+import styles from "../ui/styles.module.css";
+import {SmallAvatar} from "../../../shared/assets/avatar/smallAvatar.jsx";
+import Textarea from "react-expanding-textarea";
+import CloseIcon from "@mui/icons-material/Close.js";
 
-export const EditorForEditArticle = ({close, articleData}) => {
+export const EditorForArticleEditAdmin = ({close, articleData}) => {
     const {showBlocksId, title, id: articleId, jsonData} = articleData
     setActiveBlocks(showBlocksId)
     console.log(showBlocksId)
@@ -32,11 +30,11 @@ export const EditorForEditArticle = ({close, articleData}) => {
             setActiveBlocks([])
             const article = {data, title}
             console.log(article)
-            await ArticleApi.update({article, isModerated: false, isDraft: false, articleId})
-            NotificationManager.success('Отправлена на проверку.', '', 2000)
+            await ArticleApi.update({article, isModerated: true, isDraft: false, articleId})
+            NotificationManager.success('Статья опубликована.', '', 2000)
             close()
         }catch (e) {
-            NotificationManager.error('Статья не отправлена.', '', 2000)
+            NotificationManager.error('Статья не опубликована.', '', 2000)
             console.log('Saving failed: ', e)
         }
     }
@@ -79,7 +77,7 @@ export const EditorForEditArticle = ({close, articleData}) => {
             setActiveBlocks([])
             const article = {data, title}
             console.log(article)
-            await ArticleApi.update({article, isModerated: false, isDraft: true, articleId})
+            await ArticleApi.update({article, isModerated: false, isDraft: false, articleId})
             NotificationManager.success('Статья сохранена.', '',2000)
             close()
         }catch (e) {

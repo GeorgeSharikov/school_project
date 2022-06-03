@@ -11,6 +11,7 @@ import {articlesProfileActions} from "../../../pages/profileArticleFeed/model/sl
 import {BookmarksActions} from "../../../pages/Bookmarks/model/slice.js";
 import {draftsActions} from "../../../pages/profileDraftsFeed/model/slice.js";
 import {useLocation, useNavigate} from "react-router-dom";
+import {adminModerationActions} from "../../../pages/AdminModerationFeed/model/slice.js";
 
 export const LoginForm = ({setModalVisible}) => {
     const dispatch = useDispatch()
@@ -28,6 +29,7 @@ export const LoginForm = ({setModalVisible}) => {
     const {setProfileArticles} = useActions(articlesProfileActions)
     const {setBookmarks} = useActions(BookmarksActions)
     const {setDrafts} = useActions(draftsActions)
+    const {setAdminModeration} = useActions(adminModerationActions)
 
     const validate = (values) => {
         const errors = {};
@@ -53,6 +55,7 @@ export const LoginForm = ({setModalVisible}) => {
             setProfileArticles()
             setBookmarks()
             setDrafts()
+            setAdminModeration()
             dispatch(userLogIn(data))
                 .then((res) => {
                     navigate("/", { replace: true })

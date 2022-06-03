@@ -1,5 +1,6 @@
 import {ArticleService} from "../services/article/article-service.js";
 import {ApiError} from "../error/ApiError.js";
+import {ArticleModel} from "../db/models/models.js";
 
 class Article{
     async getFeedArticles(req, res, next){
@@ -50,8 +51,6 @@ class Article{
         try{
             const articleId = req.query.articleId
             const userId = req.user.id
-
-
             const status = await ArticleService.delete(userId,articleId , next)
             res.send({status})
         }catch (e) {
@@ -210,6 +209,41 @@ class Article{
         }
     }
 
+    async getModerationTotalCount(req, res, next){
+        try{
+            const count = await ArticleService.getModerationTotalCount(next)
+            res.send({totalCount: count})
+        }catch (e) {
+            console.log('error repasd', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+    async publishArticle(req, res, next){
+        try{
+            const articleId = req.query.articleId
+            await ArticleModel.update(
+                {is_moderated: true},
+                {where: {id: articleId}}
+            )
+            res.send({status: 'ok'})
+        }catch (e) {
+            console.log('error repasd', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+    async declineArticle(req, res, next){
+        try{
+            const articleId = req.query.articleId
+            await ArticleModel.update(
+                {is_draft: true},
+                {where: {id: articleId}}
+            )
+            res.send({status: 'ok'})
+        }catch (e) {
+            console.log('error repasd', e)
+            next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
 }
 
 export const ArticleController = new Article()

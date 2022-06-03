@@ -3,7 +3,7 @@ import styles from './ui/styles.module.css'
 import {useRef, useState} from "react";
 import {useOnClickOutside} from "../../shared/hooks/useClickOutside.jsx";
 import {ArticleApi} from "../../shared/api/api.js";
-import {EditArticleEditorModal} from "../createArticle/ModalArticleEditor/index.jsx";
+import {EditArticleEditorModal, EditArticleEditorModalAdmin} from "../createArticle/ModalArticleEditor/index.jsx";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -12,9 +12,15 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import {NotificationManager} from "react-notifications";
 
-export const PostActions = ({showEditAction, showDelAction, articleId}) => {
+export const PostActions = ({showEditAction, showDelAction, articleId, adminOptions}) => {
     const [isEditorOpen, setIsEditorOpen] = useState(false)
+    const [isAdminEditorOpen, setIsAdminEditorOpen] = useState(false)
+
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+    const [isPublishDialogOpen, setIsPublishDialogOpen] = useState(false)
+    const [isDeclineDialogOpen, setIsDeclineDialogOpen] = useState(false)
+
+
 
     const [editorProps, setEditorProps] = useState({})
     const [isOpen, setIsOpen] = useState(false)
@@ -29,7 +35,11 @@ export const PostActions = ({showEditAction, showDelAction, articleId}) => {
             jsonData = JSON.parse(jsonData)
             console.log(jsonData)
             setEditorProps({showBlocksId, title, id, jsonData})
-            setIsEditorOpen(true)
+            if(adminOptions){
+                setIsAdminEditorOpen(true)
+            }else{
+                setIsEditorOpen(true)
+            }
         }catch (e) {
             console.log(e)
         }
@@ -47,6 +57,28 @@ export const PostActions = ({showEditAction, showDelAction, articleId}) => {
         }
     }
 
+    const publish = async () => {
+        try{
+            await ArticleApi.publish(articleId)
+            NotificationManager.success('Статья опубликована.', '', 2000)
+            setIsPublishDialogOpen(false)
+        }catch (e) {
+            NotificationManager.error('Статья не опубликована..', '', 2000)
+            console.log('Saving failed: ', e)
+        }
+    }
+
+    const decline = async () => {
+        try{
+            await ArticleApi.decline(articleId)
+            NotificationManager.success('Статья отменена.', '', 2000)
+            setIsDeclineDialogOpen(false)
+        }catch (e) {
+            NotificationManager.error('Статья не отменена.', '', 2000)
+            console.log('Saving failed: ', e)
+        }
+    }
+
     return (
         <div>
             <MoreVertIcon className={styles.actions} onClick={() => setIsOpen(true)}/>
@@ -54,9 +86,13 @@ export const PostActions = ({showEditAction, showDelAction, articleId}) => {
                     <div className={styles.actionContent}>
                         {showDelAction && <div className={styles.actionItem} onClick={() => setIsDeleteDialogOpen(true)}>Удалить</div>}
                         {showEditAction && <div className={styles.actionItem} onClick={getArticleForEditor}>Редакитровать</div>}
+                        {adminOptions && <div className={styles.actionItem} onClick={() => setIsPublishDialogOpen(true)}>Опубликовать</div>}
+                        {adminOptions && <div className={styles.actionItem} onClick={() => setIsDeclineDialogOpen(true)}>Отменить</div>}
                     </div>
             </div>}
             {isEditorOpen && <EditArticleEditorModal isVisible={isEditorOpen} handleClose={() => setIsEditorOpen(false)} articleData={editorProps}/>}
+            {isAdminEditorOpen && <EditArticleEditorModalAdmin isVisible={isAdminEditorOpen} handleClose={() => setIsAdminEditorOpen(false)} articleData={editorProps}/>}
+
             <Dialog
                 open={isDeleteDialogOpen}
                 onClose={() => setIsDeleteDialogOpen(false)}
@@ -72,6 +108,46 @@ export const PostActions = ({showEditAction, showDelAction, articleId}) => {
                         <Button onClick={() => setIsDeleteDialogOpen(false)}>Отмена</Button>
                         <Button onClick={deleteArticle} autoFocus>
                             Удалить
+                        </Button>
+                    </DialogActions>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog
+                open={isPublishDialogOpen}
+                onClose={() => setIsPublishDialogOpen(false)}
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Опубликовать"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {'Вы хотите спубликовать статью?'}
+                    </DialogContentText>
+                    <DialogActions>
+                        <Button onClick={() => setIsPublishDialogOpen(false)}>Отмена</Button>
+                        <Button onClick={publish} autoFocus>
+                            Опубликовать
+                        </Button>
+                    </DialogActions>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog
+                open={isDeclineDialogOpen}
+                onClose={() => setIsDeclineDialogOpen(false)}
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Отправить статью назад"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {'Вы хотите спубликовать статью?'}
+                    </DialogContentText>
+                    <DialogActions>
+                        <Button onClick={() => setIsDeclineDialogOpen(false)}>Отмена</Button>
+                        <Button onClick={decline} autoFocus>
+                            Отправить
                         </Button>
                     </DialogActions>
                 </DialogContent>

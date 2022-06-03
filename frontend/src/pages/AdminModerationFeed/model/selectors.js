@@ -1,2 +1,2 @@
-export const getArticles = (state) => state.profileArticles.feedArticles
-export const totalArticlesCount = (state) => state.profileArticles.totalArticlesCount
+export const getArticles = (state) => state.adminModeration.feedArticles
+export const totalArticlesCount = (state) => state.adminModeration.totalArticlesCount

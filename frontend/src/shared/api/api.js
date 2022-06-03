@@ -245,9 +245,27 @@ class Article{
         }
     }
 
-    async getModerationArticles(page, id){
+    async getModerationArticles(page){
         try{
-            const response = await instance.get(`${this.apiBase}/getArticlesForModeration`, {
+            const response = await instance.get(`${this.apiBase}/getModerationArticles?page=${page}`, {
+                headers: getAuthHeaders()
+            })
+            return response
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
+    async getModerationTotalCount(){
+        try{
+            const response = await instance.get(`${this.apiBase}/getModerationTotalCount`, {
                 headers: getAuthHeaders()
             })
             return response
@@ -395,6 +413,42 @@ class Article{
     async getBookmarks(){
         try{
             const data = await instance.get(`${this.apiBase}/getBookmarks`, {
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
+    async publish(id){
+        try{
+            const data = await instance.put(`${this.apiBase}/publishArticle?articleId=${id}`, {},{
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
+    async decline(id){
+        try{
+            const data = await instance.put(`${this.apiBase}/declineArticle?articleId=${id}`, {},{
                 headers: getAuthHeaders()
             })
             return data

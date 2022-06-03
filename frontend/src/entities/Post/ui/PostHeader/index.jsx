@@ -5,7 +5,7 @@ import {ArticleAvatar} from "../../../../shared/assets/articleAvatar/index.jsx";
 import {ArticleDate} from "../../../../shared/assets/articleDate/index.jsx";
 import {PostActions} from "../../../../features/postActions/index.jsx";
 
-export const PostHeader = ({author,date, authorId, showActions, showEditAction, showDelAction, articleId}) => {
+export const PostHeader = ({author,date, authorId, showActions, showEditAction, showDelAction, articleId, adminOptions}) => {
     // toHumanDateFormat(date)
     return (
         <div className={styles.header}>
@@ -13,7 +13,7 @@ export const PostHeader = ({author,date, authorId, showActions, showEditAction, 
                 <ArticleAvatar author={author} authorId={authorId}/>
                 {/*<ArticleDate date={date}/>*/}
             </div>
-            {showActions && <PostActions showDelAction={showDelAction} showEditAction={showEditAction} articleId={articleId}/>}
+            {showActions && <PostActions showDelAction={showDelAction} showEditAction={showEditAction} articleId={articleId} adminOptions={adminOptions}/>}
         </div>
     );
 }

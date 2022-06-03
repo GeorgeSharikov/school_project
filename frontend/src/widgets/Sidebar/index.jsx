@@ -11,10 +11,12 @@ import {SidebarToggle} from "../../features/sidebarToggle/index.jsx";
 import Box from "@mui/material/Box";
 import {useSelector} from "react-redux";
 import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 
 export const SideBar = () => {
     const {setActive} = useActions(toggleActions)
     const isAuth = useSelector(state => userAuthSelectors.getIsUserAuth(state))
+    const isUserAdmin = useSelector(state => userAuthSelectors.getIsUserAdmin(state))
 
     const ref = useRef()
     const handleClose = (event) => {
@@ -63,11 +65,25 @@ export const SideBar = () => {
                         </NavLink>
                     </div>}
                     <div className={styles.element} onClick={handleClose}>
-                        <NavLink to={'/authors'} className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+                        <NavLink to={'/about'} className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
                             <PeopleOutlineOutlinedIcon className={styles.itemsIcons}/>
                             <p>О нас</p>
                         </NavLink>
                     </div>
+                    {isUserAdmin &&<>
+                    <div className={styles.element} onClick={handleClose}>
+                        <NavLink to={'/moderation'} className={({isActive}) => isActive ? styles.activeLink : styles.link}>
+                            <LibraryAddCheckIcon className={styles.itemsIcons}/>
+                            <p>Модерация</p>
+                        </NavLink>
+                    </div>
+                     <div className={styles.element} onClick={handleClose}>
+                        <NavLink to={'/admin-panel'} className={({isActive}) => isActive ? styles.activeLink : styles.link}>
+                            <PeopleOutlineOutlinedIcon className={styles.itemsIcons}/>
+                            <p>Админ панель</p>
+                        </NavLink>
+                     </div>
+                    </>}
                 </div>
             </div>
 
