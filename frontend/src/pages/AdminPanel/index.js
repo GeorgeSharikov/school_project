@@ -6,7 +6,7 @@ export const AdminPanel = (props) => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <NavLink to="/user-creation" className={styles.tab}>
+                <NavLink to="registration" className={styles.tab}>
                     <span>Добавить пользоваетля</span>
                 </NavLink>
                 <NavLink to="users-list" className={styles.tab}>

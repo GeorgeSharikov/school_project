@@ -68,8 +68,58 @@ class User{
             }
         }
     }
+    async getAllUsers(){
+        try{
+            const {data} = await instance.get(`${this.apiBase}/getAllUsers`,  {
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch(e){
+            if(e.response){
+                if(e.response.status === 404){
+                    throw new Error(e?.response?.data?.message)
+                }
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+    async resetUserPassword(id){
+        try{
+            const {data} = await instance.put(`${this.apiBase}/resetUserPassword?id=${id}`,  {},{
+                headers: getAuthHeaders()
+            })
+            return {data}
+        }catch(e){
+            if(e.response){
+                if(e.response.status === 404){
+                    throw new Error(e?.response?.data?.message)
+                }
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+    async changeStatus(status){
+        try{
+            const {data} = await instance.put(`${this.apiBase}/changeStatus`, {status},{
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch(e){
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
 }
 export const UserApi = new User('user')
+
 class UserInfo{
     constructor(apiBase){
         this.apiBase = apiBase
@@ -106,9 +156,11 @@ class UserInfo{
                 throw new Error(e?.response?.data?.message)
             }else{
                 throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
-            } 
+            }
         }
     }
+
+
 }
 export const UserInfoApi = new UserInfo('userInfo')
 

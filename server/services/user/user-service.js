@@ -53,5 +53,18 @@ export class UserService{
 
         return generateJWT(user.id, email, user.role)
     }
+
+    static async getAllUsers(next){
+        const users = await UserRepository.getAllUsers(next)
+        return users
+    }
+    static async resetUserPassword(id, next){
+        const users = await UserRepository.resetUserPassword(id, next)
+        return users
+    }
+    static async changeStatus(status,id, next){
+        const statusData = await UserRepository.changeStatus(status,id, next)
+        return statusData
+    }
 }
 

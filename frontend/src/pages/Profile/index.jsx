@@ -51,9 +51,9 @@ export const Profile = (props) => {
     return (
         <div className={styles.wrapper} >
             <div className={styles.profileHeaderWrapper}>
-                    <ProfileAvatar ava={userData.avatar} />
-                    <h1 className={styles.name}>{userData.firstName}{userData.lastName}</h1>
-                    <ProfileStatus status={userData.status}/>
+                    <ProfileAvatar name={`${userData.firstName} ${userData.lastName}`} />
+                    <h1 className={styles.name}>{userData.firstName} {userData.lastName}</h1>
+                    <ProfileStatus status={userData.status} isMyOwn={isMyOwn}/>
                     <div className={styles.headerTabs}>
                         <div className={styles.tabsList}>
                             <NavLink to="" className={checkIfActive}>
