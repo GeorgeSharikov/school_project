@@ -12,6 +12,16 @@ export class UserRepository{
         }
     }
 
+    static async checkAdminInDB(next){
+        try{
+            const isUserExist = await UserModel.findOne({where: {role: 'ADMIN'}})
+            return !!isUserExist
+        }catch (e) {
+            console.log(e)
+            return next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
+
     static async createUser({email, password, firstName, lastName, role = 'USER'}, next){
         try{
             return await UserModel.create({email, password, firstName, lastName, role})

@@ -43,5 +43,15 @@ export class UserService{
          }
          return generateJWT(user.id, email, user.role)
     }
+    static async registrationAdmin({email, password, firstName, lastName, role}, next){
+        const isAdminExist = await UserRepository.checkAdminInDB(next)
+        if(isAdminExist){
+            return next(ApiError.badRequest('Человек с таким email уже существует.'))
+        }
+        const hashPassword = await bcrypt.hash(password, 5)
+        const user = await UserRepository.createUser({email, password: hashPassword, firstName, lastName, role}, next)
+
+        return generateJWT(user.id, email, user.role)
+    }
 }
 

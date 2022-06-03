@@ -24,6 +24,20 @@ class User{
         const token = generateJWT(req.user.id, req.user.email, req.user.role)
         res.json({token})
     }
+
+    async registrationAdmin(req, res, next){
+        const userData = {
+            email: 'admin@gmail.com',
+            password: '123456789',
+            firstName: 'Наталья',
+            lastName: 'Усова',
+            role: 'ADMIN',
+        }
+        const token = await UserService.registrationAdmin(userData, next)
+        if(token) {
+            res.json({token})
+        }
+    }
 }
 
 export const UserController = new User()
