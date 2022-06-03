@@ -52,7 +52,6 @@ export const BlockOfArticle = React.memo(({adminOptions, getArticles, getTotalCo
     useEffect(() => {
         const maxPage = Math.ceil(totalCount/amount)
         setLoading(true)
-        console.log(page <= maxPage, totalCount < amount && totalCount !== 0, maxPage, totalCount)
         if(page <= maxPage || (totalCount < amount && totalCount !== 0)){
             dispatch(getArticles(page))
         }

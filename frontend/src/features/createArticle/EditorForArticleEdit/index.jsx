@@ -11,11 +11,12 @@ import {NotificationManager} from 'react-notifications';
 import {useOnClickOutside} from "../../../shared/hooks/useClickOutside.jsx";
 import {ArticleApi} from "../../../shared/api/api.js";
 import CloseIcon from '@mui/icons-material/Close';
+import {useSelector} from "react-redux";
+import {userAuthSelectors} from "../../../store/userAuthSlice/slice.js";
 
 export const EditorForEditArticle = ({close, articleData}) => {
     const {showBlocksId, title, id: articleId, jsonData} = articleData
     setActiveBlocks(showBlocksId)
-    console.log(showBlocksId)
     const {holder,placeholder,tools,tunes,i18n,logLevel,onChange} = settings
     const editor = useMemo(() => new EditorJS({
         holder,placeholder,tools,tunes,i18n,logLevel,onChange,
@@ -25,6 +26,8 @@ export const EditorForEditArticle = ({close, articleData}) => {
     const inputRef = useRef()
     const editorRef = useRef()
 
+    const isAdmin = useSelector((state) => userAuthSelectors.getIsUserAdmin(state))
+
     const save = async () => {
         try{
             const data = await editor.save()
@@ -32,8 +35,12 @@ export const EditorForEditArticle = ({close, articleData}) => {
             setActiveBlocks([])
             const article = {data, title}
             console.log(article)
-            await ArticleApi.update({article, isModerated: false, isDraft: false, articleId})
-            NotificationManager.success('Отправлена на проверку.', '', 2000)
+            await ArticleApi.update({article, isModerated: isAdmin, isDraft: false, articleId})
+            if(isAdmin){
+                NotificationManager.success('Статья опубликована.', '', 2000)
+            }else{
+                NotificationManager.success('Отправлена на проверку.', '', 2000)
+            }
             close()
         }catch (e) {
             NotificationManager.error('Статья не отправлена.', '', 2000)

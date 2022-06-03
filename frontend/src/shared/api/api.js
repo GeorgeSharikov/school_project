@@ -14,6 +14,25 @@ class User{
     constructor(apiBase){
         this.apiBase = apiBase
     }
+
+    async registration(email, password, firstName, lastName){
+        try{
+            const response = await instance.post(`${this.apiBase}/registration`, {
+            email, password, firstName, lastName
+            },{headers: getAuthHeaders()})
+            return response
+        }catch(e){
+            if(e.response){
+                if(e.response.status === 404){
+                    throw new Error(e?.response?.data?.message)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
     async checkAuth(){
         try{
            const response = await instance.get(`${this.apiBase}/auth`, {

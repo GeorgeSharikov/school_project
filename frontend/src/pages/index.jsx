@@ -14,6 +14,8 @@ import {useEffect} from "react";
 import {Bookmarks} from "./Bookmarks/index.js";
 import {userAuthSelectors} from "../store/userAuthSlice/slice.js";
 import {AdminModerationFeed} from "./AdminModerationFeed/index.js";
+import {AdminPanel} from "./AdminPanel/index.js";
+import {CreationUser} from "./CreationUser/index.js";
 
 export const Routing = () => {
     const isSidebarActive = useSelector(sideBarSelectors.getSidebarIsActive)
@@ -41,8 +43,11 @@ export const Routing = () => {
                         {isAuth && <Route path={"/bookmarks"} element={<Bookmarks/>}/>}
 
                         {role === 'ADMIN' && <Route path={"/moderation"} element={<AdminModerationFeed />}/>}
-                        {/*{role === 'ADMIN' && <Route path={"/moderation"} element={<AdminModerationFeed />}/>}*/}
-                        
+                        {role === 'ADMIN' &&
+                        <Route path={"/admin-panel"} element={<AdminPanel />}>
+                            <Route path="registration" element={<CreationUser />} />
+                        </Route>}
+
                         <Route path={"/error-page-not-found"} element={<PageNotFound/>}/>
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>

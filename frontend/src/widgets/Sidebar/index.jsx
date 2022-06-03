@@ -78,7 +78,7 @@ export const SideBar = () => {
                         </NavLink>
                     </div>
                      <div className={styles.element} onClick={handleClose}>
-                        <NavLink to={'/admin-panel'} className={({isActive}) => isActive ? styles.activeLink : styles.link}>
+                        <NavLink to={'/admin-panel/registration'} className={({isActive}) => isActive ? styles.activeLink : styles.link}>
                             <PeopleOutlineOutlinedIcon className={styles.itemsIcons}/>
                             <p>Админ панель</p>
                         </NavLink>

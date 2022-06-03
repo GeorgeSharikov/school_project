@@ -9,7 +9,7 @@ import {generateJWT} from "../../core/helpers/generateJWT.js"; env.config()
 
 export class UserService{
     static async registration(userData, next){
-        const {email, password, firstName, lastName} = userData
+        const {email, password, firstName, lastName, role} = userData
         if(!password || !email){
             return next(ApiError.badRequest('Некорректны логин или пароль.'))
         }
@@ -20,7 +20,7 @@ export class UserService{
         }
 
         const hashPassword = await bcrypt.hash(password, 5)
-        const user = await UserRepository.createUser({email, password: hashPassword, firstName, lastName}, next)
+        const user = await UserRepository.createUser({email, password: hashPassword, firstName, lastName, role}, next)
 
         return generateJWT(user.id, email, user.role)
     }

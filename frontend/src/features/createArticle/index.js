@@ -9,11 +9,15 @@ import {ArticleApi} from "../../shared/api/api.js";
 import {useOnClickOutside} from "../../shared/hooks/useClickOutside.jsx";
 import CloseIcon from "@mui/icons-material/Close.js";
 import {NotificationManager} from "react-notifications";
+import {useSelector} from "react-redux";
+import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
 
 export const ArticleEditor = ({close}) => {
     const editor = useMemo(() => new EditorJS(settings), [])
     const inputRef = useRef()
     const editorRef = useRef()
+
+    const isAdmin = useSelector((state) => userAuthSelectors.getIsUserAdmin(state))
 
     const save = async () => {
         try{
@@ -22,9 +26,13 @@ export const ArticleEditor = ({close}) => {
             setActiveBlocks([])
             const article = {data, title}
             console.log(article)
-            await ArticleApi.createArticle({article, isModerated: false, isDraft: false})
+            await ArticleApi.createArticle({article, isModerated: isAdmin, isDraft: false})
             close()
-            NotificationManager.success('Отправлена на проверку.', '', 2000)
+            if(isAdmin){
+                NotificationManager.success('Статья опубликована.', '', 2000)
+            }else{
+                NotificationManager.success('Отправлена на проверку.', '', 2000)
+            }
         }catch (e) {
             NotificationManager.error('Статья не отправлена.', '', 2000)
             console.log('Saving failed: ', e)

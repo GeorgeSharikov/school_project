@@ -23,6 +23,7 @@ import {articlesProfileActions} from "../../pages/profileArticleFeed/model/slice
 import {BookmarksActions} from "../../pages/Bookmarks/model/slice.js";
 import {draftsActions} from "../../pages/profileDraftsFeed/model/slice.js";
 import {adminModerationActions} from "../../pages/AdminModerationFeed/model/slice.js";
+import {stringToHslColor} from "../../shared/helpers/generateRandomColor.js";
 
 export const NavigationUser = (props) => {
     const [isModalVisible, setModalVisible] = useState(false)
@@ -69,8 +70,8 @@ export const NavigationUser = (props) => {
             {isFetching
                 ? <Skeleton variant="rectangular" width={140} height={30} />
                 : isAuth ? <div className={styles.navigation}>
-                        <NavLink to={`/profile/${id}`}>
-                                    <Avatar>{userData?.firstName?.[0]}</Avatar>
+                        <NavLink to={`/profile/${id}`} >
+                                    <Avatar sx={{backgroundColor: `${stringToHslColor(fullName, 50, 50)}`}}>{userData?.firstName?.[0]}</Avatar>
                         </NavLink>
                         <div className={styles.expand} onClick={() => setIsListOpen(true)}>
                             <ExpandMoreIcon/>

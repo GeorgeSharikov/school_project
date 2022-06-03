@@ -51,7 +51,7 @@ export const Profile = (props) => {
     return (
         <div className={styles.wrapper} >
             <div className={styles.profileHeaderWrapper}>
-                    <ProfileAvatar ava={userData.avatar}/>
+                    <ProfileAvatar ava={userData.avatar} />
                     <h1 className={styles.name}>{userData.firstName}{userData.lastName}</h1>
                     <ProfileStatus status={userData.status}/>
                     <div className={styles.headerTabs}>
