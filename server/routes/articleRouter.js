@@ -28,10 +28,11 @@ router.get('/getDraftsArticles',CheckAuth, ArticleController.getDraftsArticles)
 router.get('/getDraftsTotalCount',CheckAuth, ArticleController.getDraftsTotalCount)
 
 router.get('/getFeedArticlesByBookmarks',CheckAuth, ArticleController.getFeedArticlesByBookmarks)
+
 router.get('/getModerationArticles',CheckAccess('ADMIN'), ArticleController.getModerationArticles)
 router.get('/getModerationTotalCount',CheckAccess('ADMIN'), ArticleController.getModerationTotalCount)
 router.put('/publishArticle', CheckAccess('ADMIN'), ArticleController.publishArticle)
 router.put('/declineArticle', CheckAccess('ADMIN'), ArticleController.declineArticle)
-
+router.get('/getAllArticles', CheckAccess('ADMIN'), ArticleController.getAllArticles)
 
 export const articleRouter = router

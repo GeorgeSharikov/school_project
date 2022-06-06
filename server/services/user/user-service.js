@@ -27,7 +27,7 @@ export class UserService{
 
      static async signIn(userData, next){
         const {email, password} = userData
-
+         console.log(typeof password, password)
          if(!email || !password){
              return next(ApiError.badRequest('Некорректны логин или пароль.'))
          }

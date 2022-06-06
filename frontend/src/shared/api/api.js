@@ -225,6 +225,24 @@ class Article{
         }
     }
 
+    async getAllArticles(){
+        try{
+            const {data} = await instance.get(`${this.apiBase}/getAllArticles`, {
+                headers: getAuthHeaders()
+            })
+            return data
+        }catch (e) {
+            if(e.response){
+                if(e.response.status !== 401){
+                    throw new Error(e?.response?.statusText)
+                }
+                throw new Error(e?.response?.data?.message)
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
+
     async getFeedArticlesByPortions(page){
         try{
             const response = await instance.get(`${this.apiBase}/getFeedArticles/?page=${page}`, {

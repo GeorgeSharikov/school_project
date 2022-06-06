@@ -1,3 +1,13 @@
+.wrapper{
+
+}
+
+@media (max-width: 670px){
+    .wrapper{
+        padding: 0px 20px;
+    }
+}
+
 .emptyPage{
     background-color: #fff;
     font-size: 20px;

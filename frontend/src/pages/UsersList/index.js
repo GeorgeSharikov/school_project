@@ -24,17 +24,22 @@ export const UserList = (props) => {
     }
 
     return (
-        <div>
-            {userList.map(({firstName, lastName, id}) => {
+        <div className={styles.wrapper}>
+            {userList.map(({firstName, lastName, id, email}, index) => {
                 const author = `${firstName} ${lastName}`
                 return <div key={id} className={styles.wrap}>
-                    <Link to={`/profile/${id}`} className={styles.item}>
-                        <div>{author}</div>
+                    <Link to={`/profile/${id}`} className={styles.itemsWrapper}>
+                        <div className={styles.item} style={{width: '50px'}}>{index+1}</div>
+                        <div className={styles.itemInfo}>
+                            <div className={styles.item}>{author}</div>
+                            <div className={styles.item}>{email}</div>
+                        </div>
+
                     </Link>
-                    <button className={styles.btn} title={'Сбрасывает пароль на 1234567'} onClick={() => resetPassword(id)}>
+                    <div className={styles.btn} title={'Сбрасывает пароль на 1234567'} onClick={() => resetPassword(id)}>
                         <div>Сбросить пароль</div>
                         <LockResetIcon />
-                    </button>
+                    </div>
                 </div>
             })}
         </div>

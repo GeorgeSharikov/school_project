@@ -1,0 +1,48 @@
+.header{
+    padding-left: 65px;
+    display: grid;
+    grid-template-columns: 200px 400px;
+    grid-gap: 15px;
+}
+
+.wrapper{
+    padding-top: 50px;
+}
+
+.itemWrapper{
+    display: grid;
+    grid-template-columns: 50px 600px;
+    grid-gap: 15px;
+}
+
+.item{
+    display: flex;
+    background-color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.articleInfo{
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: 180px 380px;
+}
+
+.title{
+    width: 400px;
+    display: block;
+    box-sizing: border-box;
+}
+
+.articleTools{
+    display: flex;
+    margin-left: 20px;
+}

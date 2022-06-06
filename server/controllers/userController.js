@@ -44,7 +44,7 @@ class User{
         res.json(users)
     }
     async resetUserPassword(req, res, next){
-        const id = req.id
+        const id = req.query.id
         const code = await UserService.resetUserPassword(id, next)
         res.json({code})
     }

@@ -15,7 +15,8 @@ import {useSelector} from "react-redux";
 import {userAuthSelectors} from "../../../store/userAuthSlice/slice.js";
 
 export const EditorForEditArticle = ({close, articleData}) => {
-    const {showBlocksId, title, id: articleId, jsonData} = articleData
+    let {showBlocksId, title, id: articleId, jsonData} = articleData
+    showBlocksId = showBlocksId.filter(el => el !== '')
     setActiveBlocks(showBlocksId)
     const {holder,placeholder,tools,tunes,i18n,logLevel,onChange} = settings
     const editor = useMemo(() => new EditorJS({
