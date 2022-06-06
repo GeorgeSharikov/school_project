@@ -34,7 +34,6 @@ export const UserList = (props) => {
                             <div className={styles.item}>{author}</div>
                             <div className={styles.item}>{email}</div>
                         </div>
-
                     </Link>
                     <div className={styles.btn} title={'Сбрасывает пароль на 1234567'} onClick={() => resetPassword(id)}>
                         <div>Сбросить пароль</div>

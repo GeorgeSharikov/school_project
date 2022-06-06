@@ -12,7 +12,7 @@ router.get('/getArticleForEditor',CheckAuth, ArticleController.getArticleForEdit
 router.post('/createArticle', CheckAuth, ArticleController.createArticle)
 router.put('/updateArticle',CheckAuth, ArticleController.updateArticle)
 router.delete('/deleteArticle', CheckAuth, ArticleController.delete)
-router.delete('/deleteArticleByAdmin',CheckAccess('ADMIN'), ArticleController.delete)
+router.delete('/deleteArticleByAdmin',CheckAccess('ADMIN'), ArticleController.deleteArticleByAdmin)
 
 router.post('/like',CheckAuth, ArticleController.like)
 router.post('/dislike',CheckAuth, ArticleController.dislike)

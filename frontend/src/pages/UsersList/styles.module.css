@@ -62,3 +62,30 @@
 .btn:hover{
     opacity: 1;
 }
+
+@media (max-width: 500px) {
+    .wrap{
+        width: 265px;
+    }
+    .wrapper{
+        padding-top: 25px;
+    }
+
+    .itemInfo{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 5px;
+    }
+
+    .wrap{
+        margin: 20px 0;
+        flex-direction: column;
+    }
+
+    .btn{
+        width: 200px;
+        box-sizing: border-box;
+        margin-top: 10px;
+        margin-left: auto;
+    }
+}

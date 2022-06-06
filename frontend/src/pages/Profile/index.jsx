@@ -7,7 +7,7 @@ import styles from './styles.module.css'
 import { ProfileAvatar } from "../../features/avatar";
 import { ProfileStatus } from "../../features/status";
 import {useNavigate} from "react-router-dom";
-import {sideBarSelectors} from "../../features/sidebarToggle/model/slice.js";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 export const Profile = (props) => {
     const dispatch = useDispatch()
@@ -47,6 +47,7 @@ export const Profile = (props) => {
         }
         return `${styles.tab}`
     }
+    console.log()
     const userData = useSelector(state => personalDataSelectors.getPeronalDataSelector(state, isMyOwn))
     return (
         <div className={styles.wrapper} >
@@ -64,6 +65,11 @@ export const Profile = (props) => {
                             </NavLink>}
                         </div>
                     </div>
+                {isMyOwn && <div style={{position: 'absolute', top: 24, right: 24, cursor: 'pointer'}}>
+                    <NavLink to={`${location.pathname}/settings`}>
+                        <SettingsIcon sx={{width: 30, height: 30}}/>
+                    </NavLink>
+                </div>}
             </div>
 
             <div className={styles.profileContentWrapper}>
@@ -71,6 +77,7 @@ export const Profile = (props) => {
                     <Outlet />
                 </div>
             </div>
+
         </div>
     );
 }

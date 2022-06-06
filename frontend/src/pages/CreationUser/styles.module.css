@@ -4,6 +4,12 @@
     margin-top: 50px;
 }
 
+@media (max-width: 500px) {
+    .wrapper{
+        margin-top: 25px;
+    }
+}
+
 .inputWrapper{
     margin-bottom: 16px;
     display: flex;

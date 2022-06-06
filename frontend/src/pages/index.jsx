@@ -19,6 +19,7 @@ import {CreationUser} from "./CreationUser/index.js";
 import {About} from "./About/index.js";
 import {UserList} from "./UsersList/index.js";
 import {ArticleList} from "./ArticlesList/index.jsx";
+import {UserSetting} from "./UserSettings/UserSetting.js";
 
 export const Routing = () => {
     const isSidebarActive = useSelector(sideBarSelectors.getSidebarIsActive)
@@ -42,6 +43,7 @@ export const Routing = () => {
                             <Route path="" element={<ProfileArticleFeed />} />
                             <Route path="drafts" element={<ProfileDraftsFeed />} />
                         </Route>
+                        <Route path={'/profile/:id/settings'} element={<UserSetting />}/>
                         <Route path={'/about'} element={<About />}/>
                         {isAuth && <Route path={"/bookmarks"} element={<Bookmarks/>}/>}
 

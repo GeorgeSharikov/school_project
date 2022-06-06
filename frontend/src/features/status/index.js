@@ -8,8 +8,12 @@ import Button from "@mui/material/Button";
 import ExpandingTextarea from "react-expanding-textarea";
 import {UserApi} from "../../shared/api/api.js";
 import {NotificationManager} from "react-notifications";
+import {useActions} from "../../shared/hooks/useActions.jsx";
+import {personalDataActions} from "../../store/userPersonalData/slice.js";
 
 export const ProfileStatus = ({status, isMyOwn}) => {
+    const {changePersonalStatus} = useActions(personalDataActions)
+
     const [isOpen, setIsOpen] = useState(false)
     const [value, setValue] = useState(status)
     const [statusText, setStatusText] = useState(status)
@@ -19,6 +23,7 @@ export const ProfileStatus = ({status, isMyOwn}) => {
             const {statusData} = await UserApi.changeStatus(value)
             setValue(statusData)
             setStatusText(statusData)
+            changePersonalStatus(value)
             setIsOpen(false)
         }catch (e) {
             NotificationManager.error('Ошибка', '', 2000)
@@ -29,11 +34,18 @@ export const ProfileStatus = ({status, isMyOwn}) => {
         setValue(status)
         setStatusText(status)
     }, [status])
+
+    const handleClose = () => {
+        setIsOpen(false)
+        console.log(status)
+        setValue(status)
+    }
+
     return(
         <div className={styles.status}>
             <div className={styles.text}>{statusText}</div>
             {isMyOwn && <div className={styles.changeStatus} onClick={() => setIsOpen(true)}>Изменить статус</div>}
-            <Dialog open={isOpen} onClose={() => setIsOpen(false)} >
+            <Dialog open={isOpen} onClose={handleClose} >
                 <DialogTitle>Изменить статус</DialogTitle>
                 <DialogContent>
                     <ExpandingTextarea
@@ -47,7 +59,7 @@ export const ProfileStatus = ({status, isMyOwn}) => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setIsOpen(false)}>Отмена</Button>
+                    <Button onClick={handleClose}>Отмена</Button>
                     <Button onClick={changeStatus}>Изменить</Button>
                 </DialogActions>
             </Dialog>
