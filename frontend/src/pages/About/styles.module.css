@@ -32,6 +32,14 @@
     width: 100%;
 }
 
+@media (max-width: 1000px) {
+    .members{
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr / 1fr 1fr;
+    }
+}
+
 .member{
     background-color: white;
     padding: 10px;

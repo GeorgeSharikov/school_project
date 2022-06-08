@@ -73,6 +73,16 @@
         margin-right: auto;
     }
 }
+
+h1 .I-island-a, 
+h2 .I-island-a, 
+h3 .I-island-a, 
+h4 .I-island-a, 
+h5 .I-island-a, 
+h6 .I-island-a {
+    word-break: break-all;
+}
+
 .content_header{
     display: flex;
     align-items: center;
@@ -114,7 +124,7 @@
 
 .content ol li, .content ul li {
     margin: 10px 0 10px 2em;
-    word-wrap: break-word;
+    word-break: break-all;
 }
 
 
@@ -133,12 +143,6 @@
     margin-top: 24px;
     margin-bottom: 24px;
 }
-
-.content figure:last-child {
-
-}
-
-
 
 .quote{
     background-color: #fffaf1;
@@ -239,11 +243,13 @@
     color: #392e2f;
     font-size: 15px;
     word-break: break-word;
+    align-items: center;
 }
 
 .warning_sign{
     margin-right: 15px;
 }
+
 
 .warning_text{
     padding-left: 15px;
@@ -254,6 +260,9 @@
     font-weight: 700;
 }
 
+.warning_title p{
+    min-width: 100px;
+}
 .figure-image{
     margin-top: 13px;
     margin-bottom: 4px;
