@@ -1,5 +1,6 @@
 .content-short{
     margin-bottom: 13px;
+    word-wrap: break-word;
 }
 .content-short .I-island-a{
     padding-left: 20px;
