@@ -2,6 +2,8 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
 import {useNavigate, useParams} from "react-router-dom";
+import styles from './styles.module.css'
+import {ChangePassword} from "../../features/changePassword/index.jsx";
 
 export const UserSetting = (props) => {
     const navigate = useNavigate()
@@ -13,6 +15,8 @@ export const UserSetting = (props) => {
     }
 
     return (
-        <div>asdasd</div>
+        <div className={styles.wrapper}>
+            <ChangePassword />
+        </div>
     );
 }

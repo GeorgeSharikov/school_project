@@ -11,5 +11,6 @@ router.get('/auth', CheckAuth, UserController.auth)
 router.put('/changeStatus', CheckAuth, UserController.changeStatus)
 router.get('/getAllUsers', CheckAccess('ADMIN'), UserController.getAllUsers)
 router.put('/resetUserPassword', CheckAccess('ADMIN'), UserController.resetUserPassword)
+router.put('/changePassword', CheckAuth, UserController.changePassword)
 
 export const userRouter = router

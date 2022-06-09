@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ArticleApi} from "../../shared/api/api.js";
+import {ArticleApi} from "../../../shared/api/api.js";
 import styles from './styles.module.css'
 import {NavLink} from "react-router-dom";
 import {NotificationManager} from "react-notifications";
 import {
     EditArticleEditorAdminPanel,
     EditArticleEditorModalAdmin
-} from "../../features/createArticle/ModalArticleEditor/index.jsx";
+} from "../../../features/createArticle/ModalArticleEditor/index.jsx";
 
 export const ArticleList = (props) => {
     const [articles, setArticles] = useState([])

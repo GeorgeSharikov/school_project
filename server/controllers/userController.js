@@ -56,6 +56,14 @@ class User{
         const statusData = await UserService.changeStatus(status,id, next)
         res.send({statusData})
     }
+
+    async changePassword(req, res, next){
+        const {password} = req.body
+        const id = req.user.id
+        console.log(password)
+        const statusData = await UserService.changePassword(password,id, next)
+        res.send({statusData})
+    }
 }
 
 export const UserController = new User()

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Field, Form, Formik} from "formik";
 import styles from "./styles.module.css";
-import {userAuthActions} from "../../store/userAuthSlice/slice.js";
-import {useActions} from "../../shared/hooks/useActions.jsx";
-import {UserApi} from "../../shared/api/api.js";
+import {userAuthActions} from "../../../store/userAuthSlice/slice.js";
+import {useActions} from "../../../shared/hooks/useActions.jsx";
+import {UserApi} from "../../../shared/api/api.js";
 import {NotificationManager} from "react-notifications";
 
 export const CreationUser = (props) => {

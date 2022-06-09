@@ -65,5 +65,11 @@ export class UserService{
         const statusData = await UserRepository.changeStatus(status,id, next)
         return statusData
     }
+    static async changePassword(password,id, next){
+        const hashPassword = await bcrypt.hash(password, 5)
+        console.log(hashPassword)
+        const statusData = await UserRepository.changePassword(hashPassword, id, next)
+        return statusData
+    }
 }
 

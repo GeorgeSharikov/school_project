@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {UserApi} from "../../shared/api/api.js";
+import {UserApi} from "../../../shared/api/api.js";
 import LockResetIcon from '@mui/icons-material/LockReset';
 import styles from './styles.module.css'
 import {Link} from "react-router-dom";

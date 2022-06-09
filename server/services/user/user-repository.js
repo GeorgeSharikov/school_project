@@ -73,4 +73,16 @@ export class UserRepository{
             return next(ApiError.internal('Неизвестная ошибка'))
         }
     }
+    static async changePassword(password,id,next){
+        try{
+            await UserModel.update(
+                {password: password},
+                {where: {id}}
+            )
+            return 200
+        }catch (e) {
+            console.log(e)
+            return next(ApiError.internal('Неизвестная ошибка'))
+        }
+    }
 }

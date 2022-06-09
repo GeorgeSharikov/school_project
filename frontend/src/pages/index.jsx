@@ -15,10 +15,10 @@ import {Bookmarks} from "./Bookmarks/index.js";
 import {userAuthSelectors} from "../store/userAuthSlice/slice.js";
 import {AdminModerationFeed} from "./AdminModerationFeed/index.js";
 import {AdminPanel} from "./AdminPanel/index.js";
-import {CreationUser} from "./CreationUser/index.js";
+import {CreationUser} from "./AdminPanel/CreationUser/index.js";
 import {About} from "./About/index.js";
-import {UserList} from "./UsersList/index.js";
-import {ArticleList} from "./ArticlesList/index.jsx";
+import {UserList} from "./AdminPanel/UsersList/index.js";
+import {ArticleList} from "./AdminPanel/ArticlesList/index.jsx";
 import {UserSetting} from "./UserSettings/UserSetting.js";
 
 export const Routing = () => {

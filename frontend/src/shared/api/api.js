@@ -118,6 +118,22 @@ class User{
             }
         }
     }
+    async changePassword(password){
+        try{
+            const {data} = await instance.put(`${this.apiBase}/changePassword`,  {password},{
+                headers: getAuthHeaders()
+            })
+            return {data}
+        }catch(e){
+            if(e.response){
+                if(e.response.status === 404){
+                    throw new Error(e?.response?.data?.message)
+                }
+            }else{
+                throw new Error('Неизвестная ошибка. Попробуйте перезагрузить страницу.')
+            }
+        }
+    }
 }
 export const UserApi = new User('user')
 
