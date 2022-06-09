@@ -228,3 +228,9 @@ display: none;
     font-size: 23px;
 }
 }
+@media (max-width: 859px){
+    .content-short .quote_content svg{
+        left: -30px;
+        width: 21px;
+    }
+}

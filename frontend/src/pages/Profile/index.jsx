@@ -47,7 +47,7 @@ export const Profile = (props) => {
         }
         return `${styles.tab}`
     }
-    console.log()
+    console.log(isAuth)
     const userData = useSelector(state => personalDataSelectors.getPeronalDataSelector(state, isMyOwn))
     return (
         <div className={styles.wrapper} >

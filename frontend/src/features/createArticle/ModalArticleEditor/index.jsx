@@ -16,6 +16,7 @@ import styles from "../ui/styles.module.css";
 import {SmallAvatar} from "../../../shared/assets/avatar/smallAvatar.jsx";
 import Textarea from "react-expanding-textarea";
 import CloseIcon from "@mui/icons-material/Close.js";
+import './../ui/styles.css'
 
 export const ArticleEditorModal = ({isVisible, handleClose}) => {
     return (
@@ -24,7 +25,7 @@ export const ArticleEditorModal = ({isVisible, handleClose}) => {
                  open={isVisible}
                  onClose={handleClose}
                  >
-                     <Box sx={modalEditorStyles}> 
+                     <Box className={styles.editorModal}> 
                         <ArticleEditor close={handleClose} />
                      </Box>  
             </Modal>  
@@ -39,7 +40,7 @@ export const EditArticleEditorModal = ({isVisible, handleClose, articleData}) =>
                 open={isVisible}
                 onClose={handleClose}
             >
-                <Box sx={modalEditorStyles}>
+                <Box className={styles.editorModal}>
                     <EditorForEditArticle close={handleClose} articleData={articleData}/>
                 </Box>
             </Modal>
@@ -54,7 +55,7 @@ export const EditArticleEditorModalAdmin = ({isVisible, handleClose, articleData
                 open={isVisible}
                 onClose={handleClose}
             >
-                <Box sx={modalEditorStyles}>
+                <Box className={styles.editorModal}>
                     <EditorForArticleEditAdmin close={handleClose} articleData={articleData}/>
                 </Box>
             </Modal>
@@ -176,7 +177,7 @@ export const EditArticleEditorAdminPanel = ({isVisible, handleClose, articleData
                 open={isVisible}
                 onClose={handleClose}
             >
-                <Box sx={modalEditorStyles}>
+                <Box className={styles.editorModal}>
                     <AdminPanelEdit close={handleClose} articleData={articleData} callback={callback}/>
                 </Box>
             </Modal>

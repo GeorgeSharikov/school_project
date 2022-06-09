@@ -14,8 +14,8 @@ export const About = (props) => {
                     <div className={styles.redactorHeader}>Редактор газеты:</div>
                     <span><span className={styles.name}><i>Наталья Усова</i></span>, учитель русского языка и литературы</span>
                 </div>
-                <div>
-                    <img src={lyceumIcon} style={{width: '220px', margin: '0 20px'}} alt='ЛицейDays лого'/>
+                <div className={styles.iconWrapper}>
+                    <img src={lyceumIcon}  alt='ЛицейDays лого'/>
                 </div>
                 <div className={`${styles.journalists} ${styles.member}`}>
                     <div className={styles.redactorHeader}>Журналисты:</div>

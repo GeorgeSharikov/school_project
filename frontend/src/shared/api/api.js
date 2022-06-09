@@ -35,6 +35,7 @@ class User{
 
     async checkAuth(){
         try{
+            console.log(getAuthHeaders())
            const response = await instance.get(`${this.apiBase}/auth`, {
                headers: getAuthHeaders()
            })

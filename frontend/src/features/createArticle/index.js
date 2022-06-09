@@ -11,6 +11,7 @@ import CloseIcon from "@mui/icons-material/Close.js";
 import {NotificationManager} from "react-notifications";
 import {useSelector} from "react-redux";
 import {userAuthSelectors} from "../../store/userAuthSlice/slice.js";
+import './ui/styles.css'
 
 export const ArticleEditor = ({close}) => {
     const editor = useMemo(() => new EditorJS(settings), [])
