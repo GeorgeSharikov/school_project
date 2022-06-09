@@ -22,7 +22,7 @@ export const UserList = (props) => {
             NotificationManager.error('Ошибка.','',2000)
         }
     }
-
+    document.title = `Админ панель - Список Пользователей`
     return (
         <div className={styles.wrapper}>
             {userList.map(({firstName, lastName, id, email}, index) => {

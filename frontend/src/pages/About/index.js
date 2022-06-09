@@ -3,6 +3,7 @@ import styles from './styles.module.css'
 import lyceumIcon from '../../shared/assets/lyceum.jpg'
 
 export const About = (props) => {
+    document.title = `О Нас`
     return (
         <div className={styles.wrapper}>
             <div className={styles.title}>

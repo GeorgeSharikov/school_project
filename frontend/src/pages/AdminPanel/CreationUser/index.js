@@ -54,6 +54,7 @@ export const CreationUser = (props) => {
         setLoginError(false)
         setValidateErrors(false)
     }, [setLoginError])
+    document.title = `Админ панель - Создание Пользователя`
     return (
         <div className={styles.wrapper}>
             <Formik

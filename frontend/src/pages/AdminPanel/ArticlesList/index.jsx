@@ -52,7 +52,7 @@ export const ArticleList = (props) => {
         }
     }
 
-
+    document.title = `Админ панель - Список статей`
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>

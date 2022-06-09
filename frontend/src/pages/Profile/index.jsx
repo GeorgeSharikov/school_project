@@ -20,6 +20,7 @@ export const Profile = (props) => {
 
     const isMyOwn = Number(id) === myId
     useEffect(() => {
+
         window.scrollTo(0, 0);
     }, [])
     useEffect(() => {
@@ -49,6 +50,7 @@ export const Profile = (props) => {
     }
     console.log(isAuth)
     const userData = useSelector(state => personalDataSelectors.getPeronalDataSelector(state, isMyOwn))
+    document.title = `${userData.firstName} ${userData.lastName} - Статьи`
     return (
         <div className={styles.wrapper} >
             <div className={styles.profileHeaderWrapper}>
